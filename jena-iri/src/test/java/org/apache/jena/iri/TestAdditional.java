@@ -20,22 +20,13 @@ package org.apache.jena.iri ;
 
 import java.net.MalformedURLException;
 
-import junit.framework.JUnit4TestAdapter;
-
-import org.apache.jena.iri.IRI ;
-import org.apache.jena.iri.IRIFactory ;
 import org.junit.Assert;
 import org.junit.Test;
 
 
-public class Additional
+public class TestAdditional
 {
     // Test added in response to reports and bugs from 2009.
-    
-    static public junit.framework.Test suite()
-    {
-        return new JUnit4TestAdapter(Additional.class) ;
-    }
     
     @Test public void relDotSlash1() throws MalformedURLException
     {

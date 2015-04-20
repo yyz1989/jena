@@ -19,33 +19,16 @@
 package org.apache.jena.iri;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Iterator;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.apache.jena.iri.IRI ;
-import org.apache.jena.iri.IRIFactory ;
-import org.apache.jena.iri.Violation ;
+import org.junit.Test;
 
-public class MoreTests extends TestCase {
-	
-	static public Test suite() {
-		TestSuite suite = new TestSuite("Additional IRI Tests");
+public class TestIRIMoreTests {
 
-		suite.addTest(new MoreTests("testRelativizeFrag1"));
-		suite.addTest(new MoreTests("testRelativizeFrag2"));
-		suite.addTest(new MoreTests("testXPointer"));
-		suite.addTest(new MoreTests("testNotIDN"));
-		
-		return suite;
-	}
-
-	public MoreTests(String s) {
-		super(s);
-	}
-
-	
+	@Test
 	public void testRelativizeFrag1() {
 		IRIFactory f = IRIFactory.jenaImplementation();
 		IRI base = f.create("http://example.org/somefolder/mybase.rdf");
@@ -57,6 +40,7 @@ public class MoreTests extends TestCase {
 		assertEquals(frag,back);
 	}
 
+	@Test
 	public void testRelativizeFrag2() {
 		IRIFactory f = IRIFactory.jenaImplementation();
 		IRI base = f.create("http://example.org/somefolder/mybase.rdf");
@@ -66,7 +50,8 @@ public class MoreTests extends TestCase {
 		IRI back = base.resolve(rel);
 		assertEquals(frag,back);
 	}
-	
+
+	@Test
 	public void testXPointer() {
 		IRIFactory f = IRIFactory.jenaImplementation();
 		IRI base = f.create("http://example.org/");
@@ -79,6 +64,8 @@ public class MoreTests extends TestCase {
 //		}
 		
 	}
+
+	@Test
 	public void testNotIDN() {
 		IRIFactory f = IRIFactory.jenaImplementation();
 		IRI base = f.create("http://example.org/");

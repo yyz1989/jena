@@ -15,7 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.jena.iri;
 
 import org.junit.runner.RunWith;
@@ -23,11 +22,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({
-    AdditionalTestsSuite.class,
-    AdditionalIRITestsSuite.class,
-    IRIFactorySuite.class
-})
-public class TS_IRI {
-    
+@SuiteClasses(TestIRIFactory.class)
+public class IRIFactorySuite {
+
 }

@@ -21,13 +21,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.net.URI;
 
-import junit.framework.JUnit4TestAdapter;
 import org.junit.Test;
 
 public class TestIRIFactory {
-	static public junit.framework.Test suite() {
-		return new JUnit4TestAdapter(TestIRIFactory.class);
-	}
 	
 	private static IRIFactory iriFactory = IRIFactory.jenaImplementation();
 	
@@ -67,7 +63,7 @@ public class TestIRIFactory {
         IRIFactory factory = new IRIFactory();
         factory.setIsError(ViolationCodes.UNREGISTERED_IANA_SCHEME,true);
         // Expect exception
-        IRI relativeIri = IRIFactory.iriImplementation().construct(relative);
+        IRIFactory.iriImplementation().construct(relative);
     }
 	
 }

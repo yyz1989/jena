@@ -269,9 +269,4 @@ public class ModelTestBase extends GraphTestBase
 		return sl.toArray(new Statement[sl.size()]);
 	}
 
-	public ModelTestBase( final String name )
-	{
-		super(name);
-	}
-
 }

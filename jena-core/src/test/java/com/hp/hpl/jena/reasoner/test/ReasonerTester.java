@@ -189,14 +189,15 @@ public class ReasonerTester {
      * Run all the tests in the manifest
      * @param reasonerF the factory for the reasoner to be tested
      * @param configuration optional configuration information
+     * @param assertion whether to run assertion or not
      * @return true if all the tests pass
      * @throws IOException if one of the test files can't be found
      * @throws JenaException if the test can't be found or fails internally
      */
-    public boolean runTests(ReasonerFactory reasonerF, Resource configuration) throws IOException {
+    public boolean runTests(ReasonerFactory reasonerF, Resource configuration, boolean assertion) throws IOException {
         for ( String test : listTests() )
         {
-            if ( !runTest( test, reasonerF, configuration ) )
+            if ( !runTest( test, reasonerF, configuration, assertion ) )
             {
                 return false;
             }
@@ -207,14 +208,15 @@ public class ReasonerTester {
     /**
      * Run all the tests in the manifest
      * @param reasoner the reasoner to be tested
+     * @param assertion whether to run assertion or not
      * @return true if all the tests pass
      * @throws IOException if one of the test files can't be found
      * @throws JenaException if the test can't be found or fails internally
      */
-    public boolean runTests(Reasoner reasoner) throws IOException {
+    public boolean runTests(Reasoner reasoner, boolean assertion) throws IOException {
         for ( String test : listTests() )
         {
-            if ( !runTest( test, reasoner ) )
+            if ( !runTest( test, reasoner, assertion ) )
             {
                 return false;
             }
@@ -240,24 +242,26 @@ public class ReasonerTester {
      * @param uri the uri of the test, as defined in the manifest file
      * @param reasonerF the factory for the reasoner to be tested
      * @param configuration optional configuration information
+     * @param assertion whether to run assertion or not
      * @return true if the test passes
      * @throws IOException if one of the test files can't be found
      * @throws JenaException if the test can't be found or fails internally
      */
-    public boolean runTest(String uri, ReasonerFactory reasonerF, Resource configuration) throws IOException {
+    public boolean runTest(String uri, ReasonerFactory reasonerF, Resource configuration, boolean assertion) throws IOException {
         Reasoner reasoner = reasonerF.create(configuration);
-        return runTest(uri, reasoner);
+        return runTest(uri, reasoner, assertion);
     }
     
     /**
      * Run a single designated test.
      * @param uri the uri of the test, as defined in the manifest file
      * @param reasoner the reasoner to be tested
+     * @param assertion whether to run assertion or not
      * @return true if the test passes
      * @throws IOException if one of the test files can't be found
      * @throws JenaException if the test can't be found or fails internally
      */
-    public boolean runTest(String uri, Reasoner reasoner) throws IOException {
+    public boolean runTest(String uri, Reasoner reasoner, boolean assertion) throws IOException {
         // Find the specification for the named test
         Resource test = testManifest.getResource(uri);
         if (!test.hasProperty(RDF.type, testClass)) {
@@ -315,7 +319,9 @@ public class ReasonerTester {
         }
         */
         // ... end of debugging hack
-        assertTrue(description, correct);
+        if (assertion) {
+            assertTrue(description, correct);
+        }
         return correct;
     }
     

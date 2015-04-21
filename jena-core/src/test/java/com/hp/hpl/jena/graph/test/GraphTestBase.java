@@ -22,6 +22,10 @@ package com.hp.hpl.jena.graph.test;
     An extension of JenaTestBase (which see) with Graph-specific methods.
 */
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.FileNotFoundException;
 import java.lang.reflect.Constructor ;
 import java.net.URISyntaxException;
@@ -63,8 +67,6 @@ public class GraphTestBase extends JenaTestBase
    			throw new RuntimeException( e );
    		}
    	}
-    public GraphTestBase( String name )
-    	{ super( name ); }
     	
     /**
         Answer a Node as described by <code>x</code>; a shorthand for

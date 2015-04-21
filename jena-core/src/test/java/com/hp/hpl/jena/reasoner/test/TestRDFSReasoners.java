@@ -32,12 +32,15 @@ import java.util.Iterator;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.junit.runner.RunWith;
+import org.junit.runners.AllTests;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Test the set of admissable RDFS reasoners.
  */
+@RunWith(AllTests.class)
 public class TestRDFSReasoners extends ReasonerTestBase {
     
     /** Base URI for the test names */
@@ -45,13 +48,6 @@ public class TestRDFSReasoners extends ReasonerTestBase {
     
     protected static Logger logger = LoggerFactory.getLogger(TestReasoners.class);
 
-    /**
-     * Boilerplate for junit
-     */ 
-    public TestRDFSReasoners( String name ) {
-        super( name ); 
-    }
-    
     /**
      * Boilerplate for junit.
      * This is its own test suite
@@ -168,7 +164,7 @@ public class TestRDFSReasoners extends ReasonerTestBase {
          */
         @Override
         public void runTest() throws IOException {
-            tester.runTest(test, reasoner, this);
+            tester.runTest(test, reasoner, true);
         }
 
     }
@@ -206,7 +202,7 @@ public class TestRDFSReasoners extends ReasonerTestBase {
          */
         @Override
         public void runTest() throws IOException {
-            tester.runTest(test, reasonerFactory, this, config);
+            tester.runTest(test, reasonerFactory, config);
         }
 
     }
@@ -246,7 +242,7 @@ public class TestRDFSReasoners extends ReasonerTestBase {
             }
             configuration.addProperty(ReasonerVocabulary.PROPenableCMPScan, "false");
             assertTrue("scanproperties off", 
-                        !tester.runTest(NAMESPACE + "rdfs/test17", reasonerFactory, null, configuration));
+                        !tester.runTest(NAMESPACE + "rdfs/test17", reasonerFactory, configuration, false));
         
             // Check capabilities description
             Reasoner r = reasonerFactory.create(null);

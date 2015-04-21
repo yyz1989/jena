@@ -18,8 +18,9 @@
 
 package com.hp.hpl.jena.test;
 
+import static org.junit.Assert.fail;
+
 import java.lang.reflect.*;
-import junit.framework.*;
 import java.util.*;
 
 import com.hp.hpl.jena.util.CollectionFactory;
@@ -29,10 +30,8 @@ import com.hp.hpl.jena.util.iterator.*;
     A basis for Jena test cases which provides assertFalse and assertDiffer.
     Often the logic of the names is clearer than using a negation.
 */
-public class JenaTestBase extends TestCase
+public class JenaTestBase 
     {
-    public JenaTestBase( String name )
-        { super( name ); }
         
     /**
         Does what it says on the can.

@@ -27,8 +27,6 @@ import com.hp.hpl.jena.rdf.model.test.*;
 
 public class ReasonerTestBase extends ModelTestBase 
     {
-	public ReasonerTestBase( String name ) 
-        { super( name ); }
               
     /**
         Answer a new resource guaranteed to be in a different model from any other

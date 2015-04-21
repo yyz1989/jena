@@ -18,14 +18,15 @@
 
 package com.hp.hpl.jena.mem.test;
 
+import static org.junit.Assert.assertSame;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.graph.*;
 import com.hp.hpl.jena.mem.*;
 
 public class TestHashedTripleBunch extends TestTripleBunch
     {
-    public TestHashedTripleBunch( String name )
-        { super( name ); }
-
     protected static class HTB extends HashedTripleBunch
         {
         public HTB( TripleBunch b )
@@ -63,6 +64,7 @@ public class TestHashedTripleBunch extends TestTripleBunch
             { return hash; }
         }
     
+    @Test
     public void testHashcodeUsedAsIndex()
         {
         HashedTripleBunch htb = new HTB( emptyBunch );
@@ -75,23 +77,27 @@ public class TestHashedTripleBunch extends TestTripleBunch
             }
         }
 
+    @Test
     public void testRemovePerformsShiftFromTop()
         {
         int capacity = htb.currentCapacity();
         testRemovePerformsShift( capacity - 1, capacity );
         }
     
+    @Test
     public void testRemovePerformsShiftFromMiddle()
         {
         int capacity = htb.currentCapacity();
         testRemovePerformsShift( capacity - 3, capacity );
         }
     
+    @Test
     public void testRemovePerformsShiftWrappingLowestTwo()
         {
         int capacity = htb.currentCapacity();
         testRemovePerformsShift( 0, capacity );
         }
+    @Test
     public void testRemovePerformsShiftWrappingLowest()
         {
         int capacity = htb.currentCapacity();
@@ -118,12 +124,14 @@ public class TestHashedTripleBunch extends TestTripleBunch
         assertSame( null, htb.getItemForTestingAt( least ) );
         }
     
+    @Test
     public void testIteratorRemovePerformsShiftAndDeliversElementFromTop()
         {
         int capacity = htb.currentCapacity();
         testIteratorRemovePerformsShiftAndDeliversElement( capacity - 1, capacity );
         }
     
+    @Test
     public void testIteratorRemovePerformsShiftAndDeliversElementFromMiddle()
         {
         int capacity = htb.currentCapacity();

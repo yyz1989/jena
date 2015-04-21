@@ -18,16 +18,19 @@
 
 package com.hp.hpl.jena.util.iterator.test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.*;
+
+import org.junit.Test;
 
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
 import com.hp.hpl.jena.util.iterator.WrappedIterator;
 
 public class TestAsCollection extends ModelTestBase
     {
-    public TestAsCollection( String name )
-        { super( name ); }
 
+    @Test
     public void testAsList()
         {
         testReturnsList( "" );
@@ -36,6 +39,7 @@ public class TestAsCollection extends ModelTestBase
         testReturnsList( "understanding is a three-edged sword" );
         }
     
+    @Test
     public void testAsSet()
         {
         testReturnsSet( "" );

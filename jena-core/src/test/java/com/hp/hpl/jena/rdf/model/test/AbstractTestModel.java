@@ -18,29 +18,47 @@
 
 package com.hp.hpl.jena.rdf.model.test;
 
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.rdf.model.impl.ModelCom;
-import com.hp.hpl.jena.shared.*;
-import com.hp.hpl.jena.graph.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.hp.hpl.jena.graph.Node;
+import com.hp.hpl.jena.graph.Triple;
 import com.hp.hpl.jena.graph.test.NodeCreateUtils;
+import com.hp.hpl.jena.rdf.model.AnonId;
+import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.impl.ModelCom;
+import com.hp.hpl.jena.shared.Command;
 
 public abstract class AbstractTestModel extends ModelTestBase
     {
-    public AbstractTestModel( String name )
-        { super(name); }
 
     public abstract Model getModel();
     
     private Model model;
     
-    @Override
+    @Before
     public void setUp()
         { model = getModel(); }
         
-    @Override
+    @After
     public void tearDown()
         { model.close(); } 
        
+    @Test
     public void testTransactions()
         { 
         Command cmd = new Command() 
@@ -49,6 +67,7 @@ public abstract class AbstractTestModel extends ModelTestBase
         if (model.supportsTransactions()) model.executeInTransaction( cmd );
         }
         
+    @Test
     public void testCreateResourceFromNode()
         {
         RDFNode S = model.getRDFNode( NodeCreateUtils.create( "spoo:S" ) ); 
@@ -56,6 +75,7 @@ public abstract class AbstractTestModel extends ModelTestBase
         assertEquals( "spoo:S", ((Resource) S).getURI() );
         }
         
+    @Test
     public void testCreateLiteralFromNode()
         {
         RDFNode S = model.getRDFNode( NodeCreateUtils.create( "42" ) ); 
@@ -63,6 +83,7 @@ public abstract class AbstractTestModel extends ModelTestBase
         assertEquals( "42", ((Literal) S).getLexicalForm() );
         }    
             
+   @Test
    public void testCreateBlankFromNode()
         {
         RDFNode S = model.getRDFNode( NodeCreateUtils.create( "_Blank" ) ); 
@@ -70,6 +91,7 @@ public abstract class AbstractTestModel extends ModelTestBase
         assertEquals( new AnonId( "_Blank" ), ((Resource) S).getId() );
         }
         
+    @Test
     public void testIsEmpty()
         {
         Statement S1 = statement( model, "model rdf:type nonEmpty" );
@@ -85,6 +107,7 @@ public abstract class AbstractTestModel extends ModelTestBase
         assertTrue( model.isEmpty() );
         }
         
+    @Test
     public void testContainsResource()
         {
         modelAdd( model, "x R y; _a P _b" );
@@ -102,6 +125,7 @@ public abstract class AbstractTestModel extends ModelTestBase
         Test the new version of getProperty(), which delivers null for not-found
         properties.
     */
+    @Test
     public void testGetProperty()
         {
         modelAdd( model, "x P a; x P b; x R c" );
@@ -112,6 +136,7 @@ public abstract class AbstractTestModel extends ModelTestBase
         assertNull( x.getProperty( property( model, "noSuchPropertyHere" ) ) );
         }
     
+    @Test
     public void testToStatement()
         {
         Triple t = triple( "a P b" );
@@ -121,6 +146,7 @@ public abstract class AbstractTestModel extends ModelTestBase
         assertEquals( node( "b" ), s.getObject().asNode() );
         }
     
+    @Test
     public void testAsRDF()
         {
         testPresentAsRDFNode( node( "a" ), Resource.class );
@@ -135,6 +161,7 @@ public abstract class AbstractTestModel extends ModelTestBase
         assertInstanceOf( nodeClass, r );
         }
         
+    @Test
     public void testURINodeAsResource()
         {
         Node n = node( "a" );
@@ -142,6 +169,7 @@ public abstract class AbstractTestModel extends ModelTestBase
         assertSame( n, r.asNode() );
         }
         
+    @Test
     public void testLiteralNodeAsResourceFails()
         {
         try 
@@ -153,6 +181,7 @@ public abstract class AbstractTestModel extends ModelTestBase
             { pass(); }
         }
     
+    @Test
     public void testRemoveAll()
         {
         testRemoveAll( "" );
@@ -193,6 +222,7 @@ public abstract class AbstractTestModel extends ModelTestBase
  	mean emptyness isn't available. This is why we go round the houses and
  	test that expected ~= initialContent + addedStuff - removed - initialContent.
  	*/
+	@Test
 	public void testRemoveSPO()
 	    {
 	    ModelCom mc = (ModelCom) ModelFactory.createDefaultModel();
@@ -216,6 +246,7 @@ public abstract class AbstractTestModel extends ModelTestBase
             }
 	    }
 	
+	@Test
     public void testIsClosedDelegatedToGraph()
         {
         Model m = getModel();

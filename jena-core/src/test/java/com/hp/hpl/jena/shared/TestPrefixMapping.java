@@ -18,11 +18,18 @@
 
 package com.hp.hpl.jena.shared;
 
-import junit.framework.TestSuite ;
+import static org.junit.Assert.assertEquals;
 
-import com.hp.hpl.jena.assembler.JA ;
-import com.hp.hpl.jena.shared.impl.PrefixMappingImpl ;
-import com.hp.hpl.jena.vocabulary.* ;
+import org.junit.Test;
+
+import com.hp.hpl.jena.assembler.JA;
+import com.hp.hpl.jena.shared.impl.PrefixMappingImpl;
+import com.hp.hpl.jena.vocabulary.DC_11;
+import com.hp.hpl.jena.vocabulary.OWL;
+import com.hp.hpl.jena.vocabulary.RDF;
+import com.hp.hpl.jena.vocabulary.RDFS;
+import com.hp.hpl.jena.vocabulary.RSS;
+import com.hp.hpl.jena.vocabulary.VCARD;
 
 /**
     Tests PrefixMappingImpl by subclassing AbstractTestPrefixMapping, qv.
@@ -30,19 +37,16 @@ import com.hp.hpl.jena.vocabulary.* ;
 
 public class TestPrefixMapping extends AbstractTestPrefixMapping
     {
-    public TestPrefixMapping( String name )
-        { super( name ); }
-
-    public static TestSuite suite()
-        { return new TestSuite( TestPrefixMapping.class ); }
 
     @Override
     protected PrefixMapping getMapping()
         { return new PrefixMappingImpl(); }
 
+    @Test
     public void testStandard()
         { testStandard( PrefixMapping.Standard ); }
 
+    @Test
     public void testExtended()
         { testExtended( PrefixMapping.Extended ); }
 

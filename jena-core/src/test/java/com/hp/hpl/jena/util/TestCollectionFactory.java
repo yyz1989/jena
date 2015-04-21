@@ -18,34 +18,36 @@
 
 package com.hp.hpl.jena.util;
 
-import java.util.*;
+import static org.junit.Assert.assertEquals;
 
-import junit.framework.TestSuite;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.Test;
 
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
-import com.hp.hpl.jena.util.CollectionFactory;
 
 /**
  	TestHashUtils - test that the hash utility returns a map.
 */
 public class TestCollectionFactory extends ModelTestBase
     {
-    public TestCollectionFactory( String name )
-    	{ super( name ); }
     
-    public static TestSuite suite()
-        { return new TestSuite( TestCollectionFactory.class ); }
-
+    @Test
     public void testHashMapExists()
         {
         assertInstanceOf( Map.class, CollectionFactory.createHashedMap() );
         }
     
+    @Test
     public void testHashMapSized()
         {
         assertInstanceOf( Map.class, CollectionFactory.createHashedMap( 42 ) );
         }
     
+    @Test
     public void testHashMapCopy()
         {
         Map<String, String> map = new HashMap<>();
@@ -55,11 +57,13 @@ public class TestCollectionFactory extends ModelTestBase
         assertEquals( map, copy );
         }
     
+    @Test
     public void testHashSetExists()
         {
         assertInstanceOf( Set.class, CollectionFactory.<Object>createHashedSet() );
         }
     
+    @Test
     public void testHashSetCopy()
         {
         Set<String> s = new HashSet<>();

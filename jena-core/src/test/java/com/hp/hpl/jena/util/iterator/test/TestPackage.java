@@ -18,22 +18,20 @@
 
 package com.hp.hpl.jena.util.iterator.test;
 
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-public class TestPackage extends TestSuite
-    {
-    static public TestSuite suite()
-        { return new TestPackage(); }
-        
-    private TestPackage()
-        {
-        super( "iterators" );
-        addTest( TestWrappedIterator.suite() );
-        addTest( TestNullIterator.suite() );
-        addTest( TestFilters.suite() );
-        addTest( TestAndThen.suite() );
-        addTestSuite( TestAsCollection.class );
-        addTestSuite( TestMapIterators.class );
-        addTest( new TestSuite( TestResourceUtils.class ) );
-        }
-    }
+@RunWith(Suite.class)
+@SuiteClasses({
+    TestWrappedIterator.class,
+    TestNullIterator.class,
+    TestFilters.class,
+    TestAndThen.class,
+    TestAsCollection.class,
+    TestMapIterators.class,
+    TestResourceUtils.class
+})
+public class TestPackage {
+    
+}

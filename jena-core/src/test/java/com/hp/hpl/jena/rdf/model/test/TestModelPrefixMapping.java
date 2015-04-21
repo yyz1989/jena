@@ -28,6 +28,7 @@ import com.hp.hpl.jena.shared.AbstractTestPrefixMapping;
 import com.hp.hpl.jena.shared.PrefixMapping;
 
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Test that a model is a prefix mapping.
@@ -50,10 +51,8 @@ public class TestModelPrefixMapping extends AbstractTestPrefixMapping
 
 	private PrefixMapping prevMap;
 
-	public TestModelPrefixMapping( final TestingModelFactory modelFactory,
-			final String name )
+	public TestModelPrefixMapping( final TestingModelFactory modelFactory)
 	{
-		super(name);
 		this.modelFactory = modelFactory;
 	}
 
@@ -93,6 +92,7 @@ public class TestModelPrefixMapping extends AbstractTestPrefixMapping
 	 * Test that a freshly-created Model has the prefixes established by the
 	 * default in ModelCom.
 	 */
+	@Test
 	public void testDefaultPrefixes()
 	{
 		setPrefixes();
@@ -101,6 +101,7 @@ public class TestModelPrefixMapping extends AbstractTestPrefixMapping
 		restorePrefixes();
 	}
 
+	@Test
 	public void testGetDefault()
 	{
 		setPrefixes();
@@ -114,6 +115,7 @@ public class TestModelPrefixMapping extends AbstractTestPrefixMapping
 		}
 	}
 
+	@Test
 	public void testOnlyFreshPrefixes()
 	{
 		setPrefixes();

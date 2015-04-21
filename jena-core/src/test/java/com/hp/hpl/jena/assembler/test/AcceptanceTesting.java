@@ -18,13 +18,15 @@
 
 package com.hp.hpl.jena.assembler.test;
 
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.ontology.*;
 import com.hp.hpl.jena.rdf.model.*;
 
 public class AcceptanceTesting extends AssemblerTestBase
     {
-    public AcceptanceTesting( String name )
-        { super( name ); }
 
     /**
         Acceptance test inherited from ontology ModelSpec tests when ModelSpec
@@ -32,6 +34,7 @@ public class AcceptanceTesting extends AssemblerTestBase
         does the (well, some) reasoning. Probably unnecessary given the way
         the assembler unit test suite works but belt-and-braces for now at least.
     */
+    @Test
     public void test_ijd_01()
         {
         Model m = modelWithStatements

@@ -23,8 +23,17 @@ package com.hp.hpl.jena.ontology.impl;
 
 // Imports
 ///////////////
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.*;
 import java.util.*;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import com.hp.hpl.jena.graph.Graph;
 import com.hp.hpl.jena.ontology.*;
@@ -84,14 +93,10 @@ public class TestOntModel
     // Constructors
     //////////////////////////////////
 
-    public TestOntModel( String name ) {
-        super( name );
-    }
-
     // External signature methods
     //////////////////////////////////
 
-    @Override
+    @Before
     public void setUp() {
         // ensure the ont doc manager is in a consistent state
         OntDocumentManager.getInstance().reset( true );
@@ -99,6 +104,7 @@ public class TestOntModel
 
 
     /** Test writing the base model to an output stream */
+    @Test
     public void testWriteOutputStream() {
         OntModel m = ModelFactory.createOntologyModel();
 
@@ -137,6 +143,7 @@ public class TestOntModel
         assertTrue( "InputStream write/read cycle failed (2)", mIn2.isIsomorphicWith( m.getBaseModel() ) );
     }
 
+    @Test
     public void testGetBaseModelPrefixes() {
         OntModel om = ModelFactory.createOntologyModel();
         om.setNsPrefix( "bill", "http://bill.and.ben/flowerpot#" );
@@ -148,6 +155,7 @@ public class TestOntModel
      * The default namespace pefix of a non-base-model should not manifest as
      * the default namespace prefix of the base model or the Ont model.
      */
+    @Test
     public void testPolyadicPrefixMapping() {
         final String IMPORTED_NAMESPACE = "http://imported#";
         final String LOCAL_NAMESPACE = "http://local#";
@@ -159,6 +167,7 @@ public class TestOntModel
         assertNull( ontModel.getNsURIPrefix( IMPORTED_NAMESPACE ) );
     }
 
+    @Test
     public void testWritesPrefixes() {
         OntModel om = ModelFactory.createOntologyModel();
         om.setNsPrefix( "spoo", "http://spoo.spoo.com/spoo#" );
@@ -172,6 +181,7 @@ public class TestOntModel
     }
 
     /** Test writing the base model to an output stream */
+    @Test
     public void testWriteWriter() {
         OntModel m = ModelFactory.createOntologyModel();
 
@@ -209,6 +219,7 @@ public class TestOntModel
         assertTrue( "Writer write/read cycle failed (2)", mIn2.isIsomorphicWith( m.getBaseModel() ) );
     }
 
+    @Test
     public void testGetOntology() {
         OntModel m = ModelFactory.createOntologyModel();
         Resource r = m.getResource( NS + "r" );
@@ -219,7 +230,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getOntology( NS+"r"));
     }
 
-
+    @Test
     public void testGetIndividual() {
         OntModel m = ModelFactory.createOntologyModel();
         OntClass c = m.createClass( NS +"c" );
@@ -231,6 +242,7 @@ public class TestOntModel
     }
 
     /** User requested: allow null arguments when creating individuals */
+    @Test
     public void testCreateIndividual() {
         OntModel m = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
         Resource i0 = m.createIndividual( OWL.Thing );
@@ -248,6 +260,7 @@ public class TestOntModel
         assertNotNull( i5 );
     }
 
+    @Test
     public void testGetOntProperty() {
         OntModel m = ModelFactory.createOntologyModel();
         Resource r = m.getResource( NS + "r" );
@@ -258,7 +271,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getOntProperty( NS+"r"));
     }
 
-
+    @Test
     public void testGetObjectProperty() {
         OntModel m = ModelFactory.createOntologyModel();
         Resource r = m.getResource( NS + "r" );
@@ -269,7 +282,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getObjectProperty( NS+"r"));
     }
 
-
+    @Test
     public void testGetTransitiveProperty() {
         OntModel m = ModelFactory.createOntologyModel();
         Resource r = m.getResource( NS + "r" );
@@ -280,7 +293,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getTransitiveProperty( NS+"r"));
     }
 
-
+    @Test
     public void testGetSymmetricProperty() {
         OntModel m = ModelFactory.createOntologyModel();
         Resource r = m.getResource( NS + "r" );
@@ -291,7 +304,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getSymmetricProperty( NS+"r"));
     }
 
-
+    @Test
     public void testGetInverseFunctionalProperty() {
         OntModel m = ModelFactory.createOntologyModel();
         Resource r = m.getResource( NS + "r" );
@@ -302,7 +315,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getInverseFunctionalProperty( NS+"r"));
     }
 
-
+    @Test
     public void testGetDatatypeProperty() {
         OntModel m = ModelFactory.createOntologyModel();
         Resource r = m.getResource( NS + "r" );
@@ -313,7 +326,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getDatatypeProperty( NS+"r"));
     }
 
-
+    @Test
     public void testGetAnnotationProperty() {
         OntModel m = ModelFactory.createOntologyModel();
         Resource r = m.getResource( NS + "r" );
@@ -324,6 +337,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getAnnotationProperty( NS+"r"));
     }
 
+    @Test
     public void testGetOntResource() {
         OntModel m = ModelFactory.createOntologyModel();
         OntResource r0 = m.getOntResource( NS + "a" );
@@ -340,6 +354,7 @@ public class TestOntModel
         assertInstanceOf( OntResource.class, r3 );
     }
 
+    @Test
     public void testGetOntClass() {
         OntModel m = ModelFactory.createOntologyModel();
         Resource r = m.getResource( NS + "r" );
@@ -351,7 +366,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getOntClass( NS+"r"));
     }
 
-
+    @Test
     public void testGetComplementClass() {
         OntModel m = ModelFactory.createOntologyModel();
         OntClass c = m.createClass( NS +"c" );
@@ -363,7 +378,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getComplementClass( NS+"r"));
     }
 
-
+    @Test
     public void testGetEnumeratedClass() {
         OntModel m = ModelFactory.createOntologyModel();
         RDFList l = m.createList();
@@ -375,7 +390,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getEnumeratedClass( NS+"r"));
     }
 
-
+    @Test
     public void testGetUnionClass() {
         OntModel m = ModelFactory.createOntologyModel();
         RDFList l = m.createList();
@@ -387,7 +402,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getUnionClass( NS+"r"));
     }
 
-
+    @Test
     public void testGetIntersectionClass() {
         OntModel m = ModelFactory.createOntologyModel();
         RDFList l = m.createList();
@@ -399,7 +414,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getIntersectionClass( NS+"r"));
     }
 
-
+    @Test
     public void testGetRestriction() {
         OntModel m = ModelFactory.createOntologyModel();
         Property p = m.createProperty( NS + "p" );
@@ -411,7 +426,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getRestriction( NS+"r"));
     }
 
-
+    @Test
     public void testGetHasValueRestriction() {
         OntModel m = ModelFactory.createOntologyModel();
         Property p = m.createProperty( NS + "p" );
@@ -424,7 +439,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getHasValueRestriction( NS+"r"));
     }
 
-
+    @Test
     public void testGetSomeValuesFromRestriction() {
         OntModel m = ModelFactory.createOntologyModel();
         Property p = m.createProperty( NS + "p" );
@@ -437,7 +452,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getSomeValuesFromRestriction( NS+"r"));
     }
 
-
+    @Test
     public void testGetAllValuesFromRestriction() {
         OntModel m = ModelFactory.createOntologyModel();
         Property p = m.createProperty( NS + "p" );
@@ -450,7 +465,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getAllValuesFromRestriction( NS+"r"));
     }
 
-
+    @Test
     public void testGetCardinalityRestriction() {
         OntModel m = ModelFactory.createOntologyModel();
         Property p = m.createProperty( NS + "p" );
@@ -462,7 +477,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getCardinalityRestriction( NS+"r"));
     }
 
-
+    @Test
     public void testGetMinCardinalityRestriction() {
         OntModel m = ModelFactory.createOntologyModel();
         Property p = m.createProperty( NS + "p" );
@@ -474,7 +489,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getMinCardinalityRestriction( NS+"r"));
     }
 
-
+    @Test
     public void testGetMaxCardinalityRestriction() {
         OntModel m = ModelFactory.createOntologyModel();
         Property p = m.createProperty( NS + "p" );
@@ -486,6 +501,7 @@ public class TestOntModel
         assertNull( "result of get r", m.getMaxCardinalityRestriction( NS+"r"));
     }
 
+    @Test
     public void testGetSubgraphs() {
         OntModel m = ModelFactory.createOntologyModel();
         m.read( "file:testing/ontology/testImport6/a.owl" );
@@ -496,7 +512,7 @@ public class TestOntModel
         assertEquals( "n subgraphs should be ", 3, subs.size() );
     }
 
-
+    @Test
     public void testListImportURIs() {
         OntModel m = ModelFactory.createOntologyModel();
         m.read( "file:testing/ontology/testImport6/a.owl" );
@@ -516,7 +532,7 @@ public class TestOntModel
     }
 
     /** Some tests for listing properties. See also {@link TestListSyntaxCategories} */
-
+    @Test
     public void testListOntProperties0() {
         OntModel m = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
         ObjectProperty op = m.createObjectProperty( NS + "op" );
@@ -535,6 +551,7 @@ public class TestOntModel
         assertTrue( iteratorContains( m.listOntProperties(), rdfp ) );
     }
 
+    @Test
     public void testListOntProperties1() {
         OntModel m = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM_MICRO_RULE_INF);
         ObjectProperty op = m.createObjectProperty( NS + "op" );
@@ -553,6 +570,7 @@ public class TestOntModel
         assertTrue( iteratorContains( m.listOntProperties(), rdfp ) );
     }
 
+    @Test
     public void testListOntProperties2() {
         OntModelSpec owlDLReasoner = new OntModelSpec( OntModelSpec.OWL_DL_MEM );
         owlDLReasoner.setReasoner( OntModelSpec.OWL_MEM_MICRO_RULE_INF.getReasoner() );
@@ -573,7 +591,7 @@ public class TestOntModel
         assertTrue( iteratorContains( m.listOntProperties(), rdfp ) );
     }
 
-
+    @Test
     public void testListAllOntProperties0() {
         OntModel m = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
         ObjectProperty op = m.createObjectProperty( NS + "op" );
@@ -592,6 +610,7 @@ public class TestOntModel
         assertTrue( iteratorContains( m.listAllOntProperties(), rdfp ) );
     }
 
+    @Test
     public void testListObjectProperties0() {
         OntModel m = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
         ObjectProperty op = m.createObjectProperty( NS + "op" );
@@ -610,6 +629,7 @@ public class TestOntModel
         assertFalse( iteratorContains( m.listObjectProperties(), rdfp ) );
     }
 
+    @Test
     public void testListDatatypeProperties0() {
         OntModel m = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
         ObjectProperty op = m.createObjectProperty( NS + "op" );
@@ -628,6 +648,7 @@ public class TestOntModel
         assertFalse( iteratorContains( m.listDatatypeProperties(), rdfp ) );
     }
 
+    @Test
     public void testListAnnotationProperties0() {
         OntModel m = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
         ObjectProperty op = m.createObjectProperty( NS + "op" );
@@ -646,6 +667,7 @@ public class TestOntModel
         assertFalse( iteratorContains( m.listAnnotationProperties(), rdfp ) );
     }
 
+    @Test
     public void testListSubModels0() {
         OntModel m = ModelFactory.createOntologyModel();
         m.read( "file:testing/ontology/testImport6/a.owl" );
@@ -669,6 +691,7 @@ public class TestOntModel
         assertEquals( "Wrong number of sub-model imports", 0, nImports );
     }
 
+    @Test
     public void testListSubModels1() {
         OntModel m = ModelFactory.createOntologyModel();
         m.read( "file:testing/ontology/testImport6/a.owl" );
@@ -691,6 +714,7 @@ public class TestOntModel
         assertEquals( "Wrong number of sub-model imports", 2, nImports );
     }
 
+    @Test
     public void testGetImportedModel() {
         OntModel m = ModelFactory.createOntologyModel();
         m.read( "file:testing/ontology/testImport6/a.owl" );
@@ -713,6 +737,7 @@ public class TestOntModel
      * Test that the supports checks that are defined in the OWL full profile are not
      * missing in the DL and Lite profiles, unless by design.
      * Not strictly a model test, but it has to go somewhere */
+    @Test
     public void testProfiles() {
         List<Class<?>> notInDL = Arrays.asList( new Class<?>[] {} );
         List<Class<?>> notInLite = Arrays.asList( new Class<?>[] {DataRange.class, HasValueRestriction.class} );
@@ -739,6 +764,7 @@ public class TestOntModel
     <p>
         <b>Yet</b>.
     */
+    @Test
     public void testBulkAddWorks()
         {
         OntModel om1= ModelFactory.createOntologyModel();
@@ -746,6 +772,7 @@ public class TestOntModel
         om1.add( om2 );
         }
 
+    @Test
     public void testRead() {
         String base0 = "http://example.com/test0";
         String ns0 = base0 + "#";
@@ -767,6 +794,7 @@ public class TestOntModel
         assertNotNull( "Should be a class ns1:A", m.getOntClass( ns1 + "A" ) );
     }
 
+    @Test
     public void testListDataRange() {
         String base = "http://jena.hpl.hp.com/test#";
         String doc =
@@ -802,8 +830,7 @@ public class TestOntModel
         assertFalse( "Should no more DataRange", i.hasNext() );
     }
 
-
-
+    @Test
     public void testListHierarchyRoots0() {
         OntModel m = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
         assertFalse( m.listHierarchyRootClasses().hasNext() );
@@ -811,6 +838,7 @@ public class TestOntModel
         assertFalse( m.listHierarchyRootClasses().hasNext() );
     }
 
+    @Test
     public void testListHierarchyRoots1() {
         String doc =
                   "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>. "
@@ -825,11 +853,11 @@ public class TestOntModel
         m.read( new StringReader(doc), NS, "N3" );
 
         OntClass a = m.getOntClass(NS+"A");
-        TestUtil.assertIteratorValues( this, m.listHierarchyRootClasses(),
+        TestUtil.assertIteratorValues( TestOntModel.class, "TestOntModel", m.listHierarchyRootClasses(),
                                        new Object[] {a} );
     }
 
-
+    @Test
     public void testListHierarchyRoots2() {
         String doc =
                   "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>. "
@@ -844,11 +872,11 @@ public class TestOntModel
         m.read( new StringReader(doc), NS, "N3" );
 
         OntClass a = m.getOntClass(NS+"A");
-        TestUtil.assertIteratorValues( this, m.listHierarchyRootClasses(),
+        TestUtil.assertIteratorValues( TestOntModel.class, "TestOntModel", m.listHierarchyRootClasses(),
                                        new Object[] {a} );
     }
 
-
+    @Test
     public void testListHierarchyRoots3() {
         String doc =
                   "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>. "
@@ -864,10 +892,11 @@ public class TestOntModel
         m.read( new StringReader(doc), NS, "N3" );
 
         OntClass a = m.getOntClass(NS+"A");
-        TestUtil.assertIteratorValues( this, m.listHierarchyRootClasses(),
+        TestUtil.assertIteratorValues( TestOntModel.class, "TestOntModel", m.listHierarchyRootClasses(),
                                        new Object[] {a} );
     }
 
+    @Test
     public void testListHierarchyRoots4() {
         String doc =
                   "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>. "
@@ -885,11 +914,12 @@ public class TestOntModel
 
         OntClass a = m.getOntClass(NS+"A");
         OntClass c = m.getOntClass(NS+"C");
-        TestUtil.assertIteratorValues( this, m.listHierarchyRootClasses(),
+        TestUtil.assertIteratorValues( TestOntModel.class, "TestOntModel", m.listHierarchyRootClasses(),
                                        new Object[] {a,c} );
     }
 
     /* Auto-loading of imports is off by default */
+    @Test
     public void testLoadImports0() {
         OntModel m = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
         Resource a = m.getResource( "file:testing/ontology/testImport3/a.owl" );
@@ -910,8 +940,8 @@ public class TestOntModel
         assertTrue( "b should be imported", m.hasLoadedImport( "file:testing/ontology/testImport3/b.owl" ) );
     }
 
-
     /* Auto-loading of imports = on */
+    @Test
     public void testLoadImports1() {
         OntModel m = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
         Resource a = m.getResource( "file:testing/ontology/testImport3/a.owl" );
@@ -935,6 +965,7 @@ public class TestOntModel
     }
 
     /** Test that resources are attached to the right sub-models when importing */
+    @Test
     public void testLoadImports2() {
         OntModel ontModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM, null);
         ontModel.read("file:testing/ontology/testImport8/a.owl");
@@ -954,6 +985,7 @@ public class TestOntModel
     }
 
     /** Test getting conclusions after loading imports */
+    @Test
     public void testAddImports0() {
         OntModel base = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
 
@@ -976,6 +1008,7 @@ public class TestOntModel
         assertTrue( a.hasSubClass( b ) );
     }
 
+    @Test
     public void testAddImports1() {
         String ns = "http://jena.hpl.hp.com/2003/03/testont";
         OntModel base = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
@@ -1002,6 +1035,7 @@ public class TestOntModel
     /**
      * AddSubModel variant 2: base = no inf, import = no inf
      */
+    @Test
     public void testaddSubModel0() {
         OntModel m0 = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
         OntModel m1 = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
@@ -1020,6 +1054,7 @@ public class TestOntModel
     /**
      * AddSubModel variant 2: base = inf, import = no inf
      */
+    @Test
     public void testaddSubModel1() {
         OntDocumentManager.getInstance().setProcessImports( false );
         OntDocumentManager.getInstance().addAltEntry( "http://www.w3.org/TR/2003/CR-owl-guide-20030818/wine",
@@ -1042,6 +1077,7 @@ public class TestOntModel
     /**
      * Variant 3: base = no inf, import = inf
      */
+    @Test
     public void testaddSubModel3() {
         OntModel m0 = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM );
         OntModel m1 = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM_RDFS_INF );
@@ -1060,6 +1096,7 @@ public class TestOntModel
     /**
      * Variant 4: base = inf, import = inf
      */
+    @Test
     public void testaddSubModel4() {
         OntModel m0 = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM_RDFS_INF );
         OntModel m1 = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM_RDFS_INF );
@@ -1076,6 +1113,7 @@ public class TestOntModel
     }
 
     /** Remove a sub model (imported model) */
+    @Test
     public void testremoveSubModel0() {
         OntModel m = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM, null );
         m.read( "file:testing/ontology/testImport3/a.owl" );
@@ -1092,6 +1130,7 @@ public class TestOntModel
 
     /** Getting the deductions model of an OntModel
      * see also {@link TestBugs#testOntModelGetDeductions()}
+     * FIXME: test seems to be working again 
      * <p>ijd: Feb 6th, 2008 - this test has been disabled for
      * the time being, since it is not correct as written. However,
      * I'm not removing or changing it just yet, since it is showing up

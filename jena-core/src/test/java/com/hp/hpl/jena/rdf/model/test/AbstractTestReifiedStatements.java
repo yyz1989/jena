@@ -18,6 +18,16 @@
 
 package com.hp.hpl.jena.rdf.model.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.Set;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import com.hp.hpl.jena.graph.test.GraphTestBase;
 import com.hp.hpl.jena.rdf.model.DoesNotReifyException;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -31,10 +41,6 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.test.JenaTestBase;
 import com.hp.hpl.jena.util.CollectionFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
-
-import java.util.Set;
-
-import org.junit.Assert;
 
 public abstract class AbstractTestReifiedStatements extends ModelTestBase
 {
@@ -53,11 +59,6 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 	protected static Set<ReifiedStatement> noStatements = CollectionFactory
 			.createHashedSet();
 
-	public AbstractTestReifiedStatements( final String name )
-	{
-		super(name);
-	}
-
 	public abstract Model getModel();
 
 	/**
@@ -74,7 +75,7 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 		return m.listReifiedStatements(st).toSet();
 	}
 
-	@Override
+	@Before
 	public void setUp()
 	{
 		model = getModel();
@@ -95,6 +96,7 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 	 * the simplest case: if we assert all the components of a reification quad,
 	 * we can get a ReifiedStatement that represents the reified statement.
 	 */
+	@Test
 	public void testBasicReification()
 	{
 		final Resource R = model
@@ -104,7 +106,7 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 		model.add(R, RDF.predicate, P);
 		model.add(R, RDF.object, O);
 		final RDFNode rs = R.as(ReifiedStatement.class);
-		Assert.assertEquals("can recover statement", SPO,
+		assertEquals("can recover statement", SPO,
 				((ReifiedStatement) rs).getStatement());
 	}
 
@@ -135,14 +137,14 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 					m.write(System.out, "TTL");
 				}
 
-				Assert.assertTrue(
+				assertTrue(
 						"should not reify: not all components present [" + mask
 								+ "]: " + rs, (mask & 15) == 15);
 				// System.err.println( "+  and we passed the assertion." );
 			}
 			catch (final DoesNotReifyException e)
 			{ // System.err.println( "+  we exploded" );
-				Assert.assertFalse("should reify: all components present",
+				assertFalse("should reify: all components present",
 						mask == 15);
 			}
 		}
@@ -158,40 +160,45 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 		}
 	}
 
+	@Test
 	public void testConstructionByURI()
 	{
 		final ReifiedStatement rs = model.createReifiedStatement("spoo:handle",
 				SPO);
 		final ReifiedStatement rs2 = SPO.createReifiedStatement("spoo:gripper");
-		Assert.assertEquals("recover statement (URI)", SPO, rs.getStatement());
-		Assert.assertEquals("recover URI", "spoo:handle", rs.getURI());
-		Assert.assertEquals("recover URI", "spoo:gripper", rs2.getURI());
+		assertEquals("recover statement (URI)", SPO, rs.getStatement());
+		assertEquals("recover URI", "spoo:handle", rs.getURI());
+		assertEquals("recover URI", "spoo:gripper", rs2.getURI());
 	}
 
+	@Test
 	public void testConstructionFromModels()
 	{
 		testStatementAndModel("fromModel", model.createReifiedStatement(SPO),
 				model, SPO);
 	}
 
+	@Test
 	public void testConstructionFromStatements()
 	{
 		testStatementAndModel("fromStatement", SPO.createReifiedStatement(),
 				model, SPO);
 	}
 
+	@Test
 	public void testConversion()
 	{
 		final String uri = "spoo:handle";
 		model.createReifiedStatement(uri, SPO);
 		final ReifiedStatement rs2 = model.createResource(uri).as(
 				ReifiedStatement.class);
-		Assert.assertEquals("recover statement", SPO, rs2.getStatement());
+		assertEquals("recover statement", SPO, rs2.getStatement());
 	}
 
 	/**
 	 * "dirty" reifications - those with conflicting quadlets - should fail.
 	 */
+	@Test
 	public void testDirtyReification()
 	{
 		final Resource R = model
@@ -207,13 +214,14 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 		try
 		{
 			r.as(ReifiedStatement.class);
-			Assert.fail(title + " (" + r + ")");
+			fail(title + " (" + r + ")");
 		}
 		catch (final DoesNotReifyException e)
 		{ /* that's what we expect */
 		}
 	}
 
+	@Test
 	public void testDoesNotReifyElsewhere()
 	{
 		final String uri = "spoo:rubbish";
@@ -235,20 +243,23 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 	// ReifiedStatement rs = st.createReifiedStatement( root + "RS" );
 	// }
 
+	@Test
 	public void testDoesNotReifyUnknown()
 	{
 		testDoesNotReify("model should not reify rubbish",
 				model.createResource("spoo:rubbish"));
 	}
 
+	@Test
 	public void testGetAny()
 	{
 		final Resource r = model.getAnyReifiedStatement(SPO);
 		JenaTestBase.assertInstanceOf(ReifiedStatement.class, r);
-		Assert.assertEquals("should get me the statement", SPO,
+		assertEquals("should get me the statement", SPO,
 				((ReifiedStatement) r).getStatement());
 	}
 
+	@Test
 	public void testIsReified()
 	{
 		final ReifiedStatement rs = model.createReifiedStatement(
@@ -260,9 +271,9 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 		final RDFNode BO = model
 				.createProperty(AbstractTestReifiedStatements.anchor + "BO");
 		model.add(rs, P, O);
-		Assert.assertTrue("st should be reified now", SPO.isReified());
-		Assert.assertTrue("m should have st reified now", model.isReified(SPO));
-		Assert.assertFalse("this new statement should not be reified", model
+		assertTrue("st should be reified now", SPO.isReified());
+		assertTrue("m should have st reified now", model.isReified(SPO));
+		assertFalse("this new statement should not be reified", model
 				.createStatement(BS, BP, BO).isReified());
 	}
 
@@ -271,6 +282,7 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 	 * model
 	 * with style Standard didn't leave the model empty. Here's a test for it.
 	 */
+	@Test
 	public void testLeosBug()
 	{
 		final Model A = getModel();
@@ -286,17 +298,19 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 	 * like there was a problem in modelReifier().getRS(), which we're fixing
 	 * ...
 	 */
+	@Test
 	public void testListDoesntCrash()
 	{
 		model.createReifiedStatement(SPO);
 		model.createReifiedStatement(SPO2);
-		Assert.assertTrue("should be non-empty", model.listReifiedStatements()
+		assertTrue("should be non-empty", model.listReifiedStatements()
 				.hasNext());
 	}
 
+	@Test
 	public void testListReifiedSpecificStatements()
 	{
-		Assert.assertEquals("no statements should match st",
+		assertEquals("no statements should match st",
 				AbstractTestReifiedStatements.noStatements,
 				getSetRS(model, SPO));
 		/* */
@@ -310,7 +324,7 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 		/* */
 		final Set<ReifiedStatement> justRS2 = arrayToSet(new ReifiedStatement[] { rs2 });
 		model.add(rs2, P, O);
-		Assert.assertEquals("now one matching statement", justRS2,
+		assertEquals("now one matching statement", justRS2,
 				getSetRS(model, SPO2));
 	}
 
@@ -320,9 +334,10 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 	 * duplicated, because they might be; disallowing duplicates
 	 * could be expensive.
 	 */
+	@Test
 	public void testListReifiedStatements()
 	{
-		Assert.assertEquals("initially: no reified statements",
+		assertEquals("initially: no reified statements",
 				AbstractTestReifiedStatements.noStatements, getSetRS(model));
 		final ReifiedStatement rs = model.createReifiedStatement(
 				AbstractTestReifiedStatements.aURI, SPO);
@@ -330,10 +345,10 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 		/* */
 		model.add(rs, P, O);
 		final Set<ReifiedStatement> justRS = arrayToSet(new ReifiedStatement[] { rs });
-		Assert.assertEquals("post-add: one reified statement", justRS,
+		assertEquals("post-add: one reified statement", justRS,
 				getSetRS(model));
 		model.add(S, P, rs);
-		Assert.assertEquals("post-add: still one reified statement", justRS,
+		assertEquals("post-add: still one reified statement", justRS,
 				getSetRS(model));
 		/* */
 		final ReifiedStatement rs2 = model.createReifiedStatement(
@@ -341,7 +356,7 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 		final Set<ReifiedStatement> bothRS = arrayToSet(new ReifiedStatement[] {
 				rs, rs2 });
 		model.add(rs2, P, O);
-		Assert.assertEquals("post-add: still one reified statement", bothRS,
+		assertEquals("post-add: still one reified statement", bothRS,
 				getSetRS(model));
 	}
 
@@ -350,13 +365,14 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 		try
 		{
 			m.createResource(uri).as(ReifiedStatement.class);
-			Assert.fail("there should be no reifiedStatement for " + uri);
+			fail("there should be no reifiedStatement for " + uri);
 		}
 		catch (final DoesNotReifyException e)
 		{ /* that's what we require */
 		}
 	}
 
+	@Test
 	public void testQuintetOfQuadlets()
 	{
 		final Resource rs = model.createResource();
@@ -371,7 +387,7 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 		while (it.hasNext())
 		{
 			final Statement s = it.nextStatement();
-			Assert.assertFalse(s.getObject().equals(s.getSubject()));
+			assertFalse(s.getObject().equals(s.getSubject()));
 		}
 	}
 
@@ -380,6 +396,7 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 	 * we can convert R into a ReifiedStatement iff the four components of the
 	 * quad are in the model.
 	 */
+	@Test
 	public void testReificationCombinations()
 	{
 		final Resource RR = model
@@ -400,16 +417,18 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 		testCombinations(model, RR, 0, statements, statements.length);
 	}
 
+	@Test
 	public void testRemoveReificationWorks()
 	{
 		final Statement st = SPO;
 		final Model m = model;
 		m.createReifiedStatement(AbstractTestReifiedStatements.aURI, st);
-		Assert.assertTrue("st is now reified", st.isReified());
+		assertTrue("st is now reified", st.isReified());
 		m.removeAllReifications(st);
-		Assert.assertFalse("st is no longer reified", st.isReified());
+		assertFalse("st is no longer reified", st.isReified());
 	}
 
+	@Test
 	public void testRR()
 	{
 		final Statement st = SPO;
@@ -420,34 +439,36 @@ public abstract class AbstractTestReifiedStatements extends ModelTestBase
 				AbstractTestReifiedStatements.anotherURI, st);
 		m.removeReification(rs1);
 		testNotReifying(m, AbstractTestReifiedStatements.aURI);
-		Assert.assertTrue("st is still reified", st.isReified());
+		assertTrue("st is still reified", st.isReified());
 		m.removeReification(rs2);
-		Assert.assertFalse("st should no longer be reified", st.isReified());
+		assertFalse("st should no longer be reified", st.isReified());
 	}
 
 	public void testStatementAndModel( final String title,
 			final ReifiedStatement rs, final Model m, final Statement st )
 	{
-		Assert.assertEquals(title + ": recover statement", st,
+		assertEquals(title + ": recover statement", st,
 				rs.getStatement());
-		Assert.assertEquals(title + ": recover model", m, rs.getModel());
+		assertEquals(title + ": recover model", m, rs.getModel());
 	}
 
+	@Test
 	public void testStatementListReifiedStatements()
 	{
 		final Statement st = SPO;
 		final Model m = model;
-		Assert.assertEquals("it's not there yet",
+		assertEquals("it's not there yet",
 				AbstractTestReifiedStatements.noStatements,
 				GraphTestBase.iteratorToSet(st.listReifiedStatements()));
 		final ReifiedStatement rs = m.createReifiedStatement(
 				AbstractTestReifiedStatements.aURI, st);
 		final Set<ReifiedStatement> justRS = arrayToSet(new ReifiedStatement[] { rs });
 		m.add(rs, P, O);
-		Assert.assertEquals("it's here now", justRS,
+		assertEquals("it's here now", justRS,
 				GraphTestBase.iteratorToSet(st.listReifiedStatements()));
 	}
 
+	@Test
 	public void testThisWillBreak()
 	{
 		final Resource R = model

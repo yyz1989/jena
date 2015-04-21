@@ -18,12 +18,13 @@
 
 package com.hp.hpl.jena.rdf.model.test;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.rdf.model.AnonId;
 import com.hp.hpl.jena.shared.impl.JenaParameters;
 import com.hp.hpl.jena.test.JenaTestBase;
-
-import org.junit.Assert;
-import junit.framework.TestSuite;
 
 /**
  * Test for anonID generation. (Originally test for the debugging hack
@@ -31,23 +32,6 @@ import junit.framework.TestSuite;
  */
 public class TestAnonID extends JenaTestBase
 {
-
-	/**
-	 * Boilerplate for junit.
-	 * This is its own test suite
-	 */
-	public static TestSuite suite()
-	{
-		return new TestSuite(TestAnonID.class);
-	}
-
-	/**
-	 * Boilerplate for junit
-	 */
-	public TestAnonID( final String name )
-	{
-		super(name);
-	}
 
 	/**
 	 * Check that anonIDs are distinct whichever state the flag is in.
@@ -69,6 +53,7 @@ public class TestAnonID extends JenaTestBase
 	/**
 	 * Check that anonIDs are distinct whichever state the flag is in.
 	 */
+	@Test
 	public void testAnonID()
 	{
 		final boolean prior = JenaParameters.disableBNodeUIDGeneration;
@@ -89,12 +74,13 @@ public class TestAnonID extends JenaTestBase
 	 * Test that creation of an AnonId from an AnonId string preserves that
 	 * string and is equal to the original AnonId.
 	 */
+	@Test
 	public void testAnonIdPreserved()
 	{
 		final AnonId anon = AnonId.create();
 		final String id = anon.toString();
-		Assert.assertEquals(anon, AnonId.create(id));
-		Assert.assertEquals(id, AnonId.create(id).toString());
+		assertEquals(anon, AnonId.create(id));
+		assertEquals(id, AnonId.create(id).toString());
 	}
 
 }

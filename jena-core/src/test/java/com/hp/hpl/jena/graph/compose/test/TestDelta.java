@@ -18,7 +18,7 @@
 
 package com.hp.hpl.jena.graph.compose.test;
 
-import junit.framework.TestSuite ;
+import org.junit.Test;
 
 import com.hp.hpl.jena.graph.Graph ;
 import com.hp.hpl.jena.graph.compose.Delta ;
@@ -29,16 +29,6 @@ public class TestDelta extends AbstractTestGraph
 
     private static final String DEFAULT_TRIPLES = "x R y; p S q";
 
-    public TestDelta( String name )
-    {
-        super( name );
-    }
-
-    public static TestSuite suite()
-    {
-        return new TestSuite( TestDelta.class );
-    }
-
     @Override
     public Graph getGraph()
     {
@@ -46,6 +36,7 @@ public class TestDelta extends AbstractTestGraph
         return new Delta( gBase ); 
     }
 
+    @Test
     public void testDeltaMirrorsBase()
     {
         Graph base = graphWith( DEFAULT_TRIPLES );
@@ -53,6 +44,7 @@ public class TestDelta extends AbstractTestGraph
         assertIsomorphic(base, delta);
     }
 
+    @Test
     public void testAddGoesToAdditions()
     {
         Graph base = graphWith( DEFAULT_TRIPLES );
@@ -64,6 +56,7 @@ public class TestDelta extends AbstractTestGraph
         assertIsomorphic(graphWith( DEFAULT_TRIPLES + "; x R z" ), delta);
     }
 
+    @Test
     public void testDeleteGoesToDeletions()
     {
         Graph base = graphWith( DEFAULT_TRIPLES );
@@ -74,6 +67,7 @@ public class TestDelta extends AbstractTestGraph
         assertIsomorphic(graphWith( "p S q" ), delta);
     }
 
+    @Test
     public void testRedundantAddNoOp()
     {
         Graph base = graphWith( DEFAULT_TRIPLES );
@@ -85,6 +79,7 @@ public class TestDelta extends AbstractTestGraph
         assertIsomorphic(graphWith( DEFAULT_TRIPLES ), delta);
     }
 
+    @Test
     public void testRedundantDeleteNoOp()
     {
         Graph base = graphWith( DEFAULT_TRIPLES ) ;
@@ -96,6 +91,7 @@ public class TestDelta extends AbstractTestGraph
         assertIsomorphic(graphWith( DEFAULT_TRIPLES ), delta);
     }
 
+    @Test
     public void testAddThenDelete()
     {
         Graph base = graphWith( DEFAULT_TRIPLES ) ;
@@ -108,6 +104,7 @@ public class TestDelta extends AbstractTestGraph
         assertIsomorphic(graphWith( DEFAULT_TRIPLES ), delta);
     }
 
+    @Test
     public void testDeleteThenAdd()
     {
         Graph base = graphWith( DEFAULT_TRIPLES ) ;
@@ -120,6 +117,7 @@ public class TestDelta extends AbstractTestGraph
         assertIsomorphic(graphWith( DEFAULT_TRIPLES ), delta);
     }
 
+    @Test
     public void testAddAndDelete()
     {
         Graph base = graphWith( DEFAULT_TRIPLES ) ;

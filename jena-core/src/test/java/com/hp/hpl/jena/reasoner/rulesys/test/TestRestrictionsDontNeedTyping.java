@@ -18,6 +18,11 @@
 
 package com.hp.hpl.jena.reasoner.rulesys.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.ontology.*;
 import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
@@ -33,9 +38,6 @@ public class TestRestrictionsDontNeedTyping extends ModelTestBase
     {
     static final Property ANY = null;
     
-    public TestRestrictionsDontNeedTyping( String name )
-        { super( name ); }
-
     public void testAllValuesFromFullRules()
         { testAllValuesFrom( OntModelSpec.OWL_MEM_RULE_INF ); }
 
@@ -55,12 +57,15 @@ public class TestRestrictionsDontNeedTyping extends ModelTestBase
         assertTrue( ont.contains( resource( "t" ), RDF.type, resource( "T" ) ) );
         }
     
+    @Test
     public void testSomeValuesFromMiniRules()
         { testSomeValuesFrom( OntModelSpec.OWL_MEM_MINI_RULE_INF ); }
 
+    @Test
     public void testSomeValuesFromMicroRules()
         { testSomeValuesFrom( OntModelSpec.OWL_MEM_MICRO_RULE_INF ); }
 
+    @Test
     public void testSomeValuesFromFullRules()
         { testSomeValuesFrom( OntModelSpec.OWL_MEM_RULE_INF ); }
 
@@ -71,6 +76,7 @@ public class TestRestrictionsDontNeedTyping extends ModelTestBase
         assertTrue( ont.contains( resource( "X" ), RDF.type, resource( "V" ) ) );
         }
     
+    @Test
     public void testCardinalityFullRules()
         { testCardinality( OntModelSpec.OWL_MEM_RULE_INF ); }
     

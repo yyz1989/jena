@@ -18,60 +18,46 @@
 
 package com.hp.hpl.jena.mem.test;
 
-import java.util.*;
+import static org.junit.Assert.fail;
 
-import junit.framework.*;
+import java.util.ConcurrentModificationException;
+
+import org.junit.Test;
 
 import com.hp.hpl.jena.graph.Triple;
 import com.hp.hpl.jena.graph.test.NodeCreateUtils;
-import com.hp.hpl.jena.mem.*;
+import com.hp.hpl.jena.mem.ArrayBunch;
+import com.hp.hpl.jena.mem.HashedTripleBunch;
+import com.hp.hpl.jena.mem.SetBunch;
+import com.hp.hpl.jena.mem.TripleBunch;
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 public abstract class TestConcurrentModificationException extends ModelTestBase
     {
-    public TestConcurrentModificationException( String name )
-        { super( name ); }
 
     public abstract TripleBunch getBunch();
-    
-    public static TestSuite suite()
-        { 
-        TestSuite result = new TestSuite();
-        result.addTestSuite( TestArrayBunchCME.class ); 
-        result.addTestSuite( TestSetBunchCME.class ); 
-        result.addTestSuite( TestHashedBunchCME.class ); 
-        return result;
-        }
 
     public static class TestArrayBunchCME extends TestConcurrentModificationException
         {
-        public TestArrayBunchCME(String name)
-            { super( name ); }
-
         @Override public TripleBunch getBunch()
             { return new ArrayBunch(); }
         }
     
     public static class TestSetBunchCME extends TestConcurrentModificationException
         {
-        public TestSetBunchCME(String name)
-            { super( name ); }
-
         @Override public TripleBunch getBunch()
             { return new SetBunch( new ArrayBunch() ); }
         }
     
     public static class TestHashedBunchCME extends TestConcurrentModificationException
         {
-        public TestHashedBunchCME(String name)
-            { super( name ); }
-
         @Override
         public TripleBunch getBunch()
             { return new HashedTripleBunch( new ArrayBunch() ); }
         }
 
+    @Test
     public void testAddThenNextThrowsCME()
         { 
         TripleBunch b = getBunch();
@@ -84,6 +70,7 @@ public abstract class TestConcurrentModificationException extends ModelTestBase
         catch (ConcurrentModificationException e) { pass(); } 
         }
 
+    @Test
     public void testDeleteThenNextThrowsCME()
         { 
         TripleBunch b = getBunch();

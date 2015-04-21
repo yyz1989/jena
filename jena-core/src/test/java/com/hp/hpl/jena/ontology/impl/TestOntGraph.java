@@ -18,11 +18,9 @@
 
 package com.hp.hpl.jena.ontology.impl;
 
-import com.hp.hpl.jena.graph.*;
-import com.hp.hpl.jena.graph.test.*;
-import com.hp.hpl.jena.rdf.model.*;
-
-import junit.framework.*;
+import com.hp.hpl.jena.graph.Graph;
+import com.hp.hpl.jena.graph.test.AbstractTestGraph;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 /**
     Ensure that an OntGraph passes the graph tests. Clunky because it has to go
@@ -31,12 +29,7 @@ import junit.framework.*;
 
 public class TestOntGraph extends AbstractTestGraph
     {
-    public TestOntGraph( String name )
-        { super( name ); }
         
-    public static TestSuite suite()
-        { return new TestSuite( TestOntGraph.class ); }
-
     @Override
     public Graph getGraph()
         { return ModelFactory.createOntologyModel().getGraph(); }

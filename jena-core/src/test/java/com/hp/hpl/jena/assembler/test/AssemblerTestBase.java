@@ -18,6 +18,9 @@
 
 package com.hp.hpl.jena.assembler.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import com.hp.hpl.jena.assembler.*;
 import com.hp.hpl.jena.assembler.assemblers.AssemblerBase;
 import com.hp.hpl.jena.assembler.exceptions.CannotConstructException;
@@ -80,9 +83,6 @@ public class AssemblerTestBase extends ModelTestBase
 
     protected static final Model schema = JA.getSchema();
 
-    public AssemblerTestBase( String name )
-        { super( name ); }
-    
     protected Model model( String string )
         { 
         Model result = createModel( );

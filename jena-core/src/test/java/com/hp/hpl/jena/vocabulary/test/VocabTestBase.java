@@ -18,13 +18,13 @@
 
 package com.hp.hpl.jena.vocabulary.test;
 
+import static org.junit.Assert.assertEquals;
+
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
 import com.hp.hpl.jena.rdf.model.*;
 
 public class VocabTestBase extends ModelTestBase
     {
-    public VocabTestBase(String name)
-        { super(name); }
 
     public void assertProperty( String uri, Property p )
         { assertResource( uri, p ); }

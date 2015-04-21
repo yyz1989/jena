@@ -50,7 +50,7 @@ public class TestReasoners {
     public void testTransitiveReasoner() throws IOException {
         ReasonerTester tester = new ReasonerTester("transitive/manifest.rdf");
         ReasonerFactory rf = TransitiveReasonerFactory.theInstance();
-        assertTrue("transitive reasoner tests", tester.runTests(rf, null));
+        assertTrue("transitive reasoner tests", tester.runTests(rf, null, true));
     }
 
     /**

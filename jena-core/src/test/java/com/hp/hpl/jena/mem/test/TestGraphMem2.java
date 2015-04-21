@@ -18,25 +18,29 @@
 
 package com.hp.hpl.jena.mem.test;
 
-import java.util.Iterator ;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
-import junit.framework.TestSuite ;
+import java.util.Iterator;
 
-import com.hp.hpl.jena.graph.* ;
-import com.hp.hpl.jena.graph.test.AbstractTestGraph ;
-import com.hp.hpl.jena.util.iterator.ExtendedIterator ;
+import org.junit.Test;
+
+import com.hp.hpl.jena.graph.Factory;
+import com.hp.hpl.jena.graph.Graph;
+import com.hp.hpl.jena.graph.Node;
+import com.hp.hpl.jena.graph.Node_URI;
+import com.hp.hpl.jena.graph.Triple;
+import com.hp.hpl.jena.graph.test.AbstractTestGraph;
+import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 public class TestGraphMem2 extends AbstractTestGraph
     {
-    public TestGraphMem2(String name)
-        { super( name ); }
-    
-    public static TestSuite suite()
-    { return new TestSuite( TestGraphMem2.class ); }
     
     @Override
     public Graph getGraph() { return Factory.createGraphMem(); }
     
+    @Test
     public void testBrokenIndexes()
         {
         Graph g = getGraphWith( "x R y; x S z" );
@@ -47,6 +51,7 @@ public class TestGraphMem2 extends AbstractTestGraph
         assertFalse( g.find( Node.ANY, Node.ANY, node( "y" ) ).hasNext() );
         }   
             
+    @Test
     public void testBrokenSubject()
         {
         Graph g = getGraphWith( "x brokenSubject y" );
@@ -55,6 +60,7 @@ public class TestGraphMem2 extends AbstractTestGraph
         assertFalse( g.find( Node.ANY, Node.ANY, Node.ANY ).hasNext() );
         }
         
+    @Test
     public void testBrokenPredicate()
         {
         Graph g = getGraphWith( "x brokenPredicate y" );
@@ -63,6 +69,7 @@ public class TestGraphMem2 extends AbstractTestGraph
         assertFalse( g.find( Node.ANY, Node.ANY, Node.ANY ).hasNext() );
         }
         
+    @Test
     public void testBrokenObject()
         {
         Graph g = getGraphWith( "x brokenObject y" );
@@ -71,6 +78,7 @@ public class TestGraphMem2 extends AbstractTestGraph
         assertFalse( g.find( Node.ANY, Node.ANY, Node.ANY ).hasNext() );
         }
     
+    @Test
     public void testSizeAfterRemove() 
         {
         Graph g = getGraphWith( "x p y" );
@@ -79,6 +87,7 @@ public class TestGraphMem2 extends AbstractTestGraph
         assertEquals( 0, g.size() );        
         }
     
+    @Test
     public void testUnnecessaryMatches() 
         {
         Node special = new Node_URI( "eg:foo" ) 

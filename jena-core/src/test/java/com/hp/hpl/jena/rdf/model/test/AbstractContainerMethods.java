@@ -18,37 +18,36 @@
 
 package com.hp.hpl.jena.rdf.model.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import com.hp.hpl.jena.rdf.model.Container;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.test.helpers.TestingModelFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
-
-import org.junit.Assert;
 
 public abstract class AbstractContainerMethods extends AbstractModelTestBase
 {
 
 	protected Resource resource;
 
-	public AbstractContainerMethods( final TestingModelFactory modelFactory,
-			final String name )
-	{
-		super(modelFactory, name);
-	}
-
 	protected abstract Container createContainer();
 
 	protected abstract Resource getContainerType();
 
-	@Override
+	@Before
 	public void setUp() throws Exception
 	{
 		super.setUp();
 		resource = model.createResource();
 	}
 
+	@Test
 	public void testContainerOfIntegers()
 	{
 		final int num = 10;
@@ -57,15 +56,16 @@ public abstract class AbstractContainerMethods extends AbstractModelTestBase
 		{
 			c.add(i);
 		}
-		Assert.assertEquals(num, c.size());
+		assertEquals(num, c.size());
 		final NodeIterator it = c.iterator();
 		for (int i = 0; i < num; i += 1)
 		{
-			Assert.assertEquals(i, ((Literal) it.nextNode()).getInt());
+			assertEquals(i, ((Literal) it.nextNode()).getInt());
 		}
-		Assert.assertFalse(it.hasNext());
+		assertFalse(it.hasNext());
 	}
 
+	@Test
 	public void testContainerOfIntegersRemovingA()
 	{
 		final boolean[] retain = { true, true, true, false, false, false,
@@ -73,6 +73,7 @@ public abstract class AbstractContainerMethods extends AbstractModelTestBase
 		testContainerOfIntegersWithRemoving(retain);
 	}
 
+	@Test
 	public void testContainerOfIntegersRemovingB()
 	{
 		final boolean[] retain = { false, true, true, false, false, false,
@@ -80,6 +81,7 @@ public abstract class AbstractContainerMethods extends AbstractModelTestBase
 		testContainerOfIntegersWithRemoving(retain);
 	}
 
+	@Test
 	public void testContainerOfIntegersRemovingC()
 	{
 		final boolean[] retain = { false, false, false, false, false, false,
@@ -109,30 +111,32 @@ public abstract class AbstractContainerMethods extends AbstractModelTestBase
 		while (s.hasNext())
 		{
 			final int v = ((Literal) s.nextNode()).getInt();
-			Assert.assertFalse(found[v]);
+			assertFalse(found[v]);
 			found[v] = true;
 		}
 		for (int i = 0; i < num; i += 1)
 		{
-			Assert.assertEquals("element " + i, retain[i], found[i]);
+			assertEquals("element " + i, retain[i], found[i]);
 		}
 	}
 
+	@Test
 	public void testEmptyContainer()
 	{
 		final Container c = createContainer();
-		Assert.assertTrue(model.contains(c, RDF.type, getContainerType()));
-		Assert.assertEquals(0, c.size());
-		Assert.assertFalse(c.contains(AbstractModelTestBase.tvBoolean));
-		Assert.assertFalse(c.contains(AbstractModelTestBase.tvByte));
-		Assert.assertFalse(c.contains(AbstractModelTestBase.tvShort));
-		Assert.assertFalse(c.contains(AbstractModelTestBase.tvInt));
-		Assert.assertFalse(c.contains(AbstractModelTestBase.tvLong));
-		Assert.assertFalse(c.contains(AbstractModelTestBase.tvChar));
-		Assert.assertFalse(c.contains(AbstractModelTestBase.tvFloat));
-		Assert.assertFalse(c.contains(AbstractModelTestBase.tvString));
+		assertTrue(model.contains(c, RDF.type, getContainerType()));
+		assertEquals(0, c.size());
+		assertFalse(c.contains(AbstractModelTestBase.tvBoolean));
+		assertFalse(c.contains(AbstractModelTestBase.tvByte));
+		assertFalse(c.contains(AbstractModelTestBase.tvShort));
+		assertFalse(c.contains(AbstractModelTestBase.tvInt));
+		assertFalse(c.contains(AbstractModelTestBase.tvLong));
+		assertFalse(c.contains(AbstractModelTestBase.tvChar));
+		assertFalse(c.contains(AbstractModelTestBase.tvFloat));
+		assertFalse(c.contains(AbstractModelTestBase.tvString));
 	}
 
+	@Test
 	public void testFillingContainer()
 	{
 		final Container c = createContainer();
@@ -140,28 +144,28 @@ public abstract class AbstractContainerMethods extends AbstractModelTestBase
 		final Literal tvLiteral = model.createLiteral("test 12 string 2");
 		// Resource tvResObj = model.createResource( new ResTestObjF() );
 		c.add(AbstractModelTestBase.tvBoolean);
-		Assert.assertTrue(c.contains(AbstractModelTestBase.tvBoolean));
+		assertTrue(c.contains(AbstractModelTestBase.tvBoolean));
 		c.add(AbstractModelTestBase.tvByte);
-		Assert.assertTrue(c.contains(AbstractModelTestBase.tvByte));
+		assertTrue(c.contains(AbstractModelTestBase.tvByte));
 		c.add(AbstractModelTestBase.tvShort);
-		Assert.assertTrue(c.contains(AbstractModelTestBase.tvShort));
+		assertTrue(c.contains(AbstractModelTestBase.tvShort));
 		c.add(AbstractModelTestBase.tvInt);
-		Assert.assertTrue(c.contains(AbstractModelTestBase.tvInt));
+		assertTrue(c.contains(AbstractModelTestBase.tvInt));
 		c.add(AbstractModelTestBase.tvLong);
-		Assert.assertTrue(c.contains(AbstractModelTestBase.tvLong));
+		assertTrue(c.contains(AbstractModelTestBase.tvLong));
 		c.add(AbstractModelTestBase.tvChar);
-		Assert.assertTrue(c.contains(AbstractModelTestBase.tvChar));
+		assertTrue(c.contains(AbstractModelTestBase.tvChar));
 		c.add(AbstractModelTestBase.tvFloat);
-		Assert.assertTrue(c.contains(AbstractModelTestBase.tvFloat));
+		assertTrue(c.contains(AbstractModelTestBase.tvFloat));
 		c.add(AbstractModelTestBase.tvString);
-		Assert.assertTrue(c.contains(AbstractModelTestBase.tvString));
+		assertTrue(c.contains(AbstractModelTestBase.tvString));
 		c.add(AbstractModelTestBase.tvString, lang);
-		Assert.assertTrue(c.contains(AbstractModelTestBase.tvString, lang));
+		assertTrue(c.contains(AbstractModelTestBase.tvString, lang));
 		c.add(tvLiteral);
-		Assert.assertTrue(c.contains(tvLiteral));
+		assertTrue(c.contains(tvLiteral));
 		// c.add( tvResObj ); assertTrue( c.contains( tvResObj ) );
 		c.add(AbstractModelTestBase.tvLitObj);
-		Assert.assertTrue(c.contains(AbstractModelTestBase.tvLitObj));
-		Assert.assertEquals(11, c.size());
+		assertTrue(c.contains(AbstractModelTestBase.tvLitObj));
+		assertEquals(11, c.size());
 	}
 }

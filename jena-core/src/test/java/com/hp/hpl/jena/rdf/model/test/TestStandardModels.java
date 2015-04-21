@@ -18,20 +18,11 @@
 
 package com.hp.hpl.jena.rdf.model.test;
 
-import com.hp.hpl.jena.rdf.model.*;
-
-import junit.framework.*;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 public class TestStandardModels extends AbstractTestModel
     {
-
-    public TestStandardModels(String name)
-        { super(name); }
-        
-    public static TestSuite suite()
-        {
-        return new TestSuite( TestStandardModels.class );
-        }
 
     @Override
     public Model getModel()

@@ -18,9 +18,15 @@
 
 package com.hp.hpl.jena.util.iterator.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.*;
 
-import junit.framework.TestSuite;
+import org.junit.Test;
 
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
 import com.hp.hpl.jena.shared.JenaException;
@@ -28,15 +34,12 @@ import com.hp.hpl.jena.util.iterator.*;
 
 public class TestFilters extends ModelTestBase
     {
-    public TestFilters( String name )
-        { super( name ); }
-    
-    public static TestSuite suite()
-        { return new TestSuite( TestFilters.class ); }
-    
+
+    @Test
     public void testFilterAnyExists()
         { assertInstanceOf( Filter.class, Filter.any() ); }
     
+    @Test
     public void testFilterAnyAcceptsThings()
         {
         assertTrue( Filter.any().accept( "hello" ) );
@@ -49,11 +52,13 @@ public class TestFilters extends ModelTestBase
         assertTrue( Filter.any().accept( this ) );
         }
     
+    @Test
     public void testFilterFilterMethod()
         {
         assertFalse( Filter.any().filterKeep( NullIterator.instance() ).hasNext() );
         }
     
+    @Test
     public void testFilteringThings()
         {
         ExtendedIterator<String> it = iteratorOfStrings( "gab geb bag big lava hall end" );
@@ -65,6 +70,7 @@ public class TestFilters extends ModelTestBase
         assertEquals( listOfStrings( "gab bag lava hall" ), iteratorToList( f.filterKeep( it ) ) );
         }
     
+    @Test
     public void testAnyFilterSimple()
         {
         ExtendedIterator<String> it = iteratorOfStrings( "" );
@@ -74,6 +80,7 @@ public class TestFilters extends ModelTestBase
     protected Filter<String> containsA = new Filter<String>() 
         { @Override public boolean accept( String o ) { return contains( o, 'a' ); } };
     
+    @Test
     public void testFilterAnd()
         {
         Filter<String> containsB = new Filter<String>() 
@@ -86,6 +93,7 @@ public class TestFilters extends ModelTestBase
         assertTrue( f12.accept( "ba" ) );
         }
     
+    @Test
     public void testFilterShortcircuit()
         {
         Filter<String> oops = new Filter<String>() 
@@ -96,12 +104,15 @@ public class TestFilters extends ModelTestBase
         catch (JenaException e) { assertEquals( "oops", e.getMessage() ); }
         }
     
+    @Test
     public void testAnyAndTrivial()
         { assertSame( containsA, Filter.<String>any().and( containsA ) ); }
     
+    @Test
     public void testSomethingAndAny()
         { assertSame( containsA, containsA.and( Filter.<String>any() ) ); }
     
+    @Test
     public void testFilterDropIterator()
         {
         Iterator<String> i = iteratorOfStrings( "there's an a in some animals" );
@@ -109,6 +120,7 @@ public class TestFilters extends ModelTestBase
         assertEquals( listOfStrings( "there's in some" ), iteratorToList( it ) );
         }
     
+    @Test
     public void testFilterKeepIterator()
         {
         Iterator<String> i = iteratorOfStrings( "there's an a in some animals" );

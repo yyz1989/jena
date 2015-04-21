@@ -18,19 +18,25 @@
 
 package com.hp.hpl.jena.reasoner.rulesys.test;
 
-import com.hp.hpl.jena.rdf.model.*;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
 import com.hp.hpl.jena.reasoner.ReasonerRegistry;
-import com.hp.hpl.jena.vocabulary.*;
+import com.hp.hpl.jena.vocabulary.RDF;
+import com.hp.hpl.jena.vocabulary.RDFS;
+import com.hp.hpl.jena.vocabulary.ReasonerVocabulary;
 
 /**
     Tests for configuration vocabulary added as part of ModelSpec removal
 */
 public class TestConfigVocabulary extends ModelTestBase
     {
-    public TestConfigVocabulary( String name )
-        { super( name ); }
 
+    @Test
     public void testExistingVocabulary()
         {
         assertIsProperty( "name", ReasonerVocabulary.nameP );
@@ -41,7 +47,8 @@ public class TestConfigVocabulary extends ModelTestBase
         assertIsProperty( "individualAsThing", ReasonerVocabulary.individualAsThingP );
         }
     
-    public void testPropVocavulary()
+    @Test
+    public void testPropVocabulary()
         {
         assertIsPropProperty( "derivationLogging", ReasonerVocabulary.PROPderivationLogging );
         assertIsPropProperty( "traceOn", ReasonerVocabulary.PROPtraceOn );
@@ -53,6 +60,7 @@ public class TestConfigVocabulary extends ModelTestBase
         assertIsPropProperty( "enableFunctorFiltering", ReasonerVocabulary.PROPenableFunctorFiltering );
         }
 
+    @Test
     public void testDirectVocabulary()
         {
         assertIsDirectProperty( RDFS.subClassOf, ReasonerVocabulary.directSubClassOf );
@@ -60,6 +68,7 @@ public class TestConfigVocabulary extends ModelTestBase
         assertIsDirectProperty( RDF.type, ReasonerVocabulary.directRDFType );
         }
 
+    @Test
     public void testRuleSetVocabulary()
         {
         assertIsProperty( "ruleSet", ReasonerVocabulary.ruleSet );

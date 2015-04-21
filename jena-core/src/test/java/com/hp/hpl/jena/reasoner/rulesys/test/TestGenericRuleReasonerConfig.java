@@ -18,7 +18,11 @@
 
 package com.hp.hpl.jena.reasoner.rulesys.test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.*;
+
+import org.junit.Test;
 
 import com.hp.hpl.jena.assembler.test.AssemblerTestBase;
 import com.hp.hpl.jena.rdf.model.*;
@@ -31,8 +35,6 @@ import com.hp.hpl.jena.vocabulary.ReasonerVocabulary;
 */
 public class TestGenericRuleReasonerConfig extends AssemblerTestBase
     {
-    public TestGenericRuleReasonerConfig( String name )
-        { super( name ); }
 
     @Override
     protected Model setRequiredPrefixes( Model x )
@@ -41,6 +43,7 @@ public class TestGenericRuleReasonerConfig extends AssemblerTestBase
         return super.setRequiredPrefixes( x );
         }
     
+    @Test
     public void testLoadsSingleRuleSetViaURL()
         { 
 //        testLoadsSingleRuleViaURL( "jms" );
@@ -56,6 +59,7 @@ public class TestGenericRuleReasonerConfig extends AssemblerTestBase
         assertEquals( rules, grr.getRules() );
         }    
     
+    @Test
     public void testLoadsSingleRuleFromString()
         { 
 //        testLoadsSingleRuleFromString( "jms" );
@@ -71,6 +75,7 @@ public class TestGenericRuleReasonerConfig extends AssemblerTestBase
         assertEquals( rules, grr.getRules() );
         }
     
+    @Test
     public void testLoadsSingleRuleViaRuleSetStringString()
         { 
 //        testLoadsRulesViaRuleSetStrings( "jms" );
@@ -92,6 +97,7 @@ public class TestGenericRuleReasonerConfig extends AssemblerTestBase
         assertEquals( rules, new HashSet<>( grr.getRules() ) );
         }
     
+    @Test
     public void testLoadsMultipleRuleSetsViaRuleSetNode()
         {
 //        testLoadsMultipleRuleSetsViaRuleSetNode( "jms" );

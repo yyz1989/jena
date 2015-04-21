@@ -18,7 +18,11 @@
 
 package com.hp.hpl.jena.util;
 
-import junit.framework.*;
+import junit.framework.TestSuite;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * All developers should edit this file to add their tests.
@@ -26,35 +30,21 @@ import junit.framework.*;
  * Note, it is better to name your test suites on creation
  * rather than in this file.
  */
+@RunWith(Suite.class)
+@SuiteClasses({
+    TestCache.class,
+    TestTokenizer.class,
+    TestFileUtils.class,
+    TestCollectionFactory.class,
+    TestLocationMapper.class,
+    TestFileManager.class,
+    TestMonitors.class,
+    TestPrintUtil.class,
+    TestIteratorCollection.class,
+    TestUtil.class,
+    TestLocators.class,
+    TestOneToManyMap.class
+})
 public class TestPackage extends TestSuite {
-
-    static public TestSuite suite() {
-        return new TestPackage();
-    }
-    
-    /** Creates new TestPackage */
-    private TestPackage() {
-        super( "util" );
-        addTest( "TestCache",             TestCache.suite() );
-        addTest( "TestTokenzier",         TestTokenizer.suite());
-        addTest( "TestFileUtils",         TestFileUtils.suite() );
-        addTest( "TestHashUtils",         TestCollectionFactory.suite() );
-        addTest( "TestLocationMapper",    TestLocationMapper.suite() ) ;
-        addTest( "TestFileManager",       TestFileManager.suite()) ;
-        addTest( "TestMonitors",       TestMonitors.suite()) ;
-        addTest( "TestPrintUtil",       TestPrintUtil.suite()) ;
-        addTest( TestIteratorCollection.suite() );
-        addTest( "TestUtil",            TestUtil.suite()) ;
-        addTestSuite( TestLocators.class );
-        addTestSuite( TestOneToManyMap.class );
-    }
-
-    private void addTest(String name, TestSuite tc) {
-        tc.setName(name);
-        addTest(tc);
-    }        
-    private void addTest(String name, Test tc) {
-        addTest(tc);
-    }
 
 }

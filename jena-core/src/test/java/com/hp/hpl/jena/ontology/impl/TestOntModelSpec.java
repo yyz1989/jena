@@ -18,14 +18,17 @@
 
 package com.hp.hpl.jena.ontology.impl;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
 
 public class TestOntModelSpec extends ModelTestBase
     {
-    public TestOntModelSpec( String name )
-        { super( name ); }
 
+    @Test
     public void testEqualityAndDifference()
         {
         testEqualityAndDifference( OntModelSpec.OWL_MEM );
@@ -52,11 +55,13 @@ public class TestOntModelSpec extends ModelTestBase
         assertEquals( os, new OntModelSpec( os ) );
         }
     
+    @Test
     public void testAssembleRoot()
         {
         // TODO OntModelSpec.assemble( Resource root )
         }
     
+    @Test
     public void testAssembleModel()
         {
         // TODO OntModelSpec.assemble( Model model )

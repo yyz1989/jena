@@ -18,24 +18,20 @@
 
 package com.hp.hpl.jena.rdf.model.test;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.rdf.model.Alt;
 import com.hp.hpl.jena.rdf.model.Bag;
 import com.hp.hpl.jena.rdf.model.Container;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Seq;
-import com.hp.hpl.jena.rdf.model.test.helpers.TestingModelFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
-
-import org.junit.Assert;
 
 public class TestAltMethods extends AbstractContainerMethods
 {
-	public TestAltMethods( final TestingModelFactory modelFactory,
-			final String name )
-	{
-		super(modelFactory, name);
-	}
 
 	@Override
 	protected Container createContainer()
@@ -49,6 +45,7 @@ public class TestAltMethods extends AbstractContainerMethods
 		return RDF.Alt;
 	}
 
+	@Test
 	public void testDefaults()
 	{
 		final Alt a = model.createAlt();
@@ -59,35 +56,35 @@ public class TestAltMethods extends AbstractContainerMethods
 		final Seq tvSeq = model.createSeq();
 		//
 		final Resource tvResource = model.createResource();
-		Assert.assertEquals(tvLiteral, a.setDefault(tvLiteral).getDefault());
-		Assert.assertEquals(tvLiteral, a.getDefaultLiteral());
-		Assert.assertEquals(tvResource, a.setDefault(tvResource)
+		assertEquals(tvLiteral, a.setDefault(tvLiteral).getDefault());
+		assertEquals(tvLiteral, a.getDefaultLiteral());
+		assertEquals(tvResource, a.setDefault(tvResource)
 				.getDefaultResource());
-		Assert.assertEquals(AbstractModelTestBase.tvByte,
+		assertEquals(AbstractModelTestBase.tvByte,
 				a.setDefault(AbstractModelTestBase.tvByte).getDefaultByte());
-		Assert.assertEquals(AbstractModelTestBase.tvShort,
+		assertEquals(AbstractModelTestBase.tvShort,
 				a.setDefault(AbstractModelTestBase.tvShort).getDefaultShort());
-		Assert.assertEquals(AbstractModelTestBase.tvInt,
+		assertEquals(AbstractModelTestBase.tvInt,
 				a.setDefault(AbstractModelTestBase.tvInt).getDefaultInt());
-		Assert.assertEquals(AbstractModelTestBase.tvLong,
+		assertEquals(AbstractModelTestBase.tvLong,
 				a.setDefault(AbstractModelTestBase.tvLong).getDefaultLong());
-		Assert.assertEquals(AbstractModelTestBase.tvFloat,
+		assertEquals(AbstractModelTestBase.tvFloat,
 				a.setDefault(AbstractModelTestBase.tvFloat).getDefaultFloat(),
 				AbstractModelTestBase.fDelta);
-		Assert.assertEquals(
+		assertEquals(
 				AbstractModelTestBase.tvDouble,
 				a.setDefault(AbstractModelTestBase.tvDouble).getDefaultDouble(),
 				AbstractModelTestBase.dDelta);
-		Assert.assertEquals(AbstractModelTestBase.tvChar,
+		assertEquals(AbstractModelTestBase.tvChar,
 				a.setDefault(AbstractModelTestBase.tvChar).getDefaultChar());
-		Assert.assertEquals(AbstractModelTestBase.tvString,
+		assertEquals(AbstractModelTestBase.tvString,
 				a.setDefault(AbstractModelTestBase.tvString).getDefaultString());
 		// assertEquals( tvResObj, a.setDefault( tvResObj ).getDefaultResource()
 		// );
 		// assertEquals( tvLitObj, a.setDefault( tvLitObj ).getDefaultObject(
 		// new LitTestObjF() ) );
-		Assert.assertEquals(tvAlt, a.setDefault(tvAlt).getDefaultAlt());
-		Assert.assertEquals(tvBag, a.setDefault(tvBag).getDefaultBag());
-		Assert.assertEquals(tvSeq, a.setDefault(tvSeq).getDefaultSeq());
+		assertEquals(tvAlt, a.setDefault(tvAlt).getDefaultAlt());
+		assertEquals(tvBag, a.setDefault(tvBag).getDefaultBag());
+		assertEquals(tvSeq, a.setDefault(tvSeq).getDefaultSeq());
 	}
 }

@@ -18,29 +18,28 @@
 
 package com.hp.hpl.jena.rdf.model.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.rdf.model.test.helpers.ModelHelper;
-import com.hp.hpl.jena.rdf.model.test.helpers.TestingModelFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
-
-import org.junit.Assert;
 
 public class TestAddModel extends AbstractModelTestBase
 {
 	private Model model2;
 
-	public TestAddModel( final TestingModelFactory modelFactory,
-			final String name )
-	{
-		super(modelFactory, name);
-	}
-
 	protected void assertContainsAll( final Model model, final Model model2 )
 	{
 		for (final StmtIterator s = model2.listStatements(); s.hasNext();)
 		{
-			Assert.assertTrue(model.contains(s.nextStatement()));
+			assertTrue(model.contains(s.nextStatement()));
 		}
 	}
 
@@ -50,50 +49,53 @@ public class TestAddModel extends AbstractModelTestBase
 		assertContainsAll(model2, model);
 	}
 
-	@Override
+	@Before
 	public void setUp() throws Exception
 	{
 		super.setUp();
 		model2 = createModel();
 	}
 
-	@Override
+	@After
 	public void tearDown() throws Exception
 	{
 		super.tearDown();
 		model2.close();
 	}
 
+	@Test
 	public void testAddByIterator()
 	{
 
 		ModelHelper.modelAdd(model, "a P b; c P d; x Q 1; y Q 2");
 		model2.add(model.listStatements());
-		Assert.assertEquals(model.size(), model2.size());
+		assertEquals(model.size(), model2.size());
 		assertSameStatements(model, model2);
 		model.add(model.createResource(), RDF.value, model.createResource());
 		model.add(model.createResource(), RDF.value, model.createResource());
 		model.add(model.createResource(), RDF.value, model.createResource());
 		final StmtIterator s = model.listStatements();
 		model2.remove(s.nextStatement()).remove(s);
-		Assert.assertEquals(0, model2.size());
+		assertEquals(0, model2.size());
 	}
 
+	@Test
 	public void testAddByModel()
 	{
 
 		ModelHelper.modelAdd(model, "a P b; c P d; x Q 1; y Q 2");
 		model2.add(model);
-		Assert.assertEquals(model.size(), model2.size());
+		assertEquals(model.size(), model2.size());
 		assertSameStatements(model, model2);
 	}
 
+	@Test
 	public void testRemoveByModel()
 	{
 
 		ModelHelper.modelAdd(model, "a P b; c P d; x Q 1; y Q 2");
 		model2.add(model).remove(model);
-		Assert.assertEquals(0, model2.size());
-		Assert.assertFalse(model2.listStatements().hasNext());
+		assertEquals(0, model2.size());
+		assertFalse(model2.listStatements().hasNext());
 	}
 }

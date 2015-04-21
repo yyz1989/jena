@@ -18,6 +18,10 @@
 
 package com.hp.hpl.jena.regression;
 
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.test.JenaTestBase;
 
@@ -49,10 +53,7 @@ public class TestCaseBasic extends JenaTestBase {
 	protected Model m3 = null;
 	protected Model m4 = null;
 
-	public TestCaseBasic(String name) {
-		super(name);
-	}
-
+	@Test
 	public void test0() {
 		// empty the test models in case they are persistent
 		empty(m1);

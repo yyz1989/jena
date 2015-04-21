@@ -18,18 +18,14 @@
 
 package com.hp.hpl.jena.vocabulary.test;
 
-import com.hp.hpl.jena.vocabulary.*;
+import org.junit.Test;
 
-import junit.framework.*;
+import com.hp.hpl.jena.vocabulary.*;
 
 public class TestVocabRSS extends VocabTestBase
     {
-    public TestVocabRSS(String name)
-        { super(name); }
 
-     public static TestSuite suite()
-        { return new TestSuite( TestVocabRSS.class ); }
-
+    @Test
     public void testRSS()
         {
 		String ns = "http://purl.org/rss/1.0/";

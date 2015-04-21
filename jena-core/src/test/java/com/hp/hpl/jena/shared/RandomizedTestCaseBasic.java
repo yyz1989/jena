@@ -18,22 +18,19 @@
 
 package com.hp.hpl.jena.shared;
 
-import com.hp.hpl.jena.shared.RandomOrderGraph;
+import org.junit.After;
+import org.junit.Before;
 
 public class RandomizedTestCaseBasic extends com.hp.hpl.jena.regression.TestCaseBasic {
 
-    public RandomizedTestCaseBasic(String name) {
-        super(name);
-    }
-    
-    @Override
+    @Before
     public void setUp() {
         m1 = RandomOrderGraph.createDefaultModel();
         m2 = RandomOrderGraph.createDefaultModel();
         m3 = RandomOrderGraph.createDefaultModel();
         m4 = RandomOrderGraph.createDefaultModel();
     }
-    @Override
+    @After
     public void tearDown() {
     	m1 = null;
     	m2 = null;

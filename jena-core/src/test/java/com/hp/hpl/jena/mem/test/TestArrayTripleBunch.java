@@ -18,12 +18,11 @@
 
 package com.hp.hpl.jena.mem.test;
 
-import com.hp.hpl.jena.mem.*;
+import com.hp.hpl.jena.mem.ArrayBunch;
+import com.hp.hpl.jena.mem.TripleBunch;
 
 public class TestArrayTripleBunch extends TestTripleBunch
     {
-    public TestArrayTripleBunch( String name )
-        { super( name ); }
     
     @Override
     public TripleBunch getBunch()

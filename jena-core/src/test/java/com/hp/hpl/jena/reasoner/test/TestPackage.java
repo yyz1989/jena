@@ -18,35 +18,24 @@
 
 package com.hp.hpl.jena.reasoner.test;
 
-import junit.framework.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * Aggregate tester that runs all the test associated with the reasoner package.
  */
-
-public class TestPackage extends TestSuite {
-
-    static public TestSuite suite() {
-        return new TestPackage();
-    }
-    
-    /** Creates new TestPackage */
-    private TestPackage() {
-        super("reasoners");
-        addTest( "TestTransitiveGraphCache", TestTransitiveGraphCache.suite() );
-        addTest( "TestReasoners", TestReasoners.suite() );
-        addTest( "TestRDFSReasoners", TestRDFSReasoners.suite() );
-        addTest( "TestRuleReasoners",  com.hp.hpl.jena.reasoner.rulesys.test.TestPackage.suite() );
-        addTest( "TestReasonerPrefixMapping", TestInfPrefixMapping.suite() );
-        addTest( "TestInfGraph", TestInfGraph.suite() );
-        addTest( "TestInfModel", TestInfModel.suite() );
-        addTest( "TestSafeModel", TestSafeModel.suite() );
-    }
-
-    // helper method
-    private void addTest(String name, TestSuite tc) {
-        tc.setName(name);
-        addTest(tc);
-    }
+@RunWith(Suite.class)
+@SuiteClasses({
+    TestTransitiveGraphCache.class,
+    TestReasoners.class,
+    TestRDFSReasoners.class,
+    com.hp.hpl.jena.reasoner.rulesys.test.TestPackage.class,
+    TestInfPrefixMapping.class,
+    TestInfGraph.class,
+    TestInfModel.class,
+    TestSafeModel.class
+})
+public class TestPackage {
 
 }

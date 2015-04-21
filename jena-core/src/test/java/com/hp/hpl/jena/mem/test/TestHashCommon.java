@@ -18,7 +18,14 @@
 
 package com.hp.hpl.jena.mem.test;
 
-import java.util.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+import org.junit.Test;
 
 import com.hp.hpl.jena.mem.HashCommon;
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
@@ -29,9 +36,6 @@ public class TestHashCommon extends ModelTestBase
     protected static final Item item1Y = new Item( 1, "Y" );
     protected static final Item item2Z = new Item( 2, "Z" );
 
-    public TestHashCommon( String name )
-        { super( name ); }
-    
     static class ProbeHashCommon extends HashCommon<Object>
         {
         protected ProbeHashCommon( int initialCapacity )
@@ -75,6 +79,7 @@ public class TestHashCommon extends ModelTestBase
             { return s + "#" + n; }
         }    
 
+    @Test
     public void testSanityCheckTestDataConstruction()
         {
         ProbeHashCommon h = probeWith( "1:2:x 4:7:y -1:5:z" );
@@ -83,6 +88,7 @@ public class TestHashCommon extends ModelTestBase
         assertEquals( new Item( 5, "z" ), h.getItemForTestingAt( h.top() ) );
         }
 
+    @Test
     public void testHashcodeUsedAsIndex()
         {
         ProbeHashCommon htb = new ProbeHashCommon( 10 );
@@ -95,6 +101,7 @@ public class TestHashCommon extends ModelTestBase
             }
         }
     
+    @Test
     public void testRemoveNoMove()
         {
         ProbeHashCommon h = probeWith( "1:1:Y 2:2:Z" );
@@ -103,6 +110,7 @@ public class TestHashCommon extends ModelTestBase
         assertAlike( probeWith( "1:1:Y" ), h );
         }
 
+    @Test
     public void testRemoveSimpleMove()
         {
         ProbeHashCommon h = probeWith( "0:2:X 1:1:Y 2:2:Z" );
@@ -110,6 +118,7 @@ public class TestHashCommon extends ModelTestBase
         assertAlike( probeWith( "1:2:X 2:2:Z"), h );
         }
     
+    @Test
     public void testRemoveCircularMove()
         {
         ProbeHashCommon h = probeWith( "0:0:X 1:2:Y -1:2:Z" );
@@ -118,6 +127,7 @@ public class TestHashCommon extends ModelTestBase
         assertEquals( new Item( 2, "Z" ), moved );
         }
     
+    @Test
     public void testKeyIterator()
         {
         ProbeHashCommon h = probeWith( "0:0:X" );

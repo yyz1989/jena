@@ -18,12 +18,15 @@
 
 package com.hp.hpl.jena.reasoner.test;
 
-import junit.framework.TestSuite ;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
-import com.hp.hpl.jena.graph.Graph ;
-import com.hp.hpl.jena.graph.test.AbstractTestGraph ;
-import com.hp.hpl.jena.rdf.model.ModelFactory ;
-import com.hp.hpl.jena.reasoner.InfGraph ;
+import org.junit.Test;
+
+import com.hp.hpl.jena.graph.Graph;
+import com.hp.hpl.jena.graph.test.AbstractTestGraph;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.reasoner.InfGraph;
 
 /**
      Needs extending; relys on knowing that the only InfGraph currently used is
@@ -33,12 +36,7 @@ import com.hp.hpl.jena.reasoner.InfGraph ;
 
 public class TestInfGraph extends AbstractTestGraph
     {
-    public TestInfGraph( String name )
-        { super( name ); }
-    
-    public static TestSuite suite()
-        { return new TestSuite( TestInfGraph.class ); }
-    
+
     private InfGraph getInfGraph()
         {
         return (InfGraph) ModelFactory.createOntologyModel().getGraph();
@@ -48,6 +46,7 @@ public class TestInfGraph extends AbstractTestGraph
     public Graph getGraph()
         { return getInfGraph(); }
     
+    @Test
     public void testInfGraph()
         {
         InfGraph ig = getInfGraph();
@@ -57,6 +56,7 @@ public class TestInfGraph extends AbstractTestGraph
     /**
          Placeholder. Will need revision later.
     */
+    @Test
     public void testInfCapabilities()
         {
         // The default Ontology inference model is RDFS which is safe

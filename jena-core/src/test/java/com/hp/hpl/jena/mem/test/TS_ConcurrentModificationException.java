@@ -15,27 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.hp.hpl.jena.mem.test;
 
-package com.hp.hpl.jena.shared;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-import static org.junit.Assert.assertTrue;
+import com.hp.hpl.jena.mem.test.TestConcurrentModificationException.TestArrayBunchCME;
+import com.hp.hpl.jena.mem.test.TestConcurrentModificationException.TestHashedBunchCME;
+import com.hp.hpl.jena.mem.test.TestConcurrentModificationException.TestSetBunchCME;
 
-import org.junit.Test;
+@RunWith(Suite.class)
+@SuiteClasses({
+    TestArrayBunchCME.class,
+    TestSetBunchCME.class,
+    TestHashedBunchCME.class
+})
+public class TS_ConcurrentModificationException {
 
-import com.hp.hpl.jena.test.JenaTestBase;
-
-/**
-    Introduced to test that nested Jena exceptions preserve the
-    caught exception's message.
-*/
-public class TestJenaException extends JenaTestBase
-    {
-
-    @Test
-    public void testRethrownMessage()
-        {
-        Exception e = new Exception( "kings and queens" );
-        JenaException j = new JenaException( e );
-        assertTrue( j.getMessage().endsWith( e.getMessage() ) );
-        }
 }

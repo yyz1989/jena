@@ -18,8 +18,11 @@
 
 package com.hp.hpl.jena.vocabulary.test;
 
-import com.hp.hpl.jena.vocabulary.*;
-import junit.framework.*;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import com.hp.hpl.jena.vocabulary.VCARD;
 
 /**
     Test that the VCARD identifiers are what they're supposed to be.
@@ -27,12 +30,8 @@ import junit.framework.*;
 */
 public class TestVocabVCARD extends VocabTestBase
     {
-    public TestVocabVCARD( String name )
-        { super( name ); }
 
-    public static TestSuite suite()
-        { return new TestSuite( TestVocabVCARD.class ); }
-        
+    @Test
     public void testVCARD()
         {
         String ns = "http://www.w3.org/2001/vcard-rdf/3.0#";

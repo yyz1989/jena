@@ -23,13 +23,19 @@ package com.hp.hpl.jena.util;
 
 // Imports
 ///////////////
-import java.util.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import com.hp.hpl.jena.util.OneToManyMap;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
-import junit.framework.TestCase;
-
-
+import org.junit.Test;
 
 /**
  * <p>
@@ -37,7 +43,6 @@ import junit.framework.TestCase;
  * </p>
  */
 public class TestOneToManyMap 
-    extends TestCase
 {
     // Constants
     //////////////////////////////////
@@ -61,10 +66,7 @@ public class TestOneToManyMap
     // External signature methods
     //////////////////////////////////
 
-    @Override public void setUp() {}
-    
-    @Override public void tearDown() {}
-    
+    @Test
     public void testConstruct0() {
         // the types of these maps
         OneToManyMap<String, Integer> map0 = new OneToManyMap<>();
@@ -77,6 +79,7 @@ public class TestOneToManyMap
         assertTrue( map1.isEmpty() );
     }
     
+    @Test
     public void testConstruct1() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         
@@ -84,7 +87,7 @@ public class TestOneToManyMap
         assertTrue( map0.contains( s0, s1 ) );
         
         OneToManyMap<String, String> map1 = new OneToManyMap<>( map0 );
-        assertTrue( map0.contains( s0, s1 ) );
+        assertTrue( map1.contains( s0, s1 ) );
         
         map0.put( s0, s2 );
         assertTrue( map0.contains( s0, s2 ) );
@@ -92,6 +95,7 @@ public class TestOneToManyMap
         
     }
     
+    @Test
     public void testClear() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         
@@ -104,6 +108,7 @@ public class TestOneToManyMap
         assertTrue( map0.isEmpty() );
     }
 
+    @Test
     public void testContainsKey() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         assertFalse( map0.containsKey( s0 ) );
@@ -113,6 +118,7 @@ public class TestOneToManyMap
         assertFalse( map0.containsKey( s1 ) );
     }
     
+    @Test
     public void testContainsValue() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         assertFalse( map0.containsValue( s0 ) );
@@ -128,6 +134,7 @@ public class TestOneToManyMap
         assertTrue( map0.containsValue( s2 ) );
     }
     
+    @Test
     public void testContains() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         assertFalse( map0.contains( s0, s1 ) );
@@ -143,6 +150,7 @@ public class TestOneToManyMap
         assertFalse( map0.contains( s1, s2 ) );
     }
     
+    @Test
     public void testEntrySet() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         map0.put( s0, s1 );
@@ -178,6 +186,7 @@ public class TestOneToManyMap
         assertTrue( s3s4 );
     }
     
+    @Test
     public void testEquals() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         map0.put( s0, s1 );
@@ -199,6 +208,7 @@ public class TestOneToManyMap
         assertFalse( map2.equals( map0 ));
     }
     
+    @Test
     public void testGet() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         assertNull( map0.get( s0 ));
@@ -209,6 +219,7 @@ public class TestOneToManyMap
                     map0.get( s0 ).equals( s2 ));
     }
     
+    @Test
     public void testGetAll() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         Iterator<String> i = map0.getAll(s0);
@@ -242,6 +253,7 @@ public class TestOneToManyMap
         assertTrue( founds2 );
     }
     
+    @Test
     public void testKeySet() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         Set<String> keys = new HashSet<>();
@@ -256,6 +268,7 @@ public class TestOneToManyMap
         assertEquals( keys, map0.keySet() );   
     }
     
+    @Test
     public void testPutAll0() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         map0.put( s0, s1 );
@@ -272,6 +285,7 @@ public class TestOneToManyMap
         assertEquals( map0, map2 );
     }
     
+    @Test
     public void testPutAll1() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         map0.put( s0, s1 );
@@ -286,6 +300,7 @@ public class TestOneToManyMap
         assertEquals( map0, map2 );
     }
     
+    @Test
     public void testRemove0() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         map0.put( s0, s1 );
@@ -297,6 +312,7 @@ public class TestOneToManyMap
         assertTrue( map0.isEmpty() );
     }
     
+    @Test
     public void testRemove1() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         map0.put( s0, s1 );
@@ -312,6 +328,7 @@ public class TestOneToManyMap
         assertTrue( map0.isEmpty() );
     }
     
+    @Test
     public void testSize() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         assertEquals( 0, map0.size() );
@@ -329,6 +346,7 @@ public class TestOneToManyMap
         assertEquals( 0, map0.size() );
     }
 
+    @Test
     public void testValues() {
         OneToManyMap<String, String> map0 = new OneToManyMap<>();
         Set<String> vals = new HashSet<>();

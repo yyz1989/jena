@@ -18,18 +18,17 @@
 
 package com.hp.hpl.jena.mem.test;
 
-import com.hp.hpl.jena.rdf.model.*;
+import org.junit.Before;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 public class TestCaseBugs 
             extends TestCaseBasic {
                 
     Model model = null;
 
-    public TestCaseBugs(String name) {
-        super(name);
-    }
-    
-    @Override public void setUp() {
+    @Before public void setUp() {
         model = ModelFactory.createDefaultModel();
     }
     

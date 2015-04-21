@@ -18,52 +18,40 @@
 
 package com.hp.hpl.jena.util;
 
-import com.hp.hpl.jena.util.cache.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import junit.framework.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.hp.hpl.jena.util.cache.Cache;
+import com.hp.hpl.jena.util.cache.CacheManager;
 
 
-public class TestCache extends TestCase
+public class TestCache
     {    
-        
-   public TestCache(String name)
-       { super( name ); }
-    
-    public static TestSuite suite() {
-        TestSuite suite = new TestSuite("Cache");       
-        suite.addTest( new CacheTestCase(CacheManager.RAND));
-        // suite.addTest( new CacheTestCase(CacheManager.ENHNODECACHE));
-        return suite;
-    }   
-           
-    static class CacheTestCase extends TestCase {
-        String cacheType;
-        
-        CacheTestCase(String cacheType) {
-            super( cacheType );
-            this.cacheType = cacheType;
-        }
+    static String cacheType;
 
-        @Override
-        protected void runTest() {
-            testCache();
-        }
-        
+    @BeforeClass
+    public static void setUp() {
+        cacheType = CacheManager.RAND;
+        // cacheType = CacheManager.ENHNODECACHE;
+    }
+    
+    @Test
     public void testCache() {        
-        testCacheCreation(cacheType);
         testCacheSimpleReturn(cacheType);
         testFillTheCache(cacheType);
     }
-        
-    public void testCacheCreation(String type) {
-        Cache c1 = CacheManager.createCache(type, "c1", 100);
-        try {
-            Cache c2 = CacheManager.createCache(type, "c2", 1);
-            assertTrue("Missing error on bad cache size: " + type, false);
-        } catch (Error e) {}
+
+    @Test(expected=Error.class)
+    public void testCacheCreation() {
+        /* Cache c1 = */ CacheManager.createCache(cacheType, "c1", 100);
+        // cache size (1) is too small!
+        /* Cache c2 = */ CacheManager.createCache(cacheType, "c2", 1);
     }
-    
-    public void testCacheSimpleReturn(String type) {
+
+    protected void testCacheSimpleReturn(String type) {
         
         int size = 100;
         // this test does not fill the cache
@@ -94,8 +82,8 @@ public class TestCache extends TestCase
             c1.put(k3,v3);
         }
     }
-    
-    public void testFillTheCache(String type) {
+
+    protected void testFillTheCache(String type) {
         final int size = 100;
         Cache c1 = CacheManager.createCache(type, "c1", size);
         String[] k = new String[size];
@@ -121,6 +109,5 @@ public class TestCache extends TestCase
         assertEquals("count gets", size, c1.getGets());
         assertEquals("count hits", count, c1.getHits());
     }
-    }
-        
 }
+        

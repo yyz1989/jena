@@ -19,25 +19,24 @@
 package com.hp.hpl.jena.mem.test;
 
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 /**
      TestMemPackage
  */
+@RunWith(Suite.class)
+@SuiteClasses({
+    TestGraphTripleStore.class,
+    TestArrayTripleBunch.class,
+    TestWrappedSetTripleBunch.class,
+    TestHashedTripleBunch.class,
+    TestHashedBunchMap.class,
+    TestHashCommon.class
+})
 public class TestMemPackage extends TestCase
     {
-    public TestMemPackage( String name )
-        { super( name ); }
     
-    public static TestSuite suite()
-        { 
-        TestSuite result = new TestSuite();
-        result.addTest( TestGraphTripleStore.suite() );
-        result.addTest( new TestSuite( TestArrayTripleBunch.class ) );
-        result.addTest( new TestSuite( TestWrappedSetTripleBunch.class ) );
-        result.addTest( new TestSuite( TestHashedTripleBunch.class ) );
-        result.addTestSuite( TestHashedBunchMap.class );
-        result.addTestSuite( TestHashCommon.class );
-        return result;
-        }
     }

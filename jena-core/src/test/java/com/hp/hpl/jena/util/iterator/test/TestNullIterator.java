@@ -18,29 +18,32 @@
 
 package com.hp.hpl.jena.util.iterator.test;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
+
 import java.util.NoSuchElementException;
 
-import junit.framework.*;
+import org.junit.Test;
 
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
 import com.hp.hpl.jena.util.iterator.*;
 
 public class TestNullIterator extends ModelTestBase
     {
-    public TestNullIterator( String name ) { super( name ); }
     
-    public static TestSuite suite()
-        { return new TestSuite( TestNullIterator.class ); }
-    
+    @Test
     public void testHasntNext()
         { assertFalse( NullIterator.instance().hasNext() ); }
     
+    @Test
     public void testNextFails()
         { try
             { NullIterator.instance().next(); fail( "should throw NoSuchElementException" ); }
         catch (NoSuchElementException e) { pass(); }
         }
     
+    @Test
     public void testAndThenReturnsArgument()
         {
         ExtendedIterator<Object> it = new NiceIterator<>();

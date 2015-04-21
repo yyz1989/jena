@@ -397,7 +397,7 @@ class WGTestSuite extends TestSuite implements ARPErrorNumbers {
                     Resource config = ModelFactory.createDefaultModel().createResource()
                          .addProperty(ReasonerVocabulary.PROPsetRDFSLevel, "full");
 	            rslt = wgReasoner.runTestDetailedResponse(testID.getURI(),
-	            RDFSRuleReasonerFactory.theInstance(),this,config);
+	            RDFSRuleReasonerFactory.theInstance(),config);
                 }  finally {
                     logResult(testID,rslt);
 	        }

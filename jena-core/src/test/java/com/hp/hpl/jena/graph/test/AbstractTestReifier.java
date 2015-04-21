@@ -18,11 +18,23 @@
 
 package com.hp.hpl.jena.graph.test;
 
-import com.hp.hpl.jena.graph.* ;
-import com.hp.hpl.jena.rdf.model.impl.ReifierStd ;
-import com.hp.hpl.jena.shared.AlreadyReifiedException ;
-import com.hp.hpl.jena.shared.CannotReifyException ;
-import com.hp.hpl.jena.vocabulary.RDF ;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
+
+import com.hp.hpl.jena.graph.Factory;
+import com.hp.hpl.jena.graph.Graph;
+import com.hp.hpl.jena.graph.Node;
+import com.hp.hpl.jena.graph.NodeFactory;
+import com.hp.hpl.jena.graph.Triple;
+import com.hp.hpl.jena.rdf.model.impl.ReifierStd;
+import com.hp.hpl.jena.shared.AlreadyReifiedException;
+import com.hp.hpl.jena.shared.CannotReifyException;
+import com.hp.hpl.jena.vocabulary.RDF;
 
 /**
     Abstract base class for reification tests. 
@@ -30,9 +42,6 @@ import com.hp.hpl.jena.vocabulary.RDF ;
 public abstract class AbstractTestReifier extends GraphTestBase
 {
     protected static final Triple ALL = Triple.ANY;
-
-    public AbstractTestReifier( String name )
-    { super( name ); }
 
     public abstract Graph getGraph();
 
@@ -58,6 +67,7 @@ public abstract class AbstractTestReifier extends GraphTestBase
     /**
         Check that the standard reifier will note, but not hide, reification quads.
      */
+    @Test
     public void testStandard()
     {
         Graph g = getGraph( );
@@ -76,6 +86,7 @@ public abstract class AbstractTestReifier extends GraphTestBase
     /**
         Test that the Standard reifier will expose implicit quads arising from reifyAs().
      */
+    @Test
     public void testStandardExplode()
     {
         Graph g = getGraph( );
@@ -90,6 +101,7 @@ public abstract class AbstractTestReifier extends GraphTestBase
          Ensure that over-specifying a reification means that we don't get a triple
          back. Goodness knows why this test wasn't in right from the beginning.
      */
+    @Test
     public void testOverspecificationSuppressesReification()
     {
         Graph g = getGraph();
@@ -99,16 +111,19 @@ public abstract class AbstractTestReifier extends GraphTestBase
         assertEquals( null, ReifierStd.getTriple( g, node( "x" ) ) );
     }
 
+    @Test
     public void testReificationSubjectClash()
     {
         testReificationClash( "x rdf:subject SS" );
     }    
 
+    @Test
     public void testReificationPredicateClash()
     {
         testReificationClash( "x rdf:predicate PP" );
     }    
 
+    @Test
     public void testReificationObjectClash()
     {
         testReificationClash( "x rdf:object OO" );
@@ -130,6 +145,7 @@ public abstract class AbstractTestReifier extends GraphTestBase
         Test that reifying a triple explicitly has some effect on the graph only for Standard
         reifiers.
      */
+    @Test
     public void testManifestQuads()
     {
         Graph g = getGraph();   
@@ -138,6 +154,7 @@ public abstract class AbstractTestReifier extends GraphTestBase
         assertIsomorphic( graphWith( reified ), g );
     }
 
+    @Test
     public void testHiddenVsReification()
     {
         Graph g = getGraph();
@@ -145,6 +162,7 @@ public abstract class AbstractTestReifier extends GraphTestBase
         assertTrue( ReifierStd.findEither( g , ALL, false ).hasNext() );    
     }
 
+    @Test
     public void testRetrieveTriplesByNode()
     {
         Graph G = getGraph();
@@ -160,6 +178,7 @@ public abstract class AbstractTestReifier extends GraphTestBase
         assertFalse( "node is known unbound", ReifierStd.hasTriple( G, NodeFactory.createURI( "any:thing" ) ) );
     }
 
+    @Test
     public void testRetrieveTriplesByTriple()
     {
         Graph G = getGraph();
@@ -170,6 +189,7 @@ public abstract class AbstractTestReifier extends GraphTestBase
         assertFalse( "R must not have T2", ReifierStd.hasTriple( G, T2 ) );
     }   
 
+    @Test
     public void testReifyAs()
     {
         Graph G = getGraph();
@@ -178,6 +198,7 @@ public abstract class AbstractTestReifier extends GraphTestBase
         assertEquals( "retrieves correctly", triple( "x R y" ), ReifierStd.getTriple( G, X ) );
     }
 
+    @Test
     public void testAllNodes()
     {
         Graph G = getGraph();
@@ -187,6 +208,7 @@ public abstract class AbstractTestReifier extends GraphTestBase
         assertEquals( "", nodeSet( "z y x" ), iteratorToSet( ReifierStd.allNodes(G) ) );
     }
 
+    @Test
     public void testRemoveByNode()
     {
         Graph G = getGraph();
@@ -198,12 +220,14 @@ public abstract class AbstractTestReifier extends GraphTestBase
         assertEquals( "triple Y still there", triple( "y R a" ), ReifierStd.getTriple( G, Y ) );
     }
 
+    @Test
     public void testRemoveFromNothing()
     {
         Graph G = getGraph();
         G.delete( triple( "quint rdf:subject S" ) );
     }
 
+    @Test
     public void testException()
     {
         Graph G = getGraph();
@@ -214,6 +238,7 @@ public abstract class AbstractTestReifier extends GraphTestBase
         catch (AlreadyReifiedException e) { }      
     }
 
+    @Test
     public void testKevinCaseA()
     {
         Graph G = getGraph();
@@ -222,6 +247,7 @@ public abstract class AbstractTestReifier extends GraphTestBase
         ReifierStd.reifyAs( G, X, Triple.create( a, b, c ) ); 
     }
 
+    @Test
     public void testKevinCaseB()
     {
         Graph G = getGraph();
@@ -237,6 +263,7 @@ public abstract class AbstractTestReifier extends GraphTestBase
         { pass(); }
     }
 
+    @Test
     public void testQuadRemove()
     {
         Graph g = getGraph();
@@ -251,6 +278,7 @@ public abstract class AbstractTestReifier extends GraphTestBase
         assertEquals( 0, g.size() );
     }
 
+    @Test
     public void testEmpty()
     {
         Graph g = getGraph();
@@ -261,24 +289,30 @@ public abstract class AbstractTestReifier extends GraphTestBase
         graphAdd( g, "x rdf:object LiteraryCriticism" ); assertFalse( g.isEmpty() );
     }
 
+    @Test
     public void testReifierEmptyFind()
     {
         Graph g = getGraph();
         assertEquals( tripleSet( "" ), ReifierStd.findExposed( g , Triple.ANY ).toSet() );
     }
 
+    @Test
     public void testReifierFindSubject()
     { testReifierFind( "x rdf:subject S" ); }
 
+    @Test
     public void testReifierFindObject()
     { testReifierFind( "x rdf:object O" ); }
 
+    @Test
     public void testReifierFindPredicate()
     { testReifierFind( "x rdf:predicate P" ); }
 
+    @Test
     public void testReifierFindComplete()
     { testReifierFind( "x rdf:predicate P; x rdf:subject S; x rdf:object O; x rdf:type rdf:Statement" ); }
 
+    @Test
     public void testReifierFindFilter()
     { 
         Graph g = getGraph();

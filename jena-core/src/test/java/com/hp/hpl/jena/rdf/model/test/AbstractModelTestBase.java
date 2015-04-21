@@ -18,15 +18,16 @@
 
 package com.hp.hpl.jena.rdf.model.test;
 
-import java.io.FileNotFoundException ;
-import java.io.InputStream ;
-import java.net.URISyntaxException ;
-import java.net.URL ;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 
-import junit.framework.TestCase ;
+import org.junit.After;
+import org.junit.Before;
 
-import com.hp.hpl.jena.rdf.model.Model ;
-import com.hp.hpl.jena.rdf.model.test.helpers.TestingModelFactory ;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.test.helpers.TestingModelFactory;
 
 /**
  * Base for all test cases.
@@ -36,7 +37,7 @@ import com.hp.hpl.jena.rdf.model.test.helpers.TestingModelFactory ;
  * 
  * createModel will create a model using the TestingModelFactory methods.
  */
-public abstract class AbstractModelTestBase extends TestCase
+public abstract class AbstractModelTestBase
 {
 	protected static String getFileName( final String fn )
    	{
@@ -115,15 +116,20 @@ public abstract class AbstractModelTestBase extends TestCase
 	protected Model model;
 
 	protected TestingModelFactory modelFactory;
-
-	public AbstractModelTestBase( final TestingModelFactory modelFactory,
-			final String name )
-	{
-		super(name);
-		this.modelFactory = modelFactory;
+	
+	public AbstractModelTestBase() {
+	    this.modelFactory = new PlainModelFactory();
 	}
 
-	/**
+	public TestingModelFactory getModelFactory() {
+        return modelFactory;
+    }
+
+    public void setModelFactory(TestingModelFactory modelFactory) {
+        this.modelFactory = modelFactory;
+    }
+
+    /**
 	 * Create a new model.
 	 * 
 	 * @return A new model from the modelFactory.
@@ -149,7 +155,7 @@ public abstract class AbstractModelTestBase extends TestCase
 	/**
 	 * sets the model instance variable
 	 */
-	@Override
+	@Before
 	public void setUp() throws Exception
 	{
 		model = createModel();
@@ -158,7 +164,7 @@ public abstract class AbstractModelTestBase extends TestCase
 	/**
 	 * Closes the model instance variable and shuts it down.
 	 */
-	@Override
+	@After
 	public void tearDown() throws Exception
 	{
 		model.close();

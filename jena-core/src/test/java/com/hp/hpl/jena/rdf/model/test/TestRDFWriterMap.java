@@ -18,6 +18,13 @@
 
 package com.hp.hpl.jena.rdf.model.test;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.Jena;
 import com.hp.hpl.jena.n3.N3JenaWriter;
 import com.hp.hpl.jena.n3.N3JenaWriterPP;
@@ -27,16 +34,11 @@ import com.hp.hpl.jena.n3.N3TurtleJenaWriter;
 import com.hp.hpl.jena.rdf.model.RDFWriter;
 import com.hp.hpl.jena.rdf.model.RDFWriterF;
 import com.hp.hpl.jena.rdf.model.impl.NTripleWriter;
-import com.hp.hpl.jena.rdfxml.xmloutput.impl.Abbreviated ;
-import com.hp.hpl.jena.rdfxml.xmloutput.impl.Basic ;
+import com.hp.hpl.jena.rdfxml.xmloutput.impl.Abbreviated;
+import com.hp.hpl.jena.rdfxml.xmloutput.impl.Basic;
 import com.hp.hpl.jena.shared.JenaException;
 import com.hp.hpl.jena.shared.NoWriterForLangException;
 import com.hp.hpl.jena.test.JenaTestBase;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.Assert;
 
 public class TestRDFWriterMap extends JenaTestBase
 {
@@ -154,22 +156,18 @@ public class TestRDFWriterMap extends JenaTestBase
 
 	public static final String N3_TRIPLES = "N3-TRIPLES";
 
-	public TestRDFWriterMap( final String name )
-	{
-		super(name);
-	}
-
+	@Test
 	public void testDefaultWriter()
 	{
 		final RDFWriterF x = new RDFWriterMap(true);
-		Assert.assertEquals(x.getWriter("RDF/XML").getClass(), x.getWriter()
+		assertEquals(x.getWriter("RDF/XML").getClass(), x.getWriter()
 				.getClass());
 	}
 
 	/*
 	 * public void testMe()
 	 * {
-	 * Assert.fail("SPOO");
+	 * fail("SPOO");
 	 * }
 	 */
 
@@ -182,10 +180,11 @@ public class TestRDFWriterMap extends JenaTestBase
 		}
 		catch (final NoWriterForLangException e)
 		{
-			Assert.assertEquals(w, e.getMessage());
+			assertEquals(w, e.getMessage());
 		}
 	}
 
+	@Test
 	public void testWritersAbsent()
 	{
 		testWriterAbsent(TestRDFWriterMap.TURTLE_WRITER);
@@ -202,32 +201,33 @@ public class TestRDFWriterMap extends JenaTestBase
 		testWriterAbsent(TestRDFWriterMap.N3_TRIPLES);
 	}
 
+	@Test
 	public void testWritersPresent()
 	{
 		final RDFWriterF x = new RDFWriterMap(true);
-		Assert.assertEquals(N3TurtleJenaWriter.class,
+		assertEquals(N3TurtleJenaWriter.class,
 				x.getWriter(TestRDFWriterMap.TURTLE_WRITER).getClass());
-		Assert.assertEquals(N3TurtleJenaWriter.class,
+		assertEquals(N3TurtleJenaWriter.class,
 				x.getWriter(TestRDFWriterMap.TURTLE_WRITER_ALT1).getClass());
-		Assert.assertEquals(N3TurtleJenaWriter.class,
+		assertEquals(N3TurtleJenaWriter.class,
 				x.getWriter(TestRDFWriterMap.TURTLE_WRITER_ALT2).getClass());
-		Assert.assertEquals(Basic.class, x.getWriter(TestRDFWriterMap.RDF_XML)
+		assertEquals(Basic.class, x.getWriter(TestRDFWriterMap.RDF_XML)
 				.getClass());
-		Assert.assertEquals(Abbreviated.class,
+		assertEquals(Abbreviated.class,
 				x.getWriter(TestRDFWriterMap.RDF_XML_ABBREV).getClass());
-		Assert.assertEquals(NTripleWriter.class,
+		assertEquals(NTripleWriter.class,
 				x.getWriter(TestRDFWriterMap.NTRIPLE).getClass());
-		Assert.assertEquals(NTripleWriter.class,
+		assertEquals(NTripleWriter.class,
 				x.getWriter(TestRDFWriterMap.NTRIPLES).getClass());
-		Assert.assertEquals(N3JenaWriter.class, x
+		assertEquals(N3JenaWriter.class, x
 				.getWriter(TestRDFWriterMap.N3).getClass());
-		Assert.assertEquals(N3JenaWriterPP.class,
+		assertEquals(N3JenaWriterPP.class,
 				x.getWriter(TestRDFWriterMap.N3_PP).getClass());
-		Assert.assertEquals(N3JenaWriterPlain.class,
+		assertEquals(N3JenaWriterPlain.class,
 				x.getWriter(TestRDFWriterMap.N3_PLAIN).getClass());
-		Assert.assertEquals(N3JenaWriterTriples.class,
+		assertEquals(N3JenaWriterTriples.class,
 				x.getWriter(TestRDFWriterMap.N3_TRIPLE).getClass());
-		Assert.assertEquals(N3JenaWriterTriples.class,
+		assertEquals(N3JenaWriterTriples.class,
 				x.getWriter(TestRDFWriterMap.N3_TRIPLES).getClass());
 	}
 }

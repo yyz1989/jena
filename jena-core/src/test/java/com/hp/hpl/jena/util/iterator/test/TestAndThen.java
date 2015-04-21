@@ -18,9 +18,13 @@
 
 package com.hp.hpl.jena.util.iterator.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List ;
 
-import junit.framework.TestSuite ;
+import org.junit.Test;
 
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase ;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator ;
@@ -29,12 +33,8 @@ import com.hp.hpl.jena.util.iterator.WrappedIterator ;
 
 public class TestAndThen extends ModelTestBase
     {
-    public TestAndThen( String name )
-        { super( name ); }
-    
-    public static TestSuite suite()
-        { return new TestSuite( TestAndThen.class ); }
 
+    @Test
     public void testAndThen()
         { 
         ExtendedIterator<String> L = iteratorOfStrings( "a b c" );
@@ -44,6 +44,7 @@ public class TestAndThen extends ModelTestBase
         assertEquals( listOfStrings( "a b c d e f" ), iteratorToList( L.andThen( R ) ) );
         }
     
+    @Test
     public void testAndThenExtension()
         {
         ExtendedIterator<String> L = iteratorOfStrings( "a b c" );
@@ -56,6 +57,7 @@ public class TestAndThen extends ModelTestBase
         assertEquals( aToI, iteratorToList( LRX ) );
         }
     
+    @Test
     public void testClosingConcatenationClosesRemainingIterators()
         {
         LoggingClosableIterator<String> L = new LoggingClosableIterator<>( iteratorOfStrings( "only" ) );
@@ -68,6 +70,7 @@ public class TestAndThen extends ModelTestBase
         assertTrue( "final iterator should have been closed", R.isClosed() );
         }
     
+    @Test
     public void testRemove1()
     {
         List<String> L = listOfStrings("a b c");
@@ -93,6 +96,7 @@ public class TestAndThen extends ModelTestBase
         assertEquals("def", concatAsString(R));
     }
     
+    @Test
     public void testRemove2()
     {
         List<String> L = listOfStrings("a b c");
@@ -118,6 +122,7 @@ public class TestAndThen extends ModelTestBase
         assertEquals("ef", concatAsString(R));
     }
     
+    @Test
     public void testRemove3()
     {
         List<String> L = listOfStrings("a b c");

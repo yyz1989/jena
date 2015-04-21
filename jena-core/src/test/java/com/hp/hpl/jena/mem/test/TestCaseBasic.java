@@ -18,22 +18,22 @@
 
 package com.hp.hpl.jena.mem.test;
 
+import org.junit.After;
+import org.junit.Before;
+
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 public class TestCaseBasic extends com.hp.hpl.jena.regression.TestCaseBasic {
 
-    public TestCaseBasic(String name) {
-        super(name);
-    }
     
-    @Override
+    @Before
     public void setUp() {
         m1 = ModelFactory.createDefaultModel();
         m2 = ModelFactory.createDefaultModel();
         m3 = ModelFactory.createDefaultModel();
         m4 = ModelFactory.createDefaultModel();
     }
-    @Override
+    @After
     public void tearDown() {
     	m1 = null;
     	m2 = null;

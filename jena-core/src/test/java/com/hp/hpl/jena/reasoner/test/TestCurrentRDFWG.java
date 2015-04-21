@@ -18,26 +18,30 @@
 
 package com.hp.hpl.jena.reasoner.test;
 
-import java.io.IOException ;
+import java.io.IOException;
 
-import junit.framework.TestCase ;
-import junit.framework.TestSuite ;
-import org.slf4j.Logger ;
-import org.slf4j.LoggerFactory ;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-import com.hp.hpl.jena.rdf.model.Model ;
-import com.hp.hpl.jena.rdf.model.ModelFactory ;
-import com.hp.hpl.jena.rdf.model.Resource ;
-import com.hp.hpl.jena.reasoner.ReasonerFactory ;
-import com.hp.hpl.jena.reasoner.rulesys.RDFSRuleReasonerFactory ;
-import com.hp.hpl.jena.shared.impl.JenaParameters ;
-import com.hp.hpl.jena.vocabulary.OWLResults ;
-import com.hp.hpl.jena.vocabulary.RDFS ;
-import com.hp.hpl.jena.vocabulary.ReasonerVocabulary ;
+import org.junit.runner.RunWith;
+import org.junit.runners.AllTests;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.reasoner.ReasonerFactory;
+import com.hp.hpl.jena.reasoner.rulesys.RDFSRuleReasonerFactory;
+import com.hp.hpl.jena.shared.impl.JenaParameters;
+import com.hp.hpl.jena.vocabulary.OWLResults;
+import com.hp.hpl.jena.vocabulary.RDFS;
+import com.hp.hpl.jena.vocabulary.ReasonerVocabulary;
 
 /**
  * Test the default RDFS reasoner against the current set of working group tests
  */
+@RunWith(AllTests.class)
 public class TestCurrentRDFWG extends ReasonerTestBase {
     
     /** Location of the test file directory */
@@ -55,13 +59,6 @@ public class TestCurrentRDFWG extends ReasonerTestBase {
     
     protected static Logger logger = LoggerFactory.getLogger(TestCurrentRDFWG.class);
 
-    /**
-     * Boilerplate for junit
-     */ 
-    public TestCurrentRDFWG( String name ) {
-        super( name ); 
-    }
-   
     /** 
      * Initialize the result model.
      */
@@ -143,7 +140,7 @@ public class TestCurrentRDFWG extends ReasonerTestBase {
          */
         @Override
         public void runTest() throws IOException {
-            boolean success = tester.runTest(test, reasonerFactory, this, config);
+            boolean success = tester.runTest(test, reasonerFactory, config);
 //            Resource resultType = null;
 //             if (test.hasProperty(RDF.type, OWLTest.NegativeEntailmentTest) 
 //             ||  test.hasProperty(RDF.type, OWLTest.ConsistencyTest)) {

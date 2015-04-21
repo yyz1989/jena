@@ -26,22 +26,17 @@ public class TestStoreSpeed extends GraphTestBase
     {
     private long began;
     
-    public TestStoreSpeed( String name )
-        {
-        super( name );
-        }
-
     public static void main( String [] args )
         {
-        new TestStoreSpeed( "vladimir taltos" ) .gonzales( "subject StoreMem", Factory.createGraphMem() );
-        new TestStoreSpeed( "vladimir taltos" ) .gonzales( "normal StoreMem", Factory.createGraphMem() );
-        new TestStoreSpeed( "vladimir taltos" ) .gonzales( "GraphMem", Factory.createGraphMem() );
-        new TestStoreSpeed( "vladimir taltos" ) .gonzales( "subject StoreMem", Factory.createGraphMem() );
-        new TestStoreSpeed( "vladimir taltos" ) .gonzales( "normal StoreMem", Factory.createGraphMem() );
-        new TestStoreSpeed( "vladimir taltos" ) .gonzales( "GraphMem", Factory.createGraphMem() );
-        new TestStoreSpeed( "vladimir taltos" ) .gonzales( "subject StoreMem", Factory.createGraphMem() );
-        new TestStoreSpeed( "vladimir taltos" ) .gonzales( "normal StoreMem", Factory.createGraphMem() );
-        new TestStoreSpeed( "vladimir taltos" ) .gonzales( "GraphMem", Factory.createGraphMem() );
+        new TestStoreSpeed( ) .gonzales( "subject StoreMem", Factory.createGraphMem() );
+        new TestStoreSpeed( ) .gonzales( "normal StoreMem", Factory.createGraphMem() );
+        new TestStoreSpeed( ) .gonzales( "GraphMem", Factory.createGraphMem() );
+        new TestStoreSpeed( ) .gonzales( "subject StoreMem", Factory.createGraphMem() );
+        new TestStoreSpeed( ) .gonzales( "normal StoreMem", Factory.createGraphMem() );
+        new TestStoreSpeed( ) .gonzales( "GraphMem", Factory.createGraphMem() );
+        new TestStoreSpeed( ) .gonzales( "subject StoreMem", Factory.createGraphMem() );
+        new TestStoreSpeed( ) .gonzales( "normal StoreMem", Factory.createGraphMem() );
+        new TestStoreSpeed( ) .gonzales( "GraphMem", Factory.createGraphMem() );
         }
         
     private void mark()

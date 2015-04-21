@@ -18,6 +18,10 @@
 
 package com.hp.hpl.jena.vocabulary.test;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.vocabulary.OWL;
@@ -29,14 +33,14 @@ import com.hp.hpl.jena.vocabulary.OWL2;
 */
 public class TestOWL2Vocabulary extends VocabTestBase
     {
-    public TestOWL2Vocabulary( String name )
-        { super( name ); }
     
+    @Test
     public void testOWL2SharesOWL1URI()
         {
         assertEquals( OWL.getURI(), OWL2.getURI() );
         }
     
+    @Test
     public void testOWL2TermSpellings()
         {
         assertResource( OWL2.AllDifferent, "AllDifferent" );
@@ -118,6 +122,7 @@ public class TestOWL2Vocabulary extends VocabTestBase
         assertProperty( OWL2.withRestrictions, "withRestrictions" );
         }
     
+    @Test
     public void testSharedOWLTerms()
         {
         assertEquals( OWL2.AllDifferent, OWL.AllDifferent );

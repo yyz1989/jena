@@ -18,15 +18,17 @@
 
 package com.hp.hpl.jena.rdf.model.test;
 
+import java.util.Random;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.test.helpers.TestingModelFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
-
-import java.util.Random;
-
-import org.junit.Assert;
 
 public class IsomorphicTests extends AbstractModelTestBase
 {
@@ -237,12 +239,7 @@ public class IsomorphicTests extends AbstractModelTestBase
 
 	private Model model2;
 
-	public IsomorphicTests( final TestingModelFactory modelFactory, final String name )
-	{
-		super(modelFactory, name);
-	}
-
-	@Override
+	@Before
 	public void setUp() throws Exception
 	{
 		super.setUp();
@@ -250,7 +247,7 @@ public class IsomorphicTests extends AbstractModelTestBase
 		model2 = createModel();
 	}
 
-	@Override
+	@After
 	public void tearDown() throws Exception
 	{
 		model.close();
@@ -284,16 +281,19 @@ public class IsomorphicTests extends AbstractModelTestBase
 		}
 	}
 
+	@Test
 	public void test2DiHyperCubeFalse()
 	{
 		test2DiHyperCube(IsomorphicTests.QUANTITY, false);
 	}
 
+	@Test
 	public void test2DiHyperCubeTrue()
 	{
 		test2DiHyperCube(IsomorphicTests.QUANTITY, true);
 	}
 
+	@Test
 	public void test2HyperCube()
 	{
 
@@ -337,11 +337,13 @@ public class IsomorphicTests extends AbstractModelTestBase
 
 	}
 
+	@Test
 	public void test4DiHyperCubeFalse()
 	{
 		test4DiHyperCube(IsomorphicTests.QUANTITY, false);
 	}
 
+	@Test
 	public void test4DiHyperCubeTrue()
 	{
 		test4DiHyperCube(IsomorphicTests.QUANTITY, true);
@@ -372,12 +374,14 @@ public class IsomorphicTests extends AbstractModelTestBase
 		}
 	}
 
+	@Test
 	public void test4HyperCubeFalse()
 	{
 	    // Pragmatically, needs more loops
 		test4HyperCube(2 * IsomorphicTests.QUANTITY, false);
 	}
 
+	@Test
 	public void test4HyperCubeTrue()
 	{
 		test4HyperCube(IsomorphicTests.QUANTITY, true);
@@ -406,11 +410,13 @@ public class IsomorphicTests extends AbstractModelTestBase
 		}
 	}
 
+	@Test
 	public void test4ToggleHyperCubeFalse()
 	{
 		test4ToggleHyperCube(2*IsomorphicTests.QUANTITY, false);
 	}
 
+	@Test
 	public void test4ToggleHyperCubeTrue()
 	{
 		test4ToggleHyperCube(IsomorphicTests.QUANTITY, true);

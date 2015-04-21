@@ -18,6 +18,9 @@
 
 package com.hp.hpl.jena.util;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -25,7 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.TestSuite;
+import org.junit.Test;
 
 import com.hp.hpl.jena.graph.test.GraphTestBase;
 import com.hp.hpl.jena.util.iterator.NullIterator;
@@ -34,22 +37,20 @@ import com.hp.hpl.jena.util.iterator.WrappedIterator;
 
 public class TestIteratorCollection extends GraphTestBase
     {
-    public TestIteratorCollection( String name )
-        { super( name ); }
-
-    public static TestSuite suite()
-        { return new TestSuite( TestIteratorCollection.class ); }
     
+    @Test
     public void testEmptyToEmptySet()
         {
         assertEquals( CollectionFactory.createHashedSet(), IteratorCollection.iteratorToSet( NullIterator.instance() ) );
         }
     
+    @Test
     public void testSingletonToSingleSet()
         {
         assertEquals( oneSet( "single" ), iteratorToSet( new SingletonIterator<>( "single" ) ) );
         }
     
+    @Test
     public void testLotsToSet()
         {
         Object [] elements = new Object[] {"now", "is", "the", "time"};
@@ -57,6 +58,7 @@ public class TestIteratorCollection extends GraphTestBase
         assertEquals( setLots( elements ), IteratorCollection.iteratorToSet( it ) );
         }
     
+    @Test
     public void testCloseForSet()
         {
         testCloseForSet( new Object[] {} );
@@ -65,6 +67,37 @@ public class TestIteratorCollection extends GraphTestBase
         testCloseForSet( new Object[] {"another", "one", "plus", Boolean.FALSE} );
         testCloseForSet( new Object[] {"the", "king", "is", "in", "his", "counting", "house"} );
         }
+   
+    @Test
+    public void testEmptyToEmptyList()
+        {
+        assertEquals( new ArrayList<>(), IteratorCollection.iteratorToList( NullIterator.instance() ) );
+        }
+    
+    @Test
+    public void testSingletonToSingletonList()
+        {
+        assertEquals( oneList( "just one" ), IteratorCollection.iteratorToList( new SingletonIterator<>( "just one" ) ) );
+        }
+    
+    @Test
+    public void testLotsToList()
+        {
+        List<Object> list = Arrays.asList( new Object[] {"to", "be", "or", "not", "to", "be"}  );
+        assertEquals( list, IteratorCollection.iteratorToList( list.iterator() ) );
+        }
+        
+    @Test
+    public void testCloseForList()
+        {
+        testCloseForList( new Object[] {} );
+        testCloseForList( new Object[] {"one"} );
+        testCloseForList( new Object[] {"to", "free", "for"} );
+        testCloseForList( new Object[] {"another", "one", "plus", Boolean.FALSE} );
+        testCloseForList( new Object[] {"the", "king", "is", "in", "his", "counting", "house"} );
+        }
+    
+    // --- internal methods
     
     protected void testCloseForSet( Object[] objects )
         {
@@ -73,31 +106,6 @@ public class TestIteratorCollection extends GraphTestBase
             { @Override public void close() { super.close(); closed[0] = true; } };
         iteratorToSet( iterator );
         assertTrue( closed[0] );
-        }
-
-    public void testEmptyToEmptyList()
-        {
-        assertEquals( new ArrayList<>(), IteratorCollection.iteratorToList( NullIterator.instance() ) );
-        }
-    
-    public void testSingletonToSingletonList()
-        {
-        assertEquals( oneList( "just one" ), IteratorCollection.iteratorToList( new SingletonIterator<>( "just one" ) ) );
-        }
-    
-    public void testLotsToList()
-        {
-        List<Object> list = Arrays.asList( new Object[] {"to", "be", "or", "not", "to", "be"}  );
-        assertEquals( list, IteratorCollection.iteratorToList( list.iterator() ) );
-        }
-        
-    public void testCloseForList()
-        {
-        testCloseForList( new Object[] {} );
-        testCloseForList( new Object[] {"one"} );
-        testCloseForList( new Object[] {"to", "free", "for"} );
-        testCloseForList( new Object[] {"another", "one", "plus", Boolean.FALSE} );
-        testCloseForList( new Object[] {"the", "king", "is", "in", "his", "counting", "house"} );
         }
     
     protected void testCloseForList( Object[] objects )

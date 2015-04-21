@@ -18,25 +18,28 @@
 
 package com.hp.hpl.jena.mem.test;
 
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import com.hp.hpl.jena.graph.*;
-import com.hp.hpl.jena.graph.test.*;
-import com.hp.hpl.jena.mem.GraphMem ;
-import com.hp.hpl.jena.shared.*;
+import org.junit.Test;
+
+import com.hp.hpl.jena.graph.Graph;
+import com.hp.hpl.jena.graph.GraphStatisticsHandler;
+import com.hp.hpl.jena.graph.Node;
+import com.hp.hpl.jena.graph.Triple;
+import com.hp.hpl.jena.graph.test.AbstractTestGraph;
+import com.hp.hpl.jena.mem.GraphMem;
+import com.hp.hpl.jena.shared.JenaException;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 public class TestGraphMem extends AbstractTestGraph
     {
-    public TestGraphMem( String name )
-        { super( name ); }
-    
-    public static TestSuite suite()
-        { return new TestSuite( TestGraphMem.class ); }
-    
     @Override public Graph getGraph()
         { return new GraphMem(); }   
 
+    @Test
     public void testSizeAfterRemove() 
         {
         Graph g = getGraphWith( "x p y" );
@@ -45,6 +48,7 @@ public class TestGraphMem extends AbstractTestGraph
         assertEquals( 0, g.size() );        
         }
     
+    @Test
     public void testContainsConcreteDoesntUseFind()
         {
         Graph g = new GraphMemWithoutFind();
@@ -55,6 +59,7 @@ public class TestGraphMem extends AbstractTestGraph
         assertFalse( g.contains( triple( "y R b" ) ) );
         }    
     
+    @Test
     public void testSingletonStatisticsWithSingleTriple()
         {
         Graph g = getGraphWith( "a P b" );
@@ -70,6 +75,7 @@ public class TestGraphMem extends AbstractTestGraph
         assertEquals( 0L, h.getStatistic( Node.ANY, Node.ANY, node( "y" ) ) );
         }
     
+    @Test
     public void testSingletonStatisticsWithSeveralTriples()
         {
         Graph g = getGraphWith( "a P b; a P c; a Q b; x S y" );
@@ -88,6 +94,7 @@ public class TestGraphMem extends AbstractTestGraph
         assertEquals( 0L, h.getStatistic( Node.ANY, Node.ANY, node( "d" ) ) );
         }
     
+    @Test
     public void testDoubletonStatisticsWithTriples()
         {
         Graph g = getGraphWith( "a P b; a P c; a Q b; x S y" );
@@ -100,6 +107,7 @@ public class TestGraphMem extends AbstractTestGraph
         assertEquals( 0L, h.getStatistic( node( "no" ), node( "P" ), Node.ANY ) );
         }
     
+    @Test
     public void testStatisticsWithOnlyVariables()
         {
         testStatsWithAllVariables( "" );
@@ -115,6 +123,7 @@ public class TestGraphMem extends AbstractTestGraph
         assertEquals( g.size(), h.getStatistic( Node.ANY, Node.ANY, Node.ANY ) );
         }
     
+    @Test
     public void testStatsWithConcreteTriple()
         {
         testStatsWithConcreteTriple( 0, "x P y", "" );

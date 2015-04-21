@@ -18,19 +18,23 @@
 
 package com.hp.hpl.jena.mem.test;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.mem.*;
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
 
 public class TestHashedBunchMap extends ModelTestBase
     { // TODO should extend this a lot
-    public TestHashedBunchMap( String name )
-        { super( name ); }
-    
+
+    @Test
     public void testSize()
         {
         HashCommon<Object> b = new HashedBunchMap();
         }
 
+    @Test
     public void testClearSetsSizeToZero()
         {
         TripleBunch a = new ArrayBunch();

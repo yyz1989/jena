@@ -18,6 +18,8 @@
 
 package com.hp.hpl.jena.rdf.model.test.helpers;
 
+import static org.junit.Assert.fail;
+
 import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.graph.test.GraphTestBase;
 import com.hp.hpl.jena.graph.test.NodeCreateUtils;
@@ -53,9 +55,6 @@ import org.junit.Ignore;
 @Ignore // ignore this class as a test case.
 public class ModelHelper extends GraphTestBase
 {
-	private ModelHelper(String name)
-	{ super(name); }
-
 
 	protected static Model aModel;
 
@@ -218,7 +217,7 @@ public class ModelHelper extends GraphTestBase
 		if (wanted.isIsomorphicWith( got ) == false)
 		{
 			Map<Node, Object> map = CollectionFactory.createHashedMap();
-			fail( title + ": expected " + nice( wanted.getGraph(), map ) + "\n but had " + nice( got.getGraph(), map ) );
+			fail(title + ": expected " + nice( wanted.getGraph(), map ) + "\n but had " + nice( got.getGraph(), map ) );
 		}
 	}
 

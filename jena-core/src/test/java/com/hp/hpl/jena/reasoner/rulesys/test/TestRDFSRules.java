@@ -18,50 +18,40 @@
 
 package com.hp.hpl.jena.reasoner.rulesys.test;
 
-import com.hp.hpl.jena.reasoner.*;
-import com.hp.hpl.jena.reasoner.test.*;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.util.Iterator;
+
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.reasoner.Reasoner;
+import com.hp.hpl.jena.reasoner.ReasonerFactory;
+import com.hp.hpl.jena.reasoner.rulesys.RDFSFBRuleReasonerFactory;
+import com.hp.hpl.jena.reasoner.rulesys.RDFSRuleReasonerFactory;
+import com.hp.hpl.jena.reasoner.test.ReasonerTester;
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
-import com.hp.hpl.jena.reasoner.rulesys.*;
-import com.hp.hpl.jena.rdf.model.*;
-
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import java.io.IOException;
-import java.util.Iterator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /** Test suite to test the production rule version of the RDFS implementation.
  * <p> The tests themselves have been replaced by an updated version
  * of the top level TestRDFSReasoners but this file is maintained for now since
  * the top level timing test can sometimes be useful. </p>
  */
-public class TestRDFSRules extends TestCase {   
+public class TestRDFSRules {   
     /** Base URI for the test names */
     public static final String NAMESPACE = "http://www.hpl.hp.com/semweb/2003/query_tester/";
     
     protected static Logger logger = LoggerFactory.getLogger(TestRDFSRules.class);
     
-    /**
-     * Boilerplate for junit
-     */ 
-    public TestRDFSRules( String name ) {
-        super( name ); 
-    }
-    
-    /**
-     * Boilerplate for junit.
-     * This is its own test suite
-     */
-    public static TestSuite suite() {
-        return new TestSuite(TestRDFSRules.class);
-//        TestSuite suite = new TestSuite();
-//        suite.addTest(new TestRDFSRules( "hiddenTestRDFSReasonerDebug" ));
-//        return suite;
-    }  
-
     /**
      * Test a single RDFS case.
      */
@@ -69,30 +59,33 @@ public class TestRDFSRules extends TestCase {
         ReasonerTester tester = new ReasonerTester("rdfs/manifest-nodirect-noresource.rdf");
         ReasonerFactory rf = RDFSRuleReasonerFactory.theInstance();
         
-        assertTrue("RDFS hybrid-tgc reasoner test", tester.runTest("http://www.hpl.hp.com/semweb/2003/query_tester/rdfs/test11", rf, this, null));
+        assertTrue("RDFS hybrid-tgc reasoner test", tester.runTest("http://www.hpl.hp.com/semweb/2003/query_tester/rdfs/test11", rf, null, true));
     }
 
     /**
      * Test the basic functioning of the hybrid RDFS rule reasoner
      */
+    @Test
     public void testRDFSFBReasoner() throws IOException {
         ReasonerTester tester = new ReasonerTester("rdfs/manifest-nodirect-noresource.rdf");
         ReasonerFactory rf = RDFSFBRuleReasonerFactory.theInstance();
-        assertTrue("RDFS hybrid reasoner tests", tester.runTests(rf, this, null));
+        assertTrue("RDFS hybrid reasoner tests", tester.runTests(rf, null, true));
     }
 
     /**
      * Test the basic functioning of the hybrid RDFS rule reasoner with TGC cache
      */
+    @Test
     public void testRDFSExptReasoner() throws IOException {
         ReasonerTester tester = new ReasonerTester("rdfs/manifest-nodirect-noresource.rdf");
         ReasonerFactory rf = RDFSRuleReasonerFactory.theInstance();
-        assertTrue("RDFS experimental (hybrid+tgc) reasoner tests", tester.runTests(rf, this, null));
+        assertTrue("RDFS experimental (hybrid+tgc) reasoner tests", tester.runTests(rf, null, true));
     }
 
     /**
      * Test the capabilities description.
      */
+    @Test
     public void testRDFSDescription() {
         ReasonerFactory rf = RDFSFBRuleReasonerFactory.theInstance();
         Reasoner r = rf.create(null);

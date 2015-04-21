@@ -18,44 +18,34 @@
 
 package com.hp.hpl.jena.ontology.impl;
 
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-import junit.framework.*;
 
 /**
     Collected test suite for the .ontology.impl package.
 */
-
-public class TestPackage extends TestSuite {
-
-    static public TestSuite suite() {
-        return new TestPackage();
-    }
-
-    /** Creates new TestPackage */
-    private TestPackage() {
-        super("ontology.impl");
-        addTest( "TestOntGraph", TestOntGraph.suite() );
-        addTest( "TestResource", TestResource.suite() );
-        addTest( "TestAxioms", TestAxioms.suite() );
-        addTest( "TestClassExpression", TestClassExpression.suite() );
-        addTest( "TestOntDocumentManager", TestOntDocumentManager.suite() );
-        addTest( "TestOntology", TestOntology.suite() );
-        addTest( "TestProperty", TestProperty.suite() );
-        addTest( "TestListSyntaxCategories", TestListSyntaxCategories.suite() );
-        addTest( "TestCreate", TestCreate.suite() );
-        addTest( "TestIndividual", TestIndividual.suite() );
-        addTest( "TestAllDifferent", TestAllDifferent.suite() );
-        addTestSuite( TestOntModelSpec.class );
-        addTest( new TestSuite( TestOntReasoning.class  ) );
-        addTest( new TestSuite( TestOntModel.class ) );
-        addTest( new TestSuite( TestOntClass.class ));
-        addTest( new TestSuite( TestFrameView.class ));
-        addTest( new TestSuite( TestOntTools.class ));
-    }
-
-    private void addTest(String name, TestSuite tc) {
-        tc.setName(name);
-        addTest(tc);
-    }
+@RunWith(Suite.class)
+@SuiteClasses({
+    TestOntGraph.class,
+    TestResource.class,
+    TestAxioms.class,
+    TestClassExpression.class,
+    TestOntDocumentManager.class,
+    TestOntology.class,
+    TestProperty.class,
+    TestListSyntaxCategories.class,
+    TestCreate.class,
+    TestIndividual.class,
+    TestAllDifferent.class,
+    TestOntModelSpec.class,
+    TestOntReasoning.class,
+    TestOntModel.class,
+    TestOntClass.class,
+    TestFrameView.class,
+    TestOntTools.class
+})
+public class TestPackage  {
 
 }

@@ -19,16 +19,18 @@
 package com.hp.hpl.jena.mem.test;
 
 
-import junit.framework.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-public class TestGraphMemPackage extends TestCase
-    {
-    public static TestSuite suite()
-        { 
-        TestSuite result = new TestSuite();
-        result.addTest( TestGraphMem.suite() );
-        result.addTest( TestGraphMem2.suite() );
-        result.addTest( TestConcurrentModificationException.suite() );
-        return result;
-        }
-    }
+@RunWith(Suite.class)
+@SuiteClasses({
+    TestGraphMem.class,
+    TestGraphMem2.class,
+    TestConcurrentModificationException.TestArrayBunchCME.class,
+    TestConcurrentModificationException.TestHashedBunchCME.class,
+    TestConcurrentModificationException.TestSetBunchCME.class
+})
+public class TestGraphMemPackage {
+    
+}

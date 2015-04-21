@@ -18,14 +18,22 @@
 
 package com.hp.hpl.jena.reasoner.rulesys.test;
 
-import java.util.*;
+import static org.junit.Assert.assertEquals;
 
-import junit.framework.TestSuite;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import com.hp.hpl.jena.rdf.model.*;
+import org.junit.Test;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
-import com.hp.hpl.jena.reasoner.*;
-import com.hp.hpl.jena.reasoner.rulesys.*;
+import com.hp.hpl.jena.reasoner.Reasoner;
+import com.hp.hpl.jena.reasoner.ReasonerFactory;
+import com.hp.hpl.jena.reasoner.rulesys.GenericRuleReasoner;
+import com.hp.hpl.jena.reasoner.rulesys.Rule;
 import com.hp.hpl.jena.reasoner.rulesys.impl.WrappedReasonerFactory;
 
 /**
@@ -34,14 +42,9 @@ import com.hp.hpl.jena.reasoner.rulesys.impl.WrappedReasonerFactory;
 public class TestSetRules extends ModelTestBase
     {
 
-    public TestSetRules( String name )
-        { super( name ); }
-    
-    public static TestSuite suite()
-        { return new TestSuite( TestSetRules.class ); }
-
     static final List<Rule> rules = Rule.parseRules( "[name: (?s owl:foo ?p) -> (?s ?p ?a)]" );
     
+    @Test
     public void testRuleReasonerWrapper()
         {
         MockFactory mock = new MockFactory();

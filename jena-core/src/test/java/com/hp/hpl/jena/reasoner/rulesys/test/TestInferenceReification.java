@@ -18,6 +18,11 @@
 
 package com.hp.hpl.jena.reasoner.rulesys.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.List;
 
 import com.hp.hpl.jena.graph.*;
@@ -28,24 +33,8 @@ import com.hp.hpl.jena.reasoner.rulesys.*;
 import com.hp.hpl.jena.reasoner.test.TestUtil;
 import com.hp.hpl.jena.util.PrintUtil;
 
-import junit.framework.TestSuite;
-
 public class TestInferenceReification extends AbstractTestReifier 
     {
-    /**
-     * Boilerplate for junit
-     */ 
-    public TestInferenceReification( String name ) {
-        super( name ); 
-    }
-    
-    /**
-     * Boilerplate for junit.
-     * This is its own test suite
-     */
-    public static TestSuite suite() {
-        return new TestSuite( TestInferenceReification.class ); 
-    }  
     
     @Override
     public Graph getGraph()
@@ -81,7 +70,7 @@ public class TestInferenceReification extends AbstractTestReifier
         Model m = makeInfModel(rules, "r1 rdf:type rdf:Statement; r1 rdf:subject foo; r1 rdf:predicate p" );
         RSIterator i = m.listReifiedStatements();
         assertTrue(i.hasNext());
-        assertEquals( triple("foo p bar"), i.nextRS().getStatement().asTriple());
+        assertEquals(triple("foo p bar"), i.nextRS().getStatement().asTriple());
         assertFalse(i.hasNext());
     }
     

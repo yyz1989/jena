@@ -19,15 +19,17 @@
 package com.hp.hpl.jena.util.iterator.test;
 
 
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
 import com.hp.hpl.jena.util.iterator.*;
 
 public class TestMapIterators extends ModelTestBase
     {
-    
-    public TestMapIterators( String name )
-        { super( name ); }
 
+    @Test
     public void testCloseClosesBaseIterator()
         {
         Map1<String, String> map = new Map1<String, String>() 

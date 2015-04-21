@@ -18,6 +18,14 @@
 
 package com.hp.hpl.jena.assembler.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.assembler.*;
 import com.hp.hpl.jena.assembler.assemblers.*;
 import com.hp.hpl.jena.assembler.assemblers.AssemblerGroup.ExpandingAssemblerGroup;
@@ -29,8 +37,6 @@ import com.hp.hpl.jena.vocabulary.RDFS;
 
 public class TestAssemblerGroup extends AssemblerTestBase
     {
-    public TestAssemblerGroup( String name )
-        { super( name );  }
 
     @Override protected Class<? extends Assembler> getAssemblerClass()
         { return AssemblerGroup.class; }
@@ -69,6 +75,7 @@ public class TestAssemblerGroup extends AssemblerTestBase
         static { loaded = true; }
         }
     
+    @Test
     public void testLoadsClasses()
         {
         AssemblerGroup a = AssemblerGroup.create();
@@ -86,6 +93,7 @@ public class TestAssemblerGroup extends AssemblerTestBase
             { return "mockmockmock"; }
         }
     
+    @Test
     public void testSingletonAssemblerGroup()
         {
         AssemblerGroup a = AssemblerGroup.create();
@@ -94,6 +102,7 @@ public class TestAssemblerGroup extends AssemblerTestBase
         checkFailsType( a, "js:DefaultModel" );
         }
     
+    @Test
     public void testMultipleAssemblerGroup()
         {
         AssemblerGroup a = AssemblerGroup.create();
@@ -104,6 +113,7 @@ public class TestAssemblerGroup extends AssemblerTestBase
         checkFailsType( a, "js:DefaultModel" );
         }
     
+    @Test
     public void testImpliedType()
         {
         AssemblerGroup a = AssemblerGroup.create();
@@ -113,6 +123,7 @@ public class TestAssemblerGroup extends AssemblerTestBase
         assertSame( expected, a.open( root ) );
         }
     
+    @Test
     public void testBuiltinGroup()
         {
         AssemblerGroup g = Assembler.general;
@@ -128,6 +139,7 @@ public class TestAssemblerGroup extends AssemblerTestBase
             { return null; }
         };
     
+    @Test
     public void testAddingImplAddsSubclass()
         {
         final Model [] fullModel = new Model[1];
@@ -153,6 +165,7 @@ public class TestAssemblerGroup extends AssemblerTestBase
             }
         }
     
+    @Test
     public void testClassesLoadedBeforeAddingTypes()
         {
         String className = ImplementsSPOO.class.getName();
@@ -174,6 +187,7 @@ public class TestAssemblerGroup extends AssemblerTestBase
             fail( "expected a Model, but got a " + object.getClass() );
         }
     
+    @Test
     public void testPassesSelfIn()
         {
         final AssemblerGroup group = AssemblerGroup.create();
@@ -191,6 +205,7 @@ public class TestAssemblerGroup extends AssemblerTestBase
         assertSame( result, group.open( resourceInModel( "x rdf:type ja:Object" ) ) );
         }
     
+    @Test
     public void testCopyPreservesMapping()
         {
         AssemblerGroup initial = AssemblerGroup

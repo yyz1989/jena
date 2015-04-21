@@ -18,18 +18,17 @@
 
 package com.hp.hpl.jena.vocabulary.test;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
 import com.hp.hpl.jena.vocabulary.*;
-import junit.framework.*;
 
 public class TestVocabRDFS extends ModelTestBase
     {
-    public TestVocabRDFS(String name)
-        {  super(name); }
 
-    public static TestSuite suite()
-        { return new TestSuite( TestVocabRDFS.class ); }
-
+    @Test
     public void testVocabRDFS()
         {
         String ns = "http://www.w3.org/2000/01/rdf-schema#";
@@ -51,6 +50,7 @@ public class TestVocabRDFS extends ModelTestBase
         assertEquals( ns + "member", RDFS.member.getURI() );
         }
 
+    @Test
 	public void testNodes()
 		{
         assertEquals( RDFS.Class.asNode(), RDFS.Nodes.Class );

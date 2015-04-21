@@ -23,13 +23,26 @@ package com.hp.hpl.jena.util.iterator.test;
 
 // Imports
 ///////////////
-import com.hp.hpl.jena.rdf.model.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.util.ResourceUtils;
 import com.hp.hpl.jena.vocabulary.RDFS;
-import com.hp.hpl.jena.util.*;
-
-import junit.framework.*;
-
-import java.util.*;
 
 
 /**
@@ -38,7 +51,6 @@ import java.util.*;
  * </p>
  */
 public class TestResourceUtils
-    extends TestCase
 {
     // Constants
     //////////////////////////////////
@@ -54,13 +66,10 @@ public class TestResourceUtils
     // Constructors
     //////////////////////////////////
 
-    public TestResourceUtils( String name ) {
-        super( name );
-    }
-
     // External signature methods
     //////////////////////////////////
 
+    @Test
     public void testMaximalLowerElements() {
         Model m = ModelFactory.createDefaultModel();
 
@@ -85,6 +94,7 @@ public class TestResourceUtils
         assertEquals( "Result should be a", c, ResourceUtils.maximalLowerElements( cd, RDFS.subClassOf, true ).iterator().next() );
     }
     
+    @Test
     public void testRenameResource() {
         testRenameResource( ModelFactory.createDefaultModel() );
     }
@@ -143,6 +153,7 @@ public class TestResourceUtils
         assertTrue( "f1 has p f1", f1.hasProperty( p, f1 ) );
         }
 
+    @Test
     public void testReachableGraphClosure() {
         Model m0 = ModelFactory.createDefaultModel();
         Resource a = m0.createResource( "a" );
@@ -166,6 +177,7 @@ public class TestResourceUtils
         assertTrue( "m1 should be isomorphic with the reachable sub-graph from a", m1.isIsomorphicWith( ResourceUtils.reachableClosure(a)));
     }
 
+    @Test
     public void testRemoveEquiv() {
         Model m = ModelFactory.createDefaultModel();
 
@@ -198,12 +210,14 @@ public class TestResourceUtils
         List<Resource> out = null;
         assertTrue( in.equals( abcde ) );
         assertFalse( in.equals( cde ));
+        assertFalse( in.equals( abde ));
         assertNull( out );
 
         out = ResourceUtils.removeEquiv( in, RDFS.subClassOf, a );
 
         assertFalse( in.equals( abcde ) );
         assertTrue( in.equals( cde ));
+        assertFalse( in.equals( abde ));
         assertNotNull( out );
         assertEquals( out, ab );
 
@@ -215,6 +229,7 @@ public class TestResourceUtils
         assertEquals( out, de );
     }
 
+    @Test
     public void testPartition() {
         Model m = ModelFactory.createDefaultModel();
 

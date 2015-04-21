@@ -19,21 +19,21 @@
 package com.hp.hpl.jena.reasoner.rulesys.test;
 
 import java.io.IOException;
+import java.util.List;
 
-import com.hp.hpl.jena.reasoner.*;
-import com.hp.hpl.jena.reasoner.rulesys.*;
-import com.hp.hpl.jena.reasoner.test.ReasonerTester;
-
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.*;
+
+import com.hp.hpl.jena.reasoner.Reasoner;
+import com.hp.hpl.jena.reasoner.rulesys.FBRuleReasoner;
+import com.hp.hpl.jena.reasoner.rulesys.Rule;
+import com.hp.hpl.jena.reasoner.test.ReasonerTester;
 
 /**
  *  Test an FB hyrid using the emerging LP engine on the basic RDFS tests.
  */
-public class TestLPRDFS extends TestCase {
+public class TestLPRDFS {
     
     /** The location of the OWL rule definitions on the class path */
     public static final String RULE_FILE = "etc/rdfs-fb-lp-expt.rules";
@@ -45,101 +45,93 @@ public class TestLPRDFS extends TestCase {
     protected ReasonerTester tester;
      
     static Logger logger = LoggerFactory.getLogger(TestLPRDFS.class);
-    
-    /**
-     * Boilerplate for junit
-     */ 
-    public TestLPRDFS( String name ) {
-        super( name ); 
-    }
-    
-    /**
-     * Boilerplate for junit.
-     * This is its own test suite
-     */
-    public static TestSuite suite() {
-        return new TestSuite(TestLPRDFS.class);
-//        TestSuite suite = new TestSuite();
-//        try {
-//            TestRDFSReasoners.constructQuerytests(
-//                        suite,
-//                        "rdfs/manifest-nodirect-noresource.rdf", 
-//                        makeReasoner());            
-//       } catch (IOException e) {
-//           // failed to even built the test harness
-//           logger.error("Failed to construct RDFS test harness", e);
-//       }
-//       return suite;
-   }  
-   
+
+    @Test
     public void test1()  throws IOException {
         doTest("test1");
     }
    
+    @Test
     public void test2()  throws IOException {
         doTest("test2");
     }
    
+    @Test
     public void test3()  throws IOException {
         doTest("test3");
     }
    
+    @Test
     public void test4()  throws IOException {
         doTest("test4");
     }
    
+    @Test
     public void test5()  throws IOException {
         doTest("test5");
     }
    
+    @Test
     public void test6()  throws IOException {
         doTest("test6");
     }
    
+    @Test
     public void test7()  throws IOException {
         doTest("test7");
     }
    
+    @Test
     public void test8()  throws IOException {
         doTest("test8");
     }
    
+    @Test
     public void test9()  throws IOException {
         doTest("test9");
     }
    
+    @Test
     public void test10()  throws IOException {
         doTest("test10");
     }
-   
+
+    @Test
     public void test11()  throws IOException {
         doTest("test11");
     }
    
+    @Test
     public void test12()  throws IOException {
         doTest("test12");
     }
    
+    @Test
     public void test13()  throws IOException {
         doTest("test13");
     }
    
+    @Test
     public void test14()  throws IOException {
         doTest("test14");
     }
    
+    @Test
     public void test15()  throws IOException {
         doTest("test15");
     }
    
+    @Test
     public void test16()  throws IOException {
         doTest("test16");
     }
    
+    @Test
     public void test18()  throws IOException {
         doTest("test18");
     }
    
+    @Test
     public void test20()  throws IOException {
         doTest("test20");
     }
@@ -149,7 +141,7 @@ public class TestLPRDFS extends TestCase {
      */
     public void doTest(String name) throws IOException {
         ReasonerTester tester = new ReasonerTester("rdfs/manifest-nodirect-noresource.rdf");
-        tester.runTest(ReasonerTester.BASE_URI + "rdfs/" + name, makeReasoner(), this);
+        tester.runTest(ReasonerTester.BASE_URI + "rdfs/" + name, makeReasoner(), true);
     }
     
     /**

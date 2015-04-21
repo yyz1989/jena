@@ -19,8 +19,10 @@
 package com.hp.hpl.jena.test;
 
 import static jena.cmdline.CmdLineUtils.setLog4jConfiguration;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 import com.hp.hpl.jena.assembler.test.TestAssemblerPackage;
 
@@ -30,42 +32,33 @@ import com.hp.hpl.jena.assembler.test.TestAssemblerPackage;
  * Note, it is better to name your test suites on creation
  * rather than in this file.
  */
-public class TestPackage extends TestCase {
+@RunWith(Suite.class)
+@SuiteClasses({
+    TestSystemSetup.class,
+    com.hp.hpl.jena.enhanced.test.TestPackage.class,
+    com.hp.hpl.jena.datatypes.TestPackage.class,
+    com.hp.hpl.jena.graph.test.TestPackage.class,
+    com.hp.hpl.jena.mem.test.TestMemPackage.class,
+    com.hp.hpl.jena.mem.test.TestGraphMemPackage.class,
+    com.hp.hpl.jena.rdf.model.test.TestPackage.class,
+    com.hp.hpl.jena.n3.N3TestSuite.class,
+    com.hp.hpl.jena.n3.turtle.TurtleTestSuite.class,
+    com.hp.hpl.jena.rdfxml.xmloutput.TestPackage.class,
+    com.hp.hpl.jena.util.TestPackage.class,
+    com.hp.hpl.jena.util.iterator.test.TestPackage.class,
+    TestAssemblerPackage.class,
+    com.hp.hpl.jena.rdfxml.xmlinput.TestPackage.class,
+    com.hp.hpl.jena.vocabulary.test.TestVocabularies.class,
+    com.hp.hpl.jena.shared.TestSharedPackage.class,
+    com.hp.hpl.jena.reasoner.test.TestPackage.class,
+    com.hp.hpl.jena.graph.compose.test.TestPackage.class,
+    com.hp.hpl.jena.ontology.impl.TestPackage.class,
+    jena.test.TestPackage.class
+})
+public class TestPackage {
 
     static {
     	setLog4jConfiguration(JenaTest.log4jFilenameTests) ;
     }
 	
-    static public TestSuite suite() {
-        TestSuite ts = new TestSuite() ;
-        ts.setName("Jena") ;
-        addTest(ts,  "System setup", TestSystemSetup.suite());
-        addTest(ts,  "Enhanced", com.hp.hpl.jena.enhanced.test.TestPackage.suite());
-        addTest(ts,  "Datatypes", com.hp.hpl.jena.datatypes.TestPackage.suite()) ;
-        addTest(ts,  "Graph", com.hp.hpl.jena.graph.test.TestPackage.suite());
-        addTest(ts,  "Mem", com.hp.hpl.jena.mem.test.TestMemPackage.suite() );
-        addTest(ts,  "Mem2", com.hp.hpl.jena.mem.test.TestGraphMemPackage.suite() );
-        addTest(ts,  "Model", com.hp.hpl.jena.rdf.model.test.TestPackage.suite());
-        addTest(ts,  "N3", com.hp.hpl.jena.n3.N3TestSuite.suite());
-        addTest(ts,  "Turtle", com.hp.hpl.jena.n3.turtle.TurtleTestSuite.suite()) ;
-        addTest(ts,  "XML Output", com.hp.hpl.jena.rdfxml.xmloutput.TestPackage.suite());
-        addTest(ts,  "Util", com.hp.hpl.jena.util.TestPackage.suite());
-        addTest(ts,  "Jena iterator", com.hp.hpl.jena.util.iterator.test.TestPackage.suite() );
-        addTest(ts,  "Assembler", TestAssemblerPackage.suite() );
-        addTest(ts,  "ARP", com.hp.hpl.jena.rdfxml.xmlinput.TestPackage.suite());
-        addTest(ts,  "Vocabularies", com.hp.hpl.jena.vocabulary.test.TestVocabularies.suite() );
-        addTest(ts,  "Shared", com.hp.hpl.jena.shared.TestSharedPackage.suite() );
-        addTest(ts,  "Reasoners", com.hp.hpl.jena.reasoner.test.TestPackage.suite());
-        addTest(ts,  "Composed graphs", com.hp.hpl.jena.graph.compose.test.TestPackage.suite() );
-        addTest(ts,  "Ontology", com.hp.hpl.jena.ontology.impl.TestPackage.suite() );
-        addTest(ts,  "cmd line utils", jena.test.TestPackage.suite() );
-        return ts ;
-    }
-
-    private static void addTest(TestSuite ts, String name, TestSuite tc) {
-        if ( name != null )
-            tc.setName(name);
-        ts.addTest(tc);
-    }
-
 }

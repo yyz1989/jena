@@ -18,17 +18,14 @@
 
 package com.hp.hpl.jena.vocabulary.test;
 
-import com.hp.hpl.jena.vocabulary.*;
-import junit.framework.*;
+import org.junit.Test;
+
+import com.hp.hpl.jena.vocabulary.DB;
 
 public class TestVocabDB extends VocabTestBase
     {
-    public TestVocabDB(String name)
-        { super(name); }
 
-    public static TestSuite suite()
-        { return new TestSuite( TestVocabDB.class ); }
-
+    @Test
     public void testXX()
         {
 		String ns = "http://jena.hpl.hp.com/2003/04/DB#";

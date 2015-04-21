@@ -18,7 +18,9 @@
 
 package com.hp.hpl.jena.reasoner.test;
 
-import junit.framework.*;
+import static org.junit.Assert.assertSame;
+
+import org.junit.Test;
 
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
@@ -31,17 +33,13 @@ import com.hp.hpl.jena.reasoner.InfGraph;
 */
 public class TestInfPrefixMapping extends ModelTestBase
     {
-    public TestInfPrefixMapping( String name )
-        { super( name ); }
-    
-    public static TestSuite suite()
-        { return new TestSuite( TestInfPrefixMapping.class ); }
     
     private InfGraph getInfGraph()
         {
         return (InfGraph) ModelFactory.createOntologyModel().getGraph();
         }
     
+    @Test
     public void testInfGraph()
         {
         InfGraph ig = getInfGraph();

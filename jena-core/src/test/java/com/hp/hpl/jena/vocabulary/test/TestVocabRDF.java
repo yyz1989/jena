@@ -18,17 +18,15 @@
 
 package com.hp.hpl.jena.vocabulary.test;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
 import com.hp.hpl.jena.vocabulary.*;
-import junit.framework.*;
 
 public class TestVocabRDF extends ModelTestBase
     {
-    public TestVocabRDF(String name)
-        { super(name); }
-
-     public static TestSuite suite()
-        { return new TestSuite( TestVocabRDF.class ); }
 
     /**
         The correct namespace for RDF. It is *important* that this be a literal
@@ -41,6 +39,7 @@ public class TestVocabRDF extends ModelTestBase
         Tests that the RDF vocabulary identifiers are what they're supposed to be.
         TODO arrange that we detect if there are any other identifiers in the class.
     */
+    @Test
     public void testRDFVocabulary()
         {
         String ns = RDFns;
@@ -65,6 +64,7 @@ public class TestVocabRDF extends ModelTestBase
         Test that the RDF.li() method generates the correct strings for a few
         plausible test cases.
     */
+    @Test
     public void testLI()
         {
         String ns = RDFns;
@@ -77,6 +77,7 @@ public class TestVocabRDF extends ModelTestBase
         assertEquals( ns + "_32768", RDF.li(32768).getURI() );
         }
 
+    @Test
     public void testNodes()
         {
         assertEquals( RDF.Alt.asNode(), RDF.Nodes.Alt );

@@ -23,20 +23,27 @@ package com.hp.hpl.jena.util.iterator.test;
     some fake base iterator to do the checking, and _close_, ditto.
 */
 
-import com.hp.hpl.jena.graph.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.Arrays;
+import java.util.Iterator;
+
+import org.junit.Test;
+
+import com.hp.hpl.jena.graph.Node;
+import com.hp.hpl.jena.graph.Triple;
 import com.hp.hpl.jena.graph.test.GraphTestBase;
-import com.hp.hpl.jena.util.iterator.*;
-import java.util.*;
-import junit.framework.*;
+import com.hp.hpl.jena.util.iterator.ExtendedIterator;
+import com.hp.hpl.jena.util.iterator.WrappedIterator;
 
 public class TestWrappedIterator extends GraphTestBase
     {
-    public static TestSuite suite()
-        { return new TestSuite( TestWrappedIterator.class ); }   
-            
-    public TestWrappedIterator(String name)
-        { super(name); }
 
+    @Test
     public void testWrappedIterator()
         {
         Iterator<String> i = Arrays.asList( new String [] {"bill", "and", "ben"} ).iterator();
@@ -50,12 +57,14 @@ public class TestWrappedIterator extends GraphTestBase
         assertFalse( "wrapper is now empty", e.hasNext() );
         }
     
+    @Test
     public void testUnwrapExtendedIterator()
         {
         ExtendedIterator<Triple> i = graphWith( "a R b" ).find( Triple.ANY );
         assertSame( i, WrappedIterator.create( i ) );
         }
     
+    @Test
     public void testWrappedNoRemove()
         {
         Iterator<Node> base = nodeSet( "a b c" ).iterator();

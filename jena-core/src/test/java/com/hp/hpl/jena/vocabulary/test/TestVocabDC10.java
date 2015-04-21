@@ -18,17 +18,14 @@
 
 package com.hp.hpl.jena.vocabulary.test;
 
-import com.hp.hpl.jena.vocabulary.*;
-import junit.framework.*;
+import org.junit.Test;
+
+import com.hp.hpl.jena.vocabulary.DC_10;
 
 public class TestVocabDC10 extends VocabTestBase
     {
-    public TestVocabDC10(String name)
-    	{ super(name); }
 
-	public static TestSuite suite()
-		{ return new TestSuite( TestVocabDC10.class ); }
-
+	@Test
 	public void testDC10()
 		{
 		String ns = "http://purl.org/dc/elements/1.0/";

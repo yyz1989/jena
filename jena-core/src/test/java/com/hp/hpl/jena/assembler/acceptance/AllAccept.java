@@ -22,7 +22,7 @@ import java.io.File ;
 import java.io.FileOutputStream ;
 import java.io.IOException ;
 
-import junit.framework.TestSuite ;
+import org.junit.Test;
 
 import com.hp.hpl.jena.assembler.Assembler ;
 import com.hp.hpl.jena.assembler.test.AssemblerTestBase ;
@@ -34,16 +34,7 @@ import com.hp.hpl.jena.util.FileUtils ;
 
 public class AllAccept extends AssemblerTestBase
     {
-    public AllAccept( String name )
-        { super( name ); }
-    
-    public static TestSuite suite()
-        {
-        TestSuite result = new TestSuite();
-        result.addTestSuite( AllAccept.class );
-        return result;
-        }
-    
+    @Test
     public void testUnadornedInferenceModel()
         {
         Resource root = resourceInModel( "x ja:reasoner R; R rdf:type ja:ReasonerFactory" );
@@ -54,6 +45,7 @@ public class AllAccept extends AssemblerTestBase
         assertInstanceOf( GenericRuleReasoner.class, inf.getReasoner() );
         }
     
+    @Test
     public void testWithContent() throws IOException
         {
         File f = FileUtils.tempFileName( "assembler-acceptance-", ".n3" );

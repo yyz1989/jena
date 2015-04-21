@@ -18,6 +18,10 @@
 
 package com.hp.hpl.jena.util;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.rdf.model.test.ModelTestBase;
 
 public class TestLocators extends ModelTestBase
@@ -25,9 +29,7 @@ public class TestLocators extends ModelTestBase
     private static final ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
     private static final ClassLoader otherClassLoader = new ClassLoader() {};
 
-    public TestLocators( String name )
-        { super( name ); }
-    
+    @Test
     public void testClassLoaderLocatorEquality()
         {
         Locator A1 = new LocatorClassLoader( systemClassLoader );
@@ -50,12 +52,14 @@ public class TestLocators extends ModelTestBase
         assertDiffer( B, A1 );
         }
     
+    @Test
     public void testClassLoaderLocatorHashcode()
         {
         assertEquals( systemClassLoader.hashCode(), new LocatorClassLoader( systemClassLoader ).hashCode() );
         assertEquals( otherClassLoader.hashCode(), new LocatorClassLoader( otherClassLoader ).hashCode() );
         }
     
+    @Test
     public void testLocatorFileEquality()
         {
         Locator A1 = new LocatorFile( "foo/bar" );
@@ -64,6 +68,7 @@ public class TestLocators extends ModelTestBase
         testLocatorEquality( A1, A2, B );
         }
     
+    @Test
     public void testLocatorFileHashcode()
         {
         testLocatorFileHashCode( "foo/bar" );
@@ -76,6 +81,7 @@ public class TestLocators extends ModelTestBase
         assertEquals( dirName.hashCode(), new LocatorFile( dirName ).hashCode() );
         }
     
+    @Test
     public void testLocatorURLEquality()
         {
         Locator A1 = new LocatorURL();
@@ -88,6 +94,7 @@ public class TestLocators extends ModelTestBase
         There all equal. Pick a value that will at least be discriminating among
         other types (so `0` isn't a good answer).
      */
+    @Test
     public void testLocatorURLHashcode()
         {
         assertEquals( LocatorURL.class.hashCode(), new LocatorURL().hashCode() );

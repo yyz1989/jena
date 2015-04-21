@@ -30,6 +30,8 @@ import com.hp.hpl.jena.rdf.model.Statement ;
 
 /**
  * Collection of utilities to assist with unit testing.
+ *
+ * TODO: remove JUnit 3 imports once JENA-380 is solved
  */
 public class TestUtil {
     

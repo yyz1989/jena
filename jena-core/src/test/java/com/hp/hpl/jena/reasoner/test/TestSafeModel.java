@@ -20,6 +20,8 @@ package com.hp.hpl.jena.reasoner.test;
 
 import java.util.List;
 
+import org.junit.Test;
+
 import com.hp.hpl.jena.graph.Graph;
 import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.graph.Triple;
@@ -35,36 +37,20 @@ import com.hp.hpl.jena.reasoner.rulesys.Rule;
 import com.hp.hpl.jena.reasoner.rulesys.impl.SafeGraph;
 
 import static com.hp.hpl.jena.util.PrintUtil.egNS;
-
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Some Jena reasoners support extended graphs which relax the RDF syntactic constraints
  * against literals in the subject position. By default getDeductionsModel in those
  * cases will return a SafeModel 
  */
-public class TestSafeModel  extends TestCase {
-    
-    /**
-     * Boilerplate for junit
-     */ 
-    public TestSafeModel( String name ) {
-        super( name ); 
-    }
-    
-    /**
-     * Boilerplate for junit.
-     * This is its own test suite
-     */
-    public static TestSuite suite() {
-        return new TestSuite(TestSafeModel.class);
-    }  
+public class TestSafeModel {
 
     /**
      * Create a generalized model via inference and check it is
      * safe but unwrappable
      */
+    @Test
     public void testBasics() {
         Model base = ModelFactory.createDefaultModel();
         Resource r = base.createResource(egNS + "r");
@@ -77,17 +63,17 @@ public class TestSafeModel  extends TestCase {
         List<Rule> rules = Rule.parseRules("(?r eg:p ?v) -> (?v eg:q ?r).");
         GenericRuleReasoner reasoner = new GenericRuleReasoner(rules);
         InfModel inf = ModelFactory.createInfModel(reasoner, base);
-        TestUtil.assertIteratorValues(this, inf.listStatements(), new Statement[]{asserted});
+        TestUtil.assertIteratorValues(TestSafeModel.class, "TestSafeModel", inf.listStatements(), new Statement[]{asserted});
         
         Model deductions = inf.getDeductionsModel();
-        TestUtil.assertIteratorValues(this, deductions.listStatements(), new Statement[]{});
+        TestUtil.assertIteratorValues(TestSafeModel.class, "TestSafeModel", deductions.listStatements(), new Statement[]{});
         
         Graph safeGraph = deductions.getGraph();
         assertTrue(safeGraph instanceof SafeGraph);
         
         Graph rawGraph = ((SafeGraph)safeGraph).getRawGraph();
         Triple deduction = new Triple(l.asNode(), q.asNode(), r.asNode());
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestSafeModel.class, "TestSafeModel", 
                 rawGraph.find(Node.ANY, Node.ANY, Node.ANY), 
                 new Triple[]{deduction});
     }

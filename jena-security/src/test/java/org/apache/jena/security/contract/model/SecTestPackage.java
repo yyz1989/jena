@@ -28,8 +28,6 @@ import com.hp.hpl.jena.util.FileUtils;
 
 import java.lang.reflect.InvocationTargetException;
 
-import junit.framework.TestSuite;
-
 import org.apache.jena.atlas.web.TypedInputStream;
 import org.apache.jena.riot.system.stream.Locator;
 import org.apache.jena.riot.system.stream.StreamManager;
@@ -40,14 +38,8 @@ import org.apache.jena.security.SecurityEvaluator;
 /**
  * Test package to test Model implementation.
  */
-//@RunWith(ModelTestSuite.class)
 public class SecTestPackage extends AbstractTestPackage
 {
-	static public TestSuite suite() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException
-	{
-		return new SecTestPackage();
-	}
-	
 	public SecTestPackage() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException
 	{
 		super("SecuredModel", new PlainModelFactory() );

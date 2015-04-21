@@ -96,7 +96,72 @@ public class TestUtil {
         // check we got the right no. of anons
         Assert.assertEquals( testCase.getName() + " iterator test did not find the right number of anon. nodes", countAnon, anonFound );
     }
-    
+
+    /**
+     * Helper method to test an iterator against a list of objects - order independent
+     * @param testCaseClass The test case class
+     * @param testCaseName The test case name
+     * @param it The iterator to test
+     * @param vals The expected values of the iterator
+     */
+    public static void assertIteratorValues(Class<?> testCaseClass, String testCaseName, Iterator<?> it, Object[] vals) {
+        assertIteratorValues(testCaseClass, testCaseName, it, vals, 0);
+    }
+
+    /**
+     * Helper method to test an iterator against a list of objects - order independent, and
+     * can optionally check the count of anonymous resources.  This allows us to test a 
+     * iterator of resource values which includes both URI nodes and bNodes. 
+     * @param testCaseClass The test case class
+     * @param testCaseName The test case name
+     * @param it The iterator to test
+     * @param vals The expected values of the iterator
+     * @param countAnon If non zero, count the number of anonymous resources returned by <code>it</code>,
+     * and don't check these resources against the expected <code>vals</code>.
+     */
+    public static void assertIteratorValues(Class<?> testCaseClass, String testCaseName, Iterator<?> it, Object[] vals, int countAnon) {
+        Logger logger = LoggerFactory.getLogger(testCaseClass);
+        
+        boolean[] found = new boolean[vals.length];
+        int anonFound = 0;
+        
+        for (int i = 0; i < vals.length; i++) found[i] = false;
+        
+        
+        while (it.hasNext()) {
+            Object n = it.next();
+            boolean gotit = false;
+            
+            // do bNodes separately
+            if (countAnon > 0 && isAnonValue( n )) {
+                anonFound++;
+                continue;
+            }
+            
+            for (int i = 0; i < vals.length; i++) {
+                if (n.equals(vals[i])) {
+                    gotit = true;
+                    found[i] = true;
+                }
+            }
+            if (!gotit) {
+                logger.debug(testCaseName + " found unexpected iterator value: " + n);
+            }
+            Assert.assertTrue(testCaseName + " found unexpected iterator value: " + n, gotit);
+        }
+        
+        // check that no expected values were unfound
+        for (int i = 0; i < vals.length; i++) {
+            if (!found[i]) {
+//                for (int j = 0; j < vals.length; j += 1) System.err.println( "#" + j + ": " + vals[j] );
+                logger.debug(testCaseName + " failed to find expected iterator value: " + vals[i]);
+            }
+            Assert.assertTrue(testCaseName + " failed to find expected iterator value: " + vals[i], found[i]);
+        }
+        
+        // check we got the right no. of anons
+        Assert.assertEquals(testCaseName + " iterator test did not find the right number of anon. nodes", countAnon, anonFound );
+    }
 
     /**
      * Replace all blocks of white space by a single space character, just

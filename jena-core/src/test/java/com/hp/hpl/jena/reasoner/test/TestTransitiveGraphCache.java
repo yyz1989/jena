@@ -18,21 +18,22 @@
 
 package com.hp.hpl.jena.reasoner.test;
 
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 import com.hp.hpl.jena.reasoner.transitiveReasoner.TransitiveGraphCache;
 import com.hp.hpl.jena.reasoner.TriplePattern;
-import  com.hp.hpl.jena.graph.Node;
-import com.hp.hpl.jena.graph.NodeFactory ;
-import  com.hp.hpl.jena.graph.Triple;
-
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import com.hp.hpl.jena.graph.Node;
+import com.hp.hpl.jena.graph.NodeFactory;
+import com.hp.hpl.jena.graph.Triple;
 
 /**
  * A purely temporary test suite just used during development and kept
  * off the main unit test paths.
  */
 
-public class TestTransitiveGraphCache extends TestCase {
+public class TestTransitiveGraphCache {
     
     /** The cache under test */
     TransitiveGraphCache cache;
@@ -51,27 +52,10 @@ public class TestTransitiveGraphCache extends TestCase {
     Node g = NodeFactory.createURI(NS+"g");
      
     /**
-     * Boilerplate for junit
-     */ 
-    public TestTransitiveGraphCache( String name ) {
-        super( name ); 
-    }
-    
-    /**
-     * Boilerplate for junit.
-     * This is its own test suite
-     */
-    public static TestSuite suite() {
-        return new TestSuite( TestTransitiveGraphCache.class ); 
-//        TestSuite suite = new TestSuite();
-//        suite.addTest( new TestTransitiveGraphCache("testEquivalencesSimple"));
-//        return suite;
-    }  
-
-    /**
      * Test the basic functioning a Transitive closure cache.
      * Caches the graph but not the final closure.
      */
+    @Test
     public void testBasicCache() {
         initCache();
         cache.setCaching(false);
@@ -82,6 +66,7 @@ public class TestTransitiveGraphCache extends TestCase {
      * Test the basic functioning a Transitive closure cache.
      * Caches the graph and any requested closures
      */
+    @Test
     public void testCachingCache() {
         initCache();
         cache.setCaching(true);
@@ -91,6 +76,7 @@ public class TestTransitiveGraphCache extends TestCase {
     /**
      * Test the clone operation
      */
+    @Test
     public void testCloning() {
         initCache();
         TransitiveGraphCache clone = cache.deepCopy();
@@ -129,13 +115,13 @@ public class TestTransitiveGraphCache extends TestCase {
             
     public void doBasicTest(TransitiveGraphCache cache) {
          // Test forward property patterns
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache",
             cache.find(new TriplePattern(a, directP, null)),
             new Object[] {
                 new Triple(a, closedP, a),
                 new Triple(a, closedP, b)
             });
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(a, closedP, null)),
             new Object[] {
                 new Triple(a, closedP, a),
@@ -145,21 +131,21 @@ public class TestTransitiveGraphCache extends TestCase {
                 new Triple(a, closedP, f),
                 new Triple(a, closedP, g)
             });
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(a, closedP, g)),
             new Object[] {
                 new Triple(a, closedP, g),
             });
             
         // Test backward patterns
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(null, directP, f)),
             new Object[] {
                 new Triple(e, closedP, f),
                 new Triple(f, closedP, f),
                 new Triple(c, closedP, f)
             });
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(null, closedP, f)),
             new Object[] {
                 new Triple(f, closedP, f),
@@ -171,7 +157,7 @@ public class TestTransitiveGraphCache extends TestCase {
             });
         
         // List all cases
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(null, directP, null)),
             new Object[] {
                 new Triple(a, closedP, a),
@@ -189,7 +175,7 @@ public class TestTransitiveGraphCache extends TestCase {
                 new Triple(f, closedP, g),
                 new Triple(g, closedP, g)
             });
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(null, closedP, null)),
             new Object[] {
                 new Triple(a, closedP, a),
@@ -223,28 +209,28 @@ public class TestTransitiveGraphCache extends TestCase {
         // Add a look in the graph and check the loop from each starting position
         cache.addRelation(new Triple(g, closedP, e));
         
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
                 cache.find(new TriplePattern(e, directP, null)),
                 new Object[] {
                     new Triple(e, closedP, e),
                     new Triple(e, closedP, f),
                     new Triple(e, closedP, g)
                 });
-            TestUtil.assertIteratorValues(this, 
+            TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
                 cache.find(new TriplePattern(f, directP, null)),
                 new Object[] {
                     new Triple(f, closedP, f),
                     new Triple(f, closedP, g),
                     new Triple(f, closedP, e)
                 });
-            TestUtil.assertIteratorValues(this, 
+            TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
                 cache.find(new TriplePattern(g, directP, null)),
                 new Object[] {
                     new Triple(g, closedP, g),
                     new Triple(g, closedP, e),
                     new Triple(g, closedP, f)
                 });
-            TestUtil.assertIteratorValues(this, 
+            TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
                     cache.find(new TriplePattern(null, directP, e)),
                     new Object[] {
                         new Triple(e, closedP, e),
@@ -253,7 +239,7 @@ public class TestTransitiveGraphCache extends TestCase {
                         new Triple(c, closedP, e),
                         new Triple(g, closedP, e)
                     });
-                TestUtil.assertIteratorValues(this, 
+                TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
                     cache.find(new TriplePattern(null, directP, f)),
                     new Object[] {
                         new Triple(f, closedP, f),
@@ -262,7 +248,7 @@ public class TestTransitiveGraphCache extends TestCase {
                         new Triple(c, closedP, f),
                         new Triple(e, closedP, f)
                     });
-                TestUtil.assertIteratorValues(this, 
+                TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
                     cache.find(new TriplePattern(null, directP, g)),
                     new Object[] {
                         new Triple(g, closedP, g),
@@ -271,21 +257,21 @@ public class TestTransitiveGraphCache extends TestCase {
                         new Triple(c, closedP, g),
                         new Triple(f, closedP, g)
                     });
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(g, closedP, null)),
             new Object[] {
                 new Triple(g, closedP, g),
                 new Triple(g, closedP, e),
                 new Triple(g, closedP, f)
             });
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(e, closedP, null)),
             new Object[] {
                 new Triple(e, closedP, g),
                 new Triple(e, closedP, e),
                 new Triple(e, closedP, f)
             });
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(f, closedP, null)),
             new Object[] {
                 new Triple(f, closedP, g),
@@ -308,13 +294,14 @@ public class TestTransitiveGraphCache extends TestCase {
      * Test a a case where an earlier version had a bug due to removing
      * a link which was required rather than redundant.
      */
+    @Test
     public void testBug1() {
         TransitiveGraphCache cache = new TransitiveGraphCache(directP, closedP);
         cache.addRelation(new Triple(a, closedP, b));  
         cache.addRelation(new Triple(c, closedP, a));        
         cache.addRelation(new Triple(c, closedP, b));
         cache.addRelation(new Triple(a, closedP, c));     
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(a, directP, null)),
             new Object[] {
                 new Triple(a, closedP, a),
@@ -330,12 +317,13 @@ public class TestTransitiveGraphCache extends TestCase {
      * form a linear chain, with all closed links provided. But inserted
      * in a particular order.
      */
+    @Test
     public void testBug2() {
         TransitiveGraphCache cache = new TransitiveGraphCache(directP, closedP);
         cache.addRelation(new Triple(a, closedP, b));
         cache.addRelation(new Triple(a, closedP, c));
         cache.addRelation(new Triple(b, closedP, c));        
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(a, directP, null)),
             new Object[] {
                 new Triple(a, closedP, a),
@@ -347,6 +335,7 @@ public class TestTransitiveGraphCache extends TestCase {
     /**
      * Test the removeRelation functionality.
      */
+    @Test
     public void testRemove() {
         TransitiveGraphCache cache = new TransitiveGraphCache(directP, closedP);
         cache.addRelation(new Triple(a, closedP, b));
@@ -354,7 +343,7 @@ public class TestTransitiveGraphCache extends TestCase {
         cache.addRelation(new Triple(b, closedP, d));
         cache.addRelation(new Triple(c, closedP, d));
         cache.addRelation(new Triple(d, closedP, e));
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(a, closedP, null)),
             new Object[] {
                 new Triple(a, closedP, a),
@@ -364,7 +353,7 @@ public class TestTransitiveGraphCache extends TestCase {
                 new Triple(a, closedP, d),
                 new Triple(a, closedP, e)
             });
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(b, closedP, null)),
             new Object[] {
                 new Triple(b, closedP, b),
@@ -372,7 +361,7 @@ public class TestTransitiveGraphCache extends TestCase {
                 new Triple(b, closedP, e)
             });
         cache.removeRelation(new Triple(b, closedP, d));
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(a, closedP, null)),
             new Object[] {
                 new Triple(a, closedP, a),
@@ -382,19 +371,19 @@ public class TestTransitiveGraphCache extends TestCase {
                 new Triple(a, closedP, d),
                 new Triple(a, closedP, e)
             });
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(b, closedP, null)),
             new Object[] {
                 new Triple(b, closedP, b),
             });
         cache.removeRelation(new Triple(a, closedP, c));
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(a, closedP, null)),
             new Object[] {
                 new Triple(a, closedP, a),
                 new Triple(a, closedP, b)
             });
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(b, closedP, null)),
             new Object[] {
                 new Triple(b, closedP, b),
@@ -404,13 +393,14 @@ public class TestTransitiveGraphCache extends TestCase {
     /**
      * Test direct link case with adverse ordering.
      */
+    @Test
     public void testDirect() {
         TransitiveGraphCache cache = new TransitiveGraphCache(directP, closedP);
         cache.addRelation(new Triple(a, closedP, b));
         cache.addRelation(new Triple(c, closedP, d));
         cache.addRelation(new Triple(a, closedP, d));
         cache.addRelation(new Triple(b, closedP, c));
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(a, directP, null)),
             new Object[] {
                 new Triple(a, closedP, a),
@@ -421,13 +411,14 @@ public class TestTransitiveGraphCache extends TestCase {
     /**
      * Test cycle detection.
      */
+    @Test
     public void testCycle() {
         TransitiveGraphCache cache = new TransitiveGraphCache(directP, closedP);
         cache.addRelation(new Triple(a, closedP, b));
         cache.addRelation(new Triple(b, closedP, c));
         cache.addRelation(new Triple(a, closedP, c));
         cache.addRelation(new Triple(c, closedP, b));
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
             cache.find(new TriplePattern(a, directP, null)),
             new Object[] {
                 new Triple(a, closedP, a),
@@ -439,6 +430,7 @@ public class TestTransitiveGraphCache extends TestCase {
     /**
      * A ring of three cycle
      */
+    @Test
     public void testCycle2() {
         TransitiveGraphCache cache = new TransitiveGraphCache(directP, closedP);
         cache.addRelation(new Triple(a, closedP, b));
@@ -450,7 +442,7 @@ public class TestTransitiveGraphCache extends TestCase {
         cache.addRelation(new Triple(d, closedP, e));
         cache.addRelation(new Triple(c, closedP, e));
         cache.addRelation(new Triple(c, closedP, b));
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
                 cache.find(new TriplePattern(c, directP, null)),
                 new Object[] {
                     new Triple(c, closedP, e),
@@ -459,7 +451,7 @@ public class TestTransitiveGraphCache extends TestCase {
                     new Triple(c, closedP, d),
                     new Triple(c, closedP, c),
                 });
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
                 cache.find(new TriplePattern(null, directP, c)),
                 new Object[] {
                     new Triple(a, closedP, c),
@@ -468,7 +460,7 @@ public class TestTransitiveGraphCache extends TestCase {
                     new Triple(f, closedP, c),
                     new Triple(c, closedP, c),
                 });
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
                 cache.find(new TriplePattern(f, closedP, null)),
                 new Object[] {
                     new Triple(f, closedP, f),
@@ -483,6 +475,7 @@ public class TestTransitiveGraphCache extends TestCase {
     /**
      * Two ring-of-three cycles joined at two points
      */
+    @Test
     public void testCycle3() {
         TransitiveGraphCache cache = new TransitiveGraphCache(directP, closedP);
         cache.addRelation(new Triple(a, closedP, b));
@@ -493,7 +486,7 @@ public class TestTransitiveGraphCache extends TestCase {
         cache.addRelation(new Triple(f, closedP, d));
         cache.addRelation(new Triple(b, closedP, d));
         cache.addRelation(new Triple(f, closedP, c));
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
                 cache.find(new TriplePattern(a, directP, null)),
                 new Object[] {
                 new Triple(a, closedP, a),
@@ -503,7 +496,7 @@ public class TestTransitiveGraphCache extends TestCase {
                 new Triple(a, closedP, e),
                 new Triple(a, closedP, f),
                 });
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
                 cache.find(new TriplePattern(null, directP, a)),
                 new Object[] {
                 new Triple(a, closedP, a),
@@ -518,11 +511,12 @@ public class TestTransitiveGraphCache extends TestCase {
     /**
      * Test simple equivalences case
      */
+    @Test
     public void testEquivalencesSimple() {
         TransitiveGraphCache cache = new TransitiveGraphCache(directP, closedP);
         cache.addRelation(new Triple(a, closedP, b));
         cache.addRelation(new Triple(b, closedP, a));
-        TestUtil.assertIteratorValues(this, 
+        TestUtil.assertIteratorValues(TestTransitiveGraphCache.class, "TestTransitiveGraphCache", 
                 cache.find(new TriplePattern(null, closedP, null)),
                 new Object[] {
                 new Triple(a, closedP, b),
@@ -536,6 +530,7 @@ public class TestTransitiveGraphCache extends TestCase {
     /**
      * Test equivalences case
      */
+    @Test
     public void testEquivalences() {
         TransitiveGraphCache cache = new TransitiveGraphCache(directP, closedP);
         cache.addRelation(new Triple(a, closedP, b));

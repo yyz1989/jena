@@ -18,7 +18,9 @@
 
 package com.hp.hpl.jena.sparql;
 
-import junit.framework.TestCase ;
+import org.junit.runner.RunWith;
+import org.junit.runners.AllTests;
+
 import junit.framework.TestSuite ;
 
 import com.hp.hpl.jena.sparql.engine.ref.QueryEngineRef ;
@@ -26,8 +28,8 @@ import com.hp.hpl.jena.sparql.expr.E_Function ;
 import com.hp.hpl.jena.sparql.expr.NodeValue ;
 import com.hp.hpl.jena.sparql.junit.ScriptTestSuiteFactory ;
 
-
-public class ARQTestRefEngine extends TestCase
+@RunWith(AllTests.class)
+public class ARQTestRefEngine
 {
     public static TestSuite suite()
     {
